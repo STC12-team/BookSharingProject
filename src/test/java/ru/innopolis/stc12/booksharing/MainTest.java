@@ -1,6 +1,12 @@
 package ru.innopolis.stc12.booksharing;
 
-public class MainTest {
-    Main main = new Main();
+import org.junit.jupiter.api.Test;
 
+
+class MainTest {
+    @Test
+    void mainTest() {
+        Main main = new Main();
+
+    }
 }

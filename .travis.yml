@@ -12,7 +12,6 @@ os:
 
 branches:
   only:
-  - anotherWayToFixSonar
   - master
 
 
@@ -27,6 +26,6 @@ cache:
 
 script:
 - ./gradlew assemble
-- ./gradlew clean build sonarqube -s
+- ./gradlew clean build -s
 - rm -rf .scannerwork
 
