@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id "org.sonarqube" version "2.6.2"
 }
 
 group 'ru.innopolis.stc12'
@@ -15,4 +14,24 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'log4j:log4j:1.2.17'
+}
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+    testLogging.showStandardStreams = true
+
+    useJUnitPlatform()
+    afterSuite { desc, result ->
+        if (!desc.parent)
+            println("${result.resultType} " +
+                    "(${result.testCount} tests, " +
+                    "${result.successfulTestCount} successes, " +
+                    "${result.failedTestCount} failures, " +
+                    "${result.skippedTestCount} skipped)")
+    }
 }
