@@ -1,9 +1,23 @@
 plugins {
     id 'java'
+    id "org.sonarqube" version "2.6.2"
 }
 
 group 'ru.innopolis.stc12'
 version '1.0-SNAPSHOT'
+
+sonarqube {
+    properties {
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.projectName", "bookSharingProject"
+        property "sonar.projectKey", "bookSharing"
+        property "sonar.organization", "stc12team"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.language", "java"
+        property "sonar.login", System.getenv("SONARCLOUD_TOKEN")
+        property "sonar.jacoco.reportPaths", "$rootProject.buildDir/jacoco/alltest.exec"
+    }
+}
 
 sourceCompatibility = 1.8
 
