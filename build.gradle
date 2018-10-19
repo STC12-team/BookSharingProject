@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+    id "org.sonarqube" version "2.6.2"
+}
+
+group 'ru.innopolis.stc12'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'log4j:log4j:1.2.17'
+}
