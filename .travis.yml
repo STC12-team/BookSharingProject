@@ -26,6 +26,6 @@ cache:
 
 script:
 - ./gradlew assemble
-- ./gradlew clean build -s
+- ./gradlew clean build sonarqube -s
 - rm -rf .scannerwork
 

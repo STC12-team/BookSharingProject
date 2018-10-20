@@ -1,11 +1,28 @@
 plugins {
     id 'java'
+    id "org.sonarqube" version "2.6.2"
+
 }
 
 group 'ru.innopolis.stc12'
 version '1.0-SNAPSHOT'
 
+sonarqube {
+    properties {
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.projectName", "bookSharingProject"
+        property "sonar.projectKey", "bookSharing"
+        property "sonar.organization", "stc12team"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.language", "java"
+        property "sonar.login", System.getenv("SONARCLOUD_TOKEN")
+        property "sonar.jacoco.reportPaths", "$rootProject.buildDir/jacoco/alltest.exec"
+    }
+}
+apply plugin: 'jacoco'
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
+compileJava.options.encoding = 'UTF-8'
 
 repositories {
     mavenCentral()
@@ -15,18 +32,15 @@ dependencies {
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.2.0-M1'
     compile 'log4j:log4j:1.2.17'
 }
-tasks.withType(JavaCompile) {
-    options.encoding = 'UTF-8'
-}
 
 test {
     useJUnitPlatform()
-    afterSuite { desc, result ->
-        if (!desc.parent)
-            println("${result.resultType} " +
-                    "(${result.testCount} tests, " +
-                    "${result.successfulTestCount} successes, " +
-                    "${result.failedTestCount} failures, " +
-                    "${result.skippedTestCount} skipped)")
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+tasks.withType(Test) {
+    jacoco {
+        destinationFile = file("$rootProject.buildDir/jacoco/alltest.exec")
     }
 }
