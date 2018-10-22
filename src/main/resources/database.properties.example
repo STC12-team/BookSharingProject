@@ -1,0 +1,4 @@
+javabase.jdbc.url = jdbc:postgresql://localhost:5432/postgres
+javabase.jdbc.driver = org.postgresql.Driver
+javabase.jdbc.username = postgres
+javabase.jdbc.password = secret
