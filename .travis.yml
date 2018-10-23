@@ -4,6 +4,9 @@ install: true
 
 dist: trusty
 
+before_install:
+- chmod +x gradlew
+
 jdk:
 - oraclejdk8
 
@@ -12,7 +15,7 @@ os:
 
 branches:
   only:
-  - master
+  - develop
 
 
 before_cache:
