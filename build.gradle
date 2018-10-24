@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id "org.sonarqube" version "2.6.2"
-
+    id "org.liquibase.gradle" version "2.0.1"
 }
 
 group 'ru.innopolis.stc12'
@@ -31,6 +31,9 @@ repositories {
 dependencies {
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.2.0-M1'
     compile 'log4j:log4j:1.2.17'
+    liquibaseRuntime 'org.liquibase:liquibase-core:3.6.2'
+    liquibaseRuntime 'org.liquibase:liquibase-groovy-dsl:2.0.1'
+    liquibaseRuntime 'org.postgresql:postgresql:42.2.5'
 }
 
 test {
@@ -42,5 +45,16 @@ test {
 tasks.withType(Test) {
     jacoco {
         destinationFile = file("$rootProject.buildDir/jacoco/alltest.exec")
+    }
+}
+
+liquibase {
+    activities {
+        main {
+            changeLogFile 'src/main/db/changelog.xml'
+            url project.properties['url'] ?: System.getenv("DATABASE_URL")
+            username project.properties['username'] ?: System.getenv("DATABASE_USERNAME")
+            password project.properties['password'] ?: System.getenv("DATABASE_PASSWORD")
+        }
     }
 }
