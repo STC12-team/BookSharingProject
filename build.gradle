@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id "org.sonarqube" version "2.6.2"
     id "org.liquibase.gradle" version "2.0.1"
+    id 'jacoco'
+    id 'war'
 }
 
 group 'ru.innopolis.stc12'
@@ -19,7 +21,6 @@ sonarqube {
         property "sonar.jacoco.reportPaths", "$rootProject.buildDir/jacoco/alltest.exec"
     }
 }
-apply plugin: 'jacoco'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
@@ -30,7 +31,10 @@ repositories {
 
 dependencies {
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.2.0-M1'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.22.0'
     compile 'log4j:log4j:1.2.17'
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.20.RELEASE'
+    compile group: 'jstl', name: 'jstl', version: '1.2'
     liquibaseRuntime 'org.liquibase:liquibase-core:3.6.2'
     liquibaseRuntime 'org.liquibase:liquibase-groovy-dsl:2.0.1'
     liquibaseRuntime 'org.postgresql:postgresql:42.2.5'
