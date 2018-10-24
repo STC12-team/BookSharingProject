@@ -24,6 +24,12 @@ cache:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
 
+services:
+- postgresql
+
+before_script:
+- psql -c 'create database - psql -c 'create database book_sharing_project;' -U postgres
+
 script:
 - ./gradlew assemble
 - ./gradlew clean build sonarqube -s
