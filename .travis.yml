@@ -12,7 +12,7 @@ os:
 
 branches:
   only:
-  - master
+  - develop
 
 
 before_cache:
