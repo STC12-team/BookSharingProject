@@ -13,10 +13,10 @@
         </addColumn>
 
         <addColumn tableName="users">
-            <column name="role_id" type="integer" />
+            <column name="roleId" type="integer" />
         </addColumn>
 
-        <addForeignKeyConstraint baseColumnNames="role_id"
+        <addForeignKeyConstraint baseColumnNames="roleId"
                                  baseTableName="users"
                                  constraintName="fk_users_roles"
                                  deferrable="true"

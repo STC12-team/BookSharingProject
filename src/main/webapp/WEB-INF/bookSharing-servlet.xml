@@ -9,6 +9,8 @@
     <context:annotation-config/>
     <context:component-scan base-package="ru.innopolis.stc12.booksharing"/>
 
+    <bean id="connectionManager" class="ru.innopolis.stc12.booksharing.model.connection.ConnectionManagerJdbcImpl"/>
+
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">
             <value>/WEB-INF/pages/</value>
