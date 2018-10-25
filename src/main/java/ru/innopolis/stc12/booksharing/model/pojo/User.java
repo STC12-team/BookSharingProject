@@ -7,6 +7,7 @@ public class User {
     private String login;
     private String password;
     private int roleId;
+    private String role;
 
     User() {
 
@@ -21,6 +22,13 @@ public class User {
         this.login = login;
         this.password = password;
         this.roleId = roleId;
+    }
+
+    public User(long id, String login, String password, String role) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.role = role;
     }
 
     public long getId() {
@@ -53,6 +61,14 @@ public class User {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override
