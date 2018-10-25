@@ -27,4 +27,14 @@ public class LoginController {
 
         return "login";
     }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @ExceptionHandler(TestException.class)
+    public String getLoginPage(@RequestParam(value = "login") String login,
+                               @RequestParam(value = "password") String password,
+                               Model model) {
+        model.addAttribute("usersDetails", "Hello, " + login);
+
+        return "login";
+    }
 }
