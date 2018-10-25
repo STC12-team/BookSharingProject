@@ -16,6 +16,9 @@
         <li class="nav-item active">
             <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
         </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/booksFound">Add book <span class="sr-only">(current)</span></a>
+        </li>
     </ul>
 </div>
 <div id="body">
