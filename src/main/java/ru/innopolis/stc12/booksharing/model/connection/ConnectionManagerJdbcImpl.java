@@ -11,7 +11,7 @@ import java.util.Properties;
 
 public class ConnectionManagerJdbcImpl implements ConnectionManager {
     private static ConnectionManager connectionManager;
-    private static Logger LOGGER = Logger.getLogger(ConnectionManagerJdbcImpl.class);
+    private static Logger logger = Logger.getLogger(ConnectionManagerJdbcImpl.class);
     private Properties property = new Properties();
 
     private ConnectionManagerJdbcImpl() {
@@ -31,7 +31,7 @@ public class ConnectionManagerJdbcImpl implements ConnectionManager {
             InputStream stream = loader.getResourceAsStream("config.properties");
             property.load(stream);
         } catch (IOException e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         String driver = property.getProperty("driver");
         String password = property.getProperty("password");
@@ -42,7 +42,7 @@ public class ConnectionManagerJdbcImpl implements ConnectionManager {
             Class.forName(driver);
             connection = DriverManager.getConnection(url, user, password);
         } catch (SQLException | ClassNotFoundException e) {
-            LOGGER.error(e.getMessage());
+            logger.error(e.getMessage());
         }
         return connection;
     }

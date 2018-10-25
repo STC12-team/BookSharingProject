@@ -4,6 +4,6 @@
 <t:default title="Log In">
     <jsp:body>
         <h1>Please log in</h1>
-        <p class="lead">${loginMessage}</p>
+        <p class="lead">${usersList}</p>
     </jsp:body>
 </t:default>
