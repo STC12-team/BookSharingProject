@@ -8,6 +8,14 @@ public class User {
     private String password;
     private int roleId;
 
+    User() {
+
+    }
+
+    User(Role role) {
+        this.setRoleId(role.getId());
+    }
+
     public long getId() {
         return id;
     }
