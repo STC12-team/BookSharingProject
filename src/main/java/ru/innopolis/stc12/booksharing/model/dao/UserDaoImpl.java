@@ -1,8 +1,7 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
 import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.innopolis.stc12.booksharing.model.connection.ConnectionManager;
 import ru.innopolis.stc12.booksharing.model.connection.ConnectionManagerJdbcImpl;
@@ -21,9 +20,10 @@ public class UserDaoImpl implements UserDao {
     private static Logger logger = Logger.getLogger(UserDaoImpl.class);
     private static final String SQL_SELECT_ALL = "SELECT id, login, password, role_id FROM users";
 
-    public UserDaoImpl() {
-        ApplicationContext context = new ClassPathXmlApplicationContext("appContext.xml");
-        this.connectionManager = (ConnectionManagerJdbcImpl) context.getBean("connectionManager");
+
+    @Autowired
+    public void setConnectionManager(ConnectionManagerJdbcImpl connectionManager) {
+        this.connectionManager = connectionManager;
     }
 
     @Override

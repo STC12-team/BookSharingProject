@@ -2,8 +2,10 @@ package ru.innopolis.stc12.booksharing.model.connection;
 
 import org.apache.log4j.Logger;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Properties;
 
+@EnableWebMvc
 @Configuration
 public class ConnectionManagerJdbcImpl extends WebMvcConfigurerAdapter implements ConnectionManager {
 

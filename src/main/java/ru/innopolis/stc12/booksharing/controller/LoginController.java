@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.innopolis.stc12.booksharing.exceptions.TestException;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
@@ -20,12 +21,10 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @ExceptionHandler(TestException.class)
-    public String getLoginPage(Model model) {
-        try {
-            model.addAttribute("usersList", userService.getUsers());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public String getLoginPage(@RequestParam(value = "error", required = false) String error, Model model) {
+        model.addAttribute("usersList", userService.getUsers());
+        model.addAttribute("loginError", error);
+
         return "login";
     }
 }
