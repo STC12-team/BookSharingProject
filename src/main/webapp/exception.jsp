@@ -3,6 +3,7 @@
 
 <t:default title="Book sharing">
     <jsp:body>
-        <p>An error occured, please contact with...</p>
+        <h2>Exception</h2>
+        <h3>${exceptionMsg}</h3>
     </jsp:body>
 </t:default>
