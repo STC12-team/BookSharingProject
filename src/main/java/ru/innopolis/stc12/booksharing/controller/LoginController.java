@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.innopolis.stc12.booksharing.exceptions.TestException;
@@ -21,7 +21,7 @@ public class LoginController {
         this.userService = userService;
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping(value = "/login")
     @ExceptionHandler(TestException.class)
     public String getLoginPage(@RequestParam(value = "error", required = false) String error, Model model) {
         if (error != null) {
@@ -31,7 +31,7 @@ public class LoginController {
         return "login";
     }
 
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping(value = "/login")
     @ExceptionHandler(TestException.class)
     public ModelAndView postLoginPage(@RequestParam(value = "login") String login,
                                      @RequestParam(value = "password") String password,
