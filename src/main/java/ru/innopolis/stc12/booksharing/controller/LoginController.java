@@ -12,9 +12,6 @@ import ru.innopolis.stc12.booksharing.exceptions.TestException;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Controller
 public class LoginController {
     private UserService userService;
@@ -36,7 +33,7 @@ public class LoginController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ExceptionHandler(TestException.class)
-    public ModelAndView getLoginPage(@RequestParam(value = "login") String login,
+    public ModelAndView postLoginPage(@RequestParam(value = "login") String login,
                                      @RequestParam(value = "password") String password,
                                      Model model) {
         // clean up params

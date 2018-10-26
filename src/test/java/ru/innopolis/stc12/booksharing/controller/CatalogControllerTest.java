@@ -3,11 +3,7 @@ package ru.innopolis.stc12.booksharing.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import ru.innopolis.stc12.booksharing.model.dao.UserDao;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
-import ru.innopolis.stc12.booksharing.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -15,26 +11,33 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-class LoginControllerTest {
-    private LoginController loginController;
+public class CatalogControllerTest {
+    private CatalogController catalogController;
     @Mock
     private Model model;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
-        loginController = new LoginController();
+        catalogController = new CatalogController();
     }
 
     @Test
     void contextLoads() {
-        assertNotNull(loginController);
+        assertNotNull(catalogController);
     }
 
     @Test
-    void getLoginPageGet() {
-        when(model.addAttribute(any(), any())).thenReturn(model);
+    void getCatalogPageWithLoginSuccess() {
+        when(model.containsAttribute(any())).thenReturn(true);
 
-        assertEquals("login", loginController.getLoginPage("", model));
+        assertEquals("catalog", catalogController.getCatalogPage(any(), model));
+    }
+
+    @Test
+    void getCatalogPageWithLoginError() {
+        when(model.containsAttribute(any())).thenReturn(false);
+
+        assertEquals("redirect:login", catalogController.getCatalogPage(any(), model));
     }
 }
