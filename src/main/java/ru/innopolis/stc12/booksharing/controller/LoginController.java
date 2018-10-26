@@ -1,6 +1,5 @@
 package ru.innopolis.stc12.booksharing.controller;
 
-import com.google.common.hash.Hashing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,11 +7,13 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.servlet.ModelAndView;
 import ru.innopolis.stc12.booksharing.exceptions.TestException;
+import ru.innopolis.stc12.booksharing.model.pojo.User;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
-import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class LoginController {
@@ -26,23 +27,29 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     @ExceptionHandler(TestException.class)
     public String getLoginPage(@RequestParam(value = "error", required = false) String error, Model model) {
-        model.addAttribute("usersList", userService.getUsers());
-        model.addAttribute("loginError", error);
+        if (error != null) {
+            model.addAttribute("loginError", error);
+        }
 
         return "login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ExceptionHandler(TestException.class)
-    public String getLoginPage(@RequestParam(value = "login") String login,
-                               @RequestParam(value = "password") String password,
-                               Model model) {
-        if (userService.validateUser(login, password)) {
-            model.addAttribute("usersDetails", "Hello, " + login);
-        } else {
-            model.addAttribute("usersDetails", Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString());
-        }
+    public ModelAndView getLoginPage(@RequestParam(value = "login") String login,
+                                     @RequestParam(value = "password") String password,
+                                     Model model) {
+        // clean up params
+        password = password.replaceAll("[^a-zA-Z0-9]", "");
+        login = login.replaceAll("[^a-zA-Z0-9]", "");
 
-        return "login";
+        if (userService.validateUser(login, password)) {
+            User user = userService.getUserByLogin(login);
+            model.addAttribute("user", user);
+
+            return new ModelAndView("catalog");
+        }
+        model.addAttribute("loginError", "Check your credentials");
+        return new ModelAndView("login");
     }
 }
