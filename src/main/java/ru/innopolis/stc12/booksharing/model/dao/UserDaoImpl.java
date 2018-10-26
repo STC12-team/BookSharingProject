@@ -22,6 +22,10 @@ public class UserDaoImpl implements UserDao {
     private static final String SQL_SELECT_USER_BY_LOGIN =
         "SELECT u.id, u.login, u.password, r.name AS role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.login = ?";
 
+    public UserDaoImpl(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
+    }
+
 
     @Autowired
     public void setConnectionManager(ConnectionManagerJdbcImpl connectionManager) {

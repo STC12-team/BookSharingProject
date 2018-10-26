@@ -3,14 +3,10 @@ package ru.innopolis.stc12.booksharing.model.connection;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.postgresql.jdbc.PgConnection;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
-import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class ConnectionManagerJdbcImplTest {
