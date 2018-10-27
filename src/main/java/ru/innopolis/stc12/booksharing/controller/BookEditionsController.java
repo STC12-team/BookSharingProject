@@ -19,11 +19,11 @@ public class BookEditionsController {
         this.bookEditionsService = bookEditionsService;
     }
 
-    @GetMapping(value = "/book_editions")
+    @GetMapping(value = "/bookEditions")
     @ExceptionHandler(TestException.class)
     public String getBookEditionsPage(Model model) {
         model.addAttribute("bookEditions", bookEditionsService.getAllBookEditions());
-        return "book_editions";
+        return "bookEditions";
     }
 
     @GetMapping(value = "/addBookEdition")

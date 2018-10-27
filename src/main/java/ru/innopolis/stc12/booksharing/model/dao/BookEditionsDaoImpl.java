@@ -22,20 +22,20 @@ public class BookEditionsDaoImpl implements BookEditionsDao {
 
     @Override
     public BookEdition getBookEditionById(int id) {
-        String getBookEditionsQuery = "select * from book_editions where id=?";
+        String getBookEditionsQuery = "select id, title,description,isbn from book_editions where id=?";
         return jdbcTemplate.queryForObject(getBookEditionsQuery,
                 new Object[]{id}, new BookEditionMapper());
     }
 
     @Override
     public List<BookEdition> getAllBookEditions() {
-        String getBookEditionsQuery = "select * from book_editions";
+        String getBookEditionsQuery = "select id, title,description,isbn from book_editions";
         return jdbcTemplate.query(getBookEditionsQuery, new BookEditionMapper());
     }
 
     @Override
     public BookEdition getBookEditionByIsbn(String isbn) {
-        String getBookEditionsQuery = "select * from book_editions where isbn=?";
+        String getBookEditionsQuery = "select id, title,description,isbn from book_editions where isbn=?";
         return jdbcTemplate.queryForObject(getBookEditionsQuery,
                 new Object[]{isbn}, new BookEditionMapper());
     }
