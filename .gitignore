@@ -29,3 +29,4 @@ hs_err_pid*
 
 
 gradle.properties
+config.properties
