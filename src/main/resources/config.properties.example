@@ -1,0 +1,4 @@
+url=jdbc:postgresql://localhost:5432/book_sharing_project
+driver=org.postgresql.Driver
+username=postgres
+password=secret
