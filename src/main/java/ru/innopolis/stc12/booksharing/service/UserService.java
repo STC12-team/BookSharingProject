@@ -19,6 +19,14 @@ public class UserService {
         this.userDao = userDao;
     }
 
+    public UserService() {
+
+    }
+
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     public List<User> getUsers() {
         return this.userDao.getAllUsers();
     }

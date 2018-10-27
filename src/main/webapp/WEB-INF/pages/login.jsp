@@ -4,8 +4,7 @@
 
 <t:default title="Login page">
     <jsp:body>
-        <p class="lead">${usersList}</p>
-        <p class="lead">${usersDetails}</p>
+        <p class="lead">${loginError}</p>
         <form class="form-horizontal" role="form" method="POST" action="/login">
             <div class="row">
                 <div class="col-md-3"></div>
