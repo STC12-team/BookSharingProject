@@ -37,7 +37,7 @@ class BookEditionsControllerTest {
     void getBookEditionsPage() {
         when(model.addAttribute(any(), any())).thenReturn(model);
         bookEditionsController.setBookEditionsService(bookEditionsService);
-        assertEquals("book_editions", bookEditionsController.getBookEditionsPage(model));
+        assertEquals("bookEditions", bookEditionsController.getBookEditionsPage(model));
     }
 
 
