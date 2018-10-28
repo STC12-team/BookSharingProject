@@ -24,11 +24,11 @@
             </div>
         </c:if>
         <c:choose>
-            <c:when test="${not empty bookList}">
-                <t:booklist bookList="${bookList}"/>
+            <c:when test="${not empty bookEditionList}">
+                <t:booklist bookEditionList="${bookEditionList}"/>
             </c:when>
-            <c:when test="${not empty book}">
-                <t:bookdescription book="${book}"/>
+            <c:when test="${not empty bookEdition}">
+                <t:bookdescription bookEdition="${bookEdition}"/>
             </c:when>
             <c:when test="${not empty showSendRequestForm && showSendRequestForm == 'true'}">
                 <form action="/addBookByUser/sendRequest" method="post" role="form" data-toggle="validator">

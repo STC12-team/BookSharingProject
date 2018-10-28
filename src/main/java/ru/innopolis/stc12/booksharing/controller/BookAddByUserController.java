@@ -1,6 +1,5 @@
 package ru.innopolis.stc12.booksharing.controller;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,12 +7,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.innopolis.stc12.booksharing.entitys.Book;
-import ru.innopolis.stc12.booksharing.entitys.BookWithOwner;
-import ru.innopolis.stc12.booksharing.entitys.User;
-import ru.innopolis.stc12.booksharing.services.BooksService;
-import ru.innopolis.stc12.booksharing.services.BooksWithOwnerService;
-import ru.innopolis.stc12.booksharing.services.UserService;
+import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
+import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
+import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.service.BookCopiesService;
+import ru.innopolis.stc12.booksharing.service.BookEditionsService;
+import ru.innopolis.stc12.booksharing.service.UsersService;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -23,23 +22,23 @@ import java.util.List;
 public class BookAddByUserController {
     private static final String MESSAGE_ATTRIBUTE = "message";
     private static final String PAGE_NAME = "addBookByUser";
-    private BooksService booksService;
-    private UserService userService;
-    private BooksWithOwnerService booksWithOwnerService;
+    private BookEditionsService bookEditionsService;
+    private UsersService usersService;
+    private BookCopiesService bookCopiesService;
 
     @Autowired
-    public void setBooksService(BooksService booksService) {
-        this.booksService = booksService;
+    public void setBookEditionsService(BookEditionsService bookEditionsService) {
+        this.bookEditionsService = bookEditionsService;
     }
 
     @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
+    public void setUsersService(UsersService usersService) {
+        this.usersService = usersService;
     }
 
     @Autowired
-    public void setBooksWithOwnerService(BooksWithOwnerService booksWithOwnerService) {
-        this.booksWithOwnerService = booksWithOwnerService;
+    public void setBookCopiesService(BookCopiesService bookCopiesService) {
+        this.bookCopiesService = bookCopiesService;
     }
 
     @RequestMapping(value = "/addBookByUser", method = RequestMethod.GET)
@@ -52,9 +51,9 @@ public class BookAddByUserController {
     public String searchBook(
             @RequestParam(value = "searchValue") String searchValue,
             Model model) {
-        List<Book> bookList = searchBookByTypeValue(searchValue);
-        if (!bookList.isEmpty()) {
-            model.addAttribute("bookList", bookList);
+        List<BookEdition> bookEditionList = searchBookByTypeValue(searchValue);
+        if (!bookEditionList.isEmpty()) {
+            model.addAttribute("bookEditionList", bookEditionList);
         } else {
             model.addAttribute(MESSAGE_ATTRIBUTE, "Книга не найдена");
             model.addAttribute("showSendRequestForm", "true");
@@ -67,9 +66,9 @@ public class BookAddByUserController {
     public String chooseBook(
             @RequestParam(value = "chooseBook") String isbn,
             Model model) {
-        Book book = booksService.getByIsbn(Integer.valueOf(isbn));
-        if (book != null) {
-            model.addAttribute("book", book);
+        BookEdition bookEdition = bookEditionsService.getByIsbn(isbn);
+        if (bookEdition != null) {
+            model.addAttribute("bookEdition", bookEdition);
         } else {
             model.addAttribute(MESSAGE_ATTRIBUTE, "Что то пошло не так :(");
         }
@@ -81,12 +80,12 @@ public class BookAddByUserController {
     public String addBook(
             @RequestParam(value = "addBook") String isbn,
             Model model, Principal principal) {
-        Book book = booksService.getByIsbn(Integer.valueOf(isbn));
-        User user = userService.getUserByLogin(principal.getName());
-        if (booksWithOwnerService.addBook(new BookWithOwner(book, user))) {
+        BookEdition bookEdition = bookEditionsService.getByIsbn(isbn);
+        User user = usersService.getUserByLogin(principal.getName());
+        if (bookCopiesService.addBook(new BookCopy(bookEdition, user))) {
             model.addAttribute(MESSAGE_ATTRIBUTE, "Книга успешно добавлена");
         } else {
-            model.addAttribute(MESSAGE_ATTRIBUTE, "Не удалось добавить книгу, попробуйте позже");
+            model.addAttribute(MESSAGE_ATTRIBUTE, "Что то пошло не так:(");
         }
         return PAGE_NAME;
     }
@@ -102,26 +101,15 @@ public class BookAddByUserController {
         return PAGE_NAME;
     }
 
-    private List<Book> searchBookByTypeValue(String typeValue) {
+    private List<BookEdition> searchBookByTypeValue(String typeValue) {
         if (typeValue == null) {
             return new ArrayList<>();
         }
-        List<Book> bookList = booksService.getByName(typeValue);
-        if (!bookList.isEmpty()) {
-            return bookList;
+        List<BookEdition> bookEditionList = bookEditionsService.getByName(typeValue);
+        BookEdition bookEdition = bookEditionsService.getByIsbn(typeValue);
+        if (bookEdition != null) {
+            bookEditionList.add(bookEdition);
         }
-        bookList = booksService.getByAuthor(typeValue);
-        if (!bookList.isEmpty()) {
-            return bookList;
-        }
-        try {
-            Book book = booksService.getByIsbn(Integer.valueOf(typeValue));
-            if (book != null) {
-                bookList.add(book);
-            }
-        } catch (NumberFormatException e) {
-            Logger.getLogger(BookAddByUserController.class).error(e);
-        }
-        return bookList;
+        return bookEditionList;
     }
 }

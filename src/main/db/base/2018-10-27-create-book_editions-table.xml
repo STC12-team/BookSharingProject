@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet id="2018-10-27-create-book_editions-table" author="rmunirov">
+        <createTable tableName="book_editions" remarks="Книги">
+            <column name="id" remarks="Идентификатор книги" type="serial">
+                <constraints
+                        nullable="false"
+                        primaryKey="true"
+                        primaryKeyName="book_editions_pkey"
+                />
+            </column>
+            <column name="isbn" remarks="ISBN" type="varchar(40)">
+                <constraints
+                        nullable="false"
+                        unique="true"
+                />
+            </column>
+            <column name="publisher_id" remarks="Издатель" type="integer">
+                <constraints
+                        nullable="false"
+                />
+            </column>
+            <column name="title" remarks="Название книги" type="varchar(255)">
+                <constraints
+                        nullable="false"
+                />
+            </column>
+            <column name="description" remarks="Описание книги" type="varchar(500)">
+                <constraints
+                        nullable="false"
+                />
+            </column>
+            <column name="year_of_publication" remarks="Год издания" type="integer">
+                <constraints
+                        nullable="false"
+                />
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="book_editions"
+                                 baseColumnNames="publisher_id"
+                                 constraintName="fk_book_editions_publishers"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedTableName="publishers"
+                                 referencedColumnNames="id"
+        />
+    </changeSet>
+</databaseChangeLog>

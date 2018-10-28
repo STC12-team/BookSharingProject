@@ -11,7 +11,7 @@
 
     <http auto-config="true">
         <csrf disabled="true"/>
-        <intercept-url pattern="/addBook**" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/addBook**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/logoutpage" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <form-login login-processing-url="/j_username_security_check"
@@ -23,12 +23,17 @@
         <logout logout-url="/static/j_spring_security_logout"/>
     </http>
 
+    <beans:bean name="passwordEncoder"
+                class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
     <authentication-manager>
         <authentication-provider>
-            <user-service>
-                <user name="admin" password="1" authorities="ROLE_ADMIN"/>
-                <user name="user" password="1" authorities="ROLE_USER"/>
-            </user-service>
+            <password-encoder ref="passwordEncoder"/>
+            <jdbc-user-service data-source-ref="dataSource"
+                               users-by-username-query=
+                                       "SELECT login, password, enabled from users where login=?"
+                               authorities-by-username-query=
+                                       "select users.login, roles.name as role from users left join roles on users.role_id=roles.id where login=?"/>
         </authentication-provider>
     </authentication-manager>
 

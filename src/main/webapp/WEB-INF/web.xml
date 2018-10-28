@@ -10,7 +10,7 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/security-context.xml</param-value>
+        <param-value>/WEB-INF/security-context.xml /WEB-INF/database-context.xml</param-value>
     </context-param>
 
     <servlet>

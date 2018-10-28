@@ -12,7 +12,7 @@ public class AboutController {
     @RequestMapping(value = "/about", method = RequestMethod.GET)
     @ExceptionHandler(TestException.class)
     public String getAboutPage(Model model) {
-        model.addAttribute("aboutText", "Book sharing, the best project");
+        model.addAttribute("aboutText", "BookEdition sharing, the best project");
         return "about";
     }
 }
