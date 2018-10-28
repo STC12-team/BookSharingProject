@@ -27,7 +27,7 @@ public class ConnectionManagerJdbcImpl extends WebMvcConfigurerAdapter implement
             InputStream stream = loader.getResourceAsStream("config.properties");
             property.load(stream);
         } catch (IOException e) {
-            logger.error(e.getMessage());
+            logger.error("Невозможно загрузить настройки из файла config.properties. " + e.getMessage());
         }
     }
 
