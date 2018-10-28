@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet id="2018-10-28-insert-into_all_tables" author="rmunirov">
+        <insert tableName="roles">
+            <column name="name" value="ROLE_ADMIN"/>
+        </insert>
+        <insert tableName="roles">
+            <column name="name" value="ROLE_USER"/>
+        </insert>
+        <insert tableName="users">
+            <column name="login" value="admin"/>
+            <column name="password" value="$2a$10$7T9QeVarghtkYqlyaV4ftOPN1.NxLicrDyyPhV.OR5TaRkep.lYK2"/>
+            <column name="role_id" value="1"/>
+            <column name="enabled" value="true"/>
+        </insert>
+        <insert tableName="publishers">
+            <column name="name" value="эксмо"/>
+        </insert>
+        <insert tableName="book_editions">
+            <column name="isbn" value="978-5-699-99858-6"/>
+            <column name="publisher_id" value="1"/>
+            <column name="title"
+                    value="Наша чудесная планета Земля. 360 необычных мест, о существовании которых вы не знали"/>
+            <column name="description" value="Опытные путешественники Lonely Planet открывают неизвестные и загадочные места.
+            Вы узнаете про тайные коммунистические бункеры."/>
+            <column name="year_of_publication" value="2018"/>
+        </insert>
+        <insert tableName="book_editions">
+            <column name="isbn" value="978-5-699-92755-5"/>
+            <column name="publisher_id" value="1"/>
+            <column name="title" value="Атлас приключений. Незабываемые ощущения, которые стоит пережить хотя бы раз"/>
+            <column name="description" value="Авторы Lonely Planet собрали самые интересные и вдохновляющие
+            способы путешествовать более чем по 150 странам."/>
+            <column name="year_of_publication" value="2018"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

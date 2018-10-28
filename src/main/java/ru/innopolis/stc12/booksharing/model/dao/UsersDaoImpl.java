@@ -90,8 +90,8 @@ public class UsersDaoImpl implements UsersDao {
         int rows = jdbcTemplate.update(getUserQuery,
                 user.getLogin(),
                 user.getPassword(),
-                user.getRole().getId(),
-                user.getEnabled());
+                user.getRoleId(),
+                "true");
         if (rows <= 0) {
             return false;
         }

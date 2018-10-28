@@ -14,6 +14,14 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserDao userDao;
 
+    public UserService() {
+
+    }
+
+    public UserService(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -22,14 +30,6 @@ public class UserService {
     @Autowired
     public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
-
-    public UserService() {
-
-    }
-
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
     }
 
     public List<User> getUsers() {
@@ -41,7 +41,6 @@ public class UserService {
         if (login != null) {
             user = this.userDao.getUserByLogin(login);
         }
-
         return user;
     }
 
@@ -51,7 +50,6 @@ public class UserService {
             user = this.getUserByLogin(login);
             return bCryptPasswordEncoder.matches(password, user.getPassword());
         }
-
         return false;
     }
 }

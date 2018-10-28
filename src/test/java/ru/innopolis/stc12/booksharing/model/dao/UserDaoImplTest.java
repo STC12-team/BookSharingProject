@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 class UserDaoImplTest {
     @Test
-    void getUserByLogin(){
+    void getUserByLogin() {
         // TODO add test
     }
 }

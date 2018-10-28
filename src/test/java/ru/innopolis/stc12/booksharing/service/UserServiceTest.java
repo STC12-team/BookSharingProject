@@ -10,7 +10,7 @@ class UserServiceTest {
     }
 
     @Test
-    void getUserByLogin(){
+    void getUserByLogin() {
         // TODO add test
     }
 }

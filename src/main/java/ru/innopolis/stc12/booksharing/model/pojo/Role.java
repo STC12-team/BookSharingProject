@@ -3,7 +3,7 @@ package ru.innopolis.stc12.booksharing.model.pojo;
 import java.util.Objects;
 
 public class Role {
-    private Integer id;
+    private int id;
     private String name;
 
     public Role(Integer id, String name) {
@@ -18,11 +18,11 @@ public class Role {
     public Role() {
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -11,12 +11,12 @@ import java.util.List;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-    private JdbcTemplate jdbcTemplate;
-    private static Logger logger = Logger.getLogger(UserDaoImpl.class);
     private static final String SQL_SELECT_ALL =
-        "SELECT u.id, u.login, u.password, r.name AS role FROM users u JOIN roles r ON u.role_id = r.id";
+            "SELECT u.id, u.login, u.password, r.name AS role FROM users u JOIN roles r ON u.role_id = r.id";
     private static final String SQL_SELECT_USER_BY_LOGIN =
-        "SELECT u.id, u.login, u.password, r.name AS role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.login = ?";
+            "SELECT u.id, u.login, u.password, r.name AS role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.login = ?";
+    private static Logger logger = Logger.getLogger(UserDaoImpl.class);
+    private JdbcTemplate jdbcTemplate;
 
     public UserDaoImpl() {
 

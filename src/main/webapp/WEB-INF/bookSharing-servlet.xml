@@ -12,7 +12,7 @@
     <context:annotation-config/>
     <context:component-scan base-package="ru.innopolis.stc12.booksharing"/>
 
-    <mvc:annotation-driven /> <!-- this declaration allow usage of @GetMapping annotation in controller -->
+    <mvc:annotation-driven/> <!-- this declaration allow usage of @GetMapping annotation in controller -->
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">

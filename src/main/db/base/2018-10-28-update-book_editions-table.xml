@@ -4,6 +4,11 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
     <changeSet id="2018-10-27-update-book_editions-table" author="rmunirov">
+        <modifyDataType tableName="book_editions" columnName="title"
+                        newDataType="varchar(255)"/>
+        <modifyDataType tableName="book_editions" columnName="isbn"
+                        newDataType="varchar(30)"/>
+
         <addColumn tableName="book_editions">
             <column name="publisher_id" remarks="Издатель" type="integer">
                 <constraints nullable="false"/>

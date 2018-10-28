@@ -34,8 +34,8 @@ public class LoginController {
     @PostMapping(value = "/login")
     @ExceptionHandler(TestException.class)
     public ModelAndView postLoginPage(@RequestParam(value = "login") String login,
-                                     @RequestParam(value = "password") String password,
-                                     Model model) {
+                                      @RequestParam(value = "password") String password,
+                                      Model model) {
         // clean up params
         password = password.replaceAll("[^a-zA-Z0-9]", "");
         login = login.replaceAll("[^a-zA-Z0-9]", "");

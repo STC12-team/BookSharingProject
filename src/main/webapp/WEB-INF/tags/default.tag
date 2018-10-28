@@ -17,7 +17,7 @@
             <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="/addBookByUser">Add bookEdition <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/addBookByUser">Add book by user <span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
             <a class="nav-link" href="/bookEditions">Book Editions <span class="sr-only">(current)</span></a>

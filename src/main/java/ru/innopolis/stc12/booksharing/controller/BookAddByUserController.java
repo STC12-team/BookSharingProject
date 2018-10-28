@@ -12,7 +12,7 @@ import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
 import ru.innopolis.stc12.booksharing.service.BookCopiesService;
 import ru.innopolis.stc12.booksharing.service.BookEditionsService;
-import ru.innopolis.stc12.booksharing.service.UsersService;
+import ru.innopolis.stc12.booksharing.service.UserService;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class BookAddByUserController {
     private static final String MESSAGE_ATTRIBUTE = "message";
     private static final String PAGE_NAME = "addBookByUser";
     private BookEditionsService bookEditionsService;
-    private UsersService usersService;
+    private UserService userService;
     private BookCopiesService bookCopiesService;
 
     @Autowired
@@ -32,8 +32,8 @@ public class BookAddByUserController {
     }
 
     @Autowired
-    public void setUsersService(UsersService usersService) {
-        this.usersService = usersService;
+    public void setUsersService(UserService userService) {
+        this.userService = userService;
     }
 
     @Autowired
@@ -81,7 +81,11 @@ public class BookAddByUserController {
             @RequestParam(value = "addBook") String isbn,
             Model model, Principal principal) {
         BookEdition bookEdition = bookEditionsService.getByIsbn(isbn);
-        User user = usersService.getUserByLogin(principal.getName());
+        User user = userService.getUserByLogin(principal.getName());
+        if (bookEdition == null || user == null) {
+            model.addAttribute(MESSAGE_ATTRIBUTE, "Что то пошло не так:(");
+            return PAGE_NAME;
+        }
         if (bookCopiesService.addBook(new BookCopy(bookEdition, user))) {
             model.addAttribute(MESSAGE_ATTRIBUTE, "Книга успешно добавлена");
         } else {

@@ -1,7 +1,10 @@
 package ru.innopolis.stc12.booksharing.model.dao.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
-import ru.innopolis.stc12.booksharing.model.pojo.*;
+import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
+import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
+import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
+import ru.innopolis.stc12.booksharing.model.pojo.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,8 +24,7 @@ public class BookCopyMapper implements RowMapper<BookCopy> {
         user.setId(rs.getInt("u_id"));
         user.setLogin(rs.getString("u_login"));
         user.setPassword(rs.getString("u_password"));
-        user.setRole(new Role(rs.getInt("r_id"), rs.getString("r_name")));
-        user.setEnabled(rs.getString("u_enabled"));
+        user.setRole(rs.getString("r_name"));
         result.setId(rs.getInt("bc_id"));
         result.setBookEdition(bookEdition);
         result.setUser(user);

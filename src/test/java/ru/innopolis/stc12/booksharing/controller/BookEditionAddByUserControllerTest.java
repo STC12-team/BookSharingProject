@@ -5,8 +5,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.ui.Model;
 import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
+import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.service.BookCopiesService;
 import ru.innopolis.stc12.booksharing.service.BookEditionsService;
+import ru.innopolis.stc12.booksharing.service.UserService;
 
+import java.security.Principal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -23,78 +27,89 @@ class BookEditionAddByUserControllerTest {
     private BookEditionsService bookEditionsService;
     @Mock
     private List<BookEdition> bookEditionList;
+    @Mock
+    private BookEdition bookEdition;
+    @Mock
+    private UserService userService;
+    @Mock
+    private User user;
+    @Mock
+    private Principal principal;
+    @Mock
+    private BookCopiesService bookCopiesService;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
         bookAddByUserController = new BookAddByUserController();
         bookAddByUserController.setBookEditionsService(bookEditionsService);
+        bookAddByUserController.setUsersService(userService);
+        bookAddByUserController.setBookCopiesService(bookCopiesService);
     }
 
     @Test
     void showPage() {
-        when(model.addAttribute(any())).thenReturn(model);
         assertEquals("addBookByUser", bookAddByUserController.showPage(model));
         verify(model, times(1)).addAttribute(anyString(), anyString());
     }
 
     @Test
     void searchBookWhenSearchValueIsNull() {
-        when(model.addAttribute(any())).thenReturn(model);
         assertEquals("addBookByUser", bookAddByUserController.searchBook(null, model));
         verify(model, times(2)).addAttribute(anyString(), anyString());
     }
 
     @Test
-    void searchBookWhenSearchValueIsName() {
-/*        when(model.addAttribute(any())).thenReturn(model);
+    void searchBookWhenSearchValueIsNotNull() {
+        when(bookEditionsService.getByName(anyString())).thenReturn(bookEditionList);
+        when(bookEditionsService.getByIsbn(anyString())).thenReturn(bookEdition);
         when(bookEditionList.isEmpty()).thenReturn(false);
-        when(bookEditionsService.getByName(anyString())).thenReturn(bookEditionList);
         assertEquals("addBookByUser", bookAddByUserController.searchBook(anyString(), model));
-        verify(bookEditionList, times(2)).isEmpty();
+        verify(bookEditionList, times(1)).isEmpty();
         verify(bookEditionsService, times(1)).getByName(anyString());
-        verify(model, times(1)).addAttribute(anyString(), any());*/
-    }
-
-    @Test
-    void searchBookWhenSearchValueIsAuthor() {
-/*
-        when(model.addAttribute(any())).thenReturn(model);
-        when(bookEditionList.isEmpty()).thenReturn(true).thenReturn(false);
-        when(bookEditionsService.getByName(anyString())).thenReturn(bookEditionList);
-        assertEquals("addBookByUser", bookAddByUserController.searchBook(anyString(), model));
-        verify(bookEditionList, times(3)).isEmpty();
-        verify(bookEditionsService, times(1)).getByName(anyString());
+        verify(bookEditionsService, times(1)).getByIsbn(anyString());
         verify(model, times(1)).addAttribute(anyString(), any());
-*/
     }
 
     @Test
-    void searchBookWhenSearchValueIsIsbn() {
-/*
-        when(model.addAttribute(any())).thenReturn(model);
-        when(bookEditionList.isEmpty()).thenReturn(true).thenReturn(true).thenReturn(false);
-        when(booksService.getByName(anyString())).thenReturn(bookEditionList);
-        when(booksService.getByAuthor(anyString())).thenReturn(bookEditionList);
-        when(booksService.getByIsbn(anyInt())).thenReturn(new BookEdition());
-        assertEquals("addBookByUser", bookAddByUserController.searchBook(anyString(), model));
-        verify(bookEditionList, times(3)).isEmpty();
-        verify(booksService, times(1)).getByName(anyString());
-        verify(booksService, times(1)).getByAuthor(anyString());
-        verify(booksService, times(1)).getByIsbn(anyInt());
+    void chooseBookWhenBookNotFound() {
+        when(bookEditionsService.getByIsbn(anyString())).thenReturn(null);
+        assertEquals("addBookByUser", bookAddByUserController.chooseBook(anyString(), model));
+        verify(bookEditionsService, times(1)).getByIsbn(anyString());
+    }
+
+    @Test
+    void chooseBookWhenBookIsFound() {
+        when(bookEditionsService.getByIsbn(anyString())).thenReturn(bookEdition);
+        assertEquals("addBookByUser", bookAddByUserController.chooseBook(anyString(), model));
+        verify(bookEditionsService, times(1)).getByIsbn(anyString());
+    }
+
+    @Test
+    void addBookWhenBookOrUserIsNull() {
+        when(bookEditionsService.getByIsbn(anyString())).thenReturn(null);
+        when(userService.getUserByLogin(anyString())).thenReturn(null);
+        when(principal.getName()).thenReturn("name");
+        assertEquals("addBookByUser", bookAddByUserController.addBook(anyString(), model, principal));
+        verify(bookEditionsService, times(1)).getByIsbn(anyString());
+        verify(userService, times(1)).getUserByLogin(anyString());
+    }
+
+    @Test
+    void addBookWhenBookOrUserIsNotNull() {
+        when(bookEditionsService.getByIsbn(anyString())).thenReturn(bookEdition);
+        when(userService.getUserByLogin(anyString())).thenReturn(user);
+        when(principal.getName()).thenReturn("name");
+        when(bookCopiesService.addBook(any())).thenReturn(true);
+        assertEquals("addBookByUser", bookAddByUserController.addBook(anyString(), model, principal));
+        verify(bookEditionsService, times(1)).getByIsbn(anyString());
+        verify(userService, times(1)).getUserByLogin(anyString());
         verify(model, times(1)).addAttribute(anyString(), any());
-*/
-    }
-
-    @Test
-    void chooseBook() {
-    }
-
-    @Test
-    void addBook() {
     }
 
     @Test
     void sendRequest() {
+        assertEquals("addBookByUser", bookAddByUserController.sendRequest("", "", "", model));
+        verify(model, times(1)).addAttribute(anyString(), any());
     }
 }

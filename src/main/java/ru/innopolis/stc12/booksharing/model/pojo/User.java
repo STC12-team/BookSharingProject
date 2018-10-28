@@ -3,35 +3,39 @@ package ru.innopolis.stc12.booksharing.model.pojo;
 import java.util.Objects;
 
 public class User {
-    private Integer id;
+    private long id;
     private String login;
     private String password;
-    private Role role;
-    private String enabled;
+    private int roleId;
+    private String role;
 
-    public User(Integer id, String login, String password, Role role, String enabled) {
+    public User() {
+
+    }
+
+    User(Role role) {
+        this.setRoleId(role.getId());
+    }
+
+    public User(long id, String login, String password, int roleId) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.roleId = roleId;
+    }
+
+    public User(long id, String login, String password, String role) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.role = role;
-        this.enabled = enabled;
     }
 
-    public User(String login, String password, Role role, String enabled) {
-        this.login = login;
-        this.password = password;
-        this.role = role;
-        this.enabled = enabled;
-    }
-
-    public User() {
-    }
-
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -51,20 +55,20 @@ public class User {
         this.password = password;
     }
 
-    public Role getRole() {
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
-    }
-
-    public String getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(String enabled) {
-        this.enabled = enabled;
     }
 
     @Override
@@ -73,8 +77,7 @@ public class User {
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", role=" + role +
-                ", enabled='" + enabled + '\'' +
+                ", roleId=" + roleId +
                 '}';
     }
 
@@ -83,15 +86,14 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id, user.id) &&
+        return id == user.id &&
+                roleId == user.roleId &&
                 Objects.equals(login, user.login) &&
-                Objects.equals(password, user.password) &&
-                Objects.equals(role, user.role) &&
-                Objects.equals(enabled, user.enabled);
+                Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, role, enabled);
+        return Objects.hash(id, login, password, roleId);
     }
 }
