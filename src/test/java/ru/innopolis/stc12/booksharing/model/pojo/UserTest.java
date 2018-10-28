@@ -1,9 +1,8 @@
-package ru.innopolis.stc12.booksharing.pojo;
+package ru.innopolis.stc12.booksharing.model.pojo;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
 
 class UserTest {
     private User user;
