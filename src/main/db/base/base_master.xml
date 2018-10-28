@@ -5,11 +5,8 @@
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
     <include file="2018-10-22-users-table.xml" relativeToChangelogFile="true" />
-    <include file="2018-10-28-create-roles-table.xml" relativeToChangelogFile="true"/>
-    <include file="2018-10-28-create-publishers-table.xml" relativeToChangelogFile="true"/>
-    <include file="2018-10-28-update-users-table.xml" relativeToChangelogFile="true"/>
-    <include file="2018-10-27-create-book_editions-table.xml" relativeToChangelogFile="true"/>
-    <include file="2018-10-28-create-book_copies-table.xml" relativeToChangelogFile="true"/>
-    <include file="2018-10-29-update-users-table.xml" relativeToChangelogFile="true"/>
+    <include file="2018-10-25-create-roles-table.xml" relativeToChangelogFile="true" />
+    <include file="2018-10-25-update-users-table.xml" relativeToChangelogFile="true" />
+    <include file="2018-10-27-create-book-editions-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

@@ -3,23 +3,9 @@
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
-    <changeSet id="2018-10-28-update-users-table" author="rmunirov">
-        <modifyDataType tableName="users" columnName="login"
-                        newDataType="varchar(50)"/>
+    <changeSet id="2018-10-29-update-users-table" author="rmunirov">
         <addColumn tableName="users">
-            <column name="password" type="char(64)"/>
+            <column name="enabled" type="varchar(20)"/>
         </addColumn>
-        <addColumn tableName="users">
-            <column name="role_id" type="integer"/>
-        </addColumn>
-        <addForeignKeyConstraint baseColumnNames="role_id"
-                                 baseTableName="users"
-                                 constraintName="fk_users_roles"
-                                 deferrable="true"
-                                 initiallyDeferred="true"
-                                 onDelete="CASCADE"
-                                 onUpdate="RESTRICT"
-                                 referencedColumnNames="id"
-                                 referencedTableName="roles"/>
     </changeSet>
 </databaseChangeLog>

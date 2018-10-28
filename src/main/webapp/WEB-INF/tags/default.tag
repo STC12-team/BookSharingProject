@@ -19,6 +19,15 @@
         <li class="nav-item active">
             <a class="nav-link" href="/addBookByUser">Add bookEdition <span class="sr-only">(current)</span></a>
         </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/bookEditions">Book Editions <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/addBookEdition">Add book edition <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/login">Log In <span class="sr-only">(current)</span></a>
+        </li>
     </ul>
 </div>
 <div id="body">

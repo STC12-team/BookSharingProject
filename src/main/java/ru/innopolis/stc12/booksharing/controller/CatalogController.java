@@ -4,14 +4,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import ru.innopolis.stc12.booksharing.exceptions.TestException;
 
 @Controller
-public class AboutController {
-    @GetMapping(value = "/about")
+public class CatalogController {
+
+    @GetMapping(value = "/catalog")
     @ExceptionHandler(TestException.class)
-    public String getAboutPage(Model model) {
-        model.addAttribute("aboutText", "BookEdition sharing, the best project");
-        return "about";
+    public String getCatalogPage(@RequestParam(value = "error", required = false) String error, Model model) {
+        if (model.containsAttribute("user")) {
+            return "catalog";
+        }
+        return "redirect:login";
     }
 }
