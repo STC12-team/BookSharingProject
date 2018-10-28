@@ -8,8 +8,8 @@
         <modifyDataType tableName="users" columnName="login"
                         newDataType="varchar(50)"/>
 
-        <addColumn tableName="users">
-            <column name="password" type="char(64)" />
+        <addColumn tableName="users"> <!-- Fix field type for spring security requirements -->
+            <column name="password" type="varchar(64)" />
         </addColumn>
 
         <addColumn tableName="users">
