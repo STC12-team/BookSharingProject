@@ -6,9 +6,11 @@ class UserServiceTest {
 
     @Test
     void getUsers() {
+        // TODO add test
     }
 
     @Test
     void getUserByLogin(){
+        // TODO add test
     }
 }
