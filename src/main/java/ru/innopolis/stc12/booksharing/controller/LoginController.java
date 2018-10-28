@@ -47,8 +47,7 @@ public class LoginController {
 
             return new ModelAndView("catalog");
         }
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        model.addAttribute("loginError", encoder.encode(password));
+        model.addAttribute("loginError", "Check your credentials");
         return new ModelAndView("login");
     }
 }
