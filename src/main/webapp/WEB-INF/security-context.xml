@@ -31,6 +31,8 @@
     <authentication-manager>
         <authentication-provider>
             <password-encoder ref="passwordEncoder"/>
+
+            <!-- Changes for sql request, got `login` & `role` as expected from spring -->
             <jdbc-user-service data-source-ref="dataSource"
                                users-by-username-query=
                                        "SELECT login, password from users where login=?"
