@@ -8,5 +8,6 @@
     <include file="2018-10-25-create-roles-table.xml" relativeToChangelogFile="true" />
     <include file="2018-10-25-update-users-table.xml" relativeToChangelogFile="true" />
     <include file="2018-10-27-create-book-editions-table.xml" relativeToChangelogFile="true"/>
+    <include file="2018-10-28-insert-roles-value.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
