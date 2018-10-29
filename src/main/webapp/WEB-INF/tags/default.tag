@@ -14,16 +14,19 @@
 <div class="navbar navbar-expand-lg navbar-dark bg-dark">
     <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-            <a class="nav-link" href="/about">About <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/about">О проекте<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="/bookEditions">Book Editions <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/bookEditions">Книжные издания<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="/addBookEdition">Add book edition <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/addBookEdition">Добавить книжное издание<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
-            <a class="nav-link" href="/login">Log In <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/login">Войти<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="/register">Зарегистрироваться<span class="sr-only">(current)</span></a>
         </li>
     </ul>
 </div>

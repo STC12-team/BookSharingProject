@@ -8,6 +8,7 @@
  http://www.springframework.org/schema/security/spring-security-4.2.xsd">
 
     <http pattern="/login" security="none"/>
+    <http pattern="/register" security="none"/>
 
     <http auto-config="true">
         <csrf disabled="true"/>

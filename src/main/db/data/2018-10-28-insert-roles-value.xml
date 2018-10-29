@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="2018-10-28-insert-roles-value" author="svdovin">
+        <loadUpdateData file="src/main/db/data/insert_roles.csv" primaryKey="id" tableName="roles"/>
+    </changeSet>
+</databaseChangeLog>
