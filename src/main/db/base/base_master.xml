@@ -12,5 +12,6 @@
     <include file="2018-10-28-update-book_editions-table.xml" relativeToChangelogFile="true"/>
     <include file="2018-10-28-update-users-table.xml" relativeToChangelogFile="true"/>
     <include file="2018-10-28-create-book_copies-table.xml" relativeToChangelogFile="true"/>
+    <include file="2018-10-29-update-users-table.xml" relativeToChangelogFile="true" />
 
 </databaseChangeLog>

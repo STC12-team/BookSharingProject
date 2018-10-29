@@ -39,7 +39,7 @@
                                users-by-username-query=
                                        "SELECT login, password, enabled from users where login=?"
                                authorities-by-username-query=
-                                       "SELECT u.login, r.name AS role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.login = ?"/>
+                                       "SELECT u.login, r.name FROM users u JOIN roles r ON u.role_id = r.id WHERE u.login = ?"/>
         </authentication-provider>
     </authentication-manager>
 </beans:beans>
