@@ -54,7 +54,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User addUser(String login, String passwordHash) {
-        logger.debug("Insert User");
+        logger.debug("Insert User login = " + login);
         jdbcTemplate.update(SQL_INSERT_USER,    login, passwordHash, ROLE_USER_ID);
         return getUserByLogin(login);
     }

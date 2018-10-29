@@ -1,8 +1,9 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:default title="Book sharing">
+<t:default title="Букшеринг">
     <jsp:body>
-        <h3>Hello to Book sharing site</h3>
+        <h1>Добро пожаловать в p2p букшеринг.</h1>
+        <p class="lead">Решение для прозрачного децентрализованного обмена книг от человека к человеку.</p>
     </jsp:body>
 </t:default>
