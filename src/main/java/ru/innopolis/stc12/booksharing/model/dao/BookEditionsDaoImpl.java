@@ -11,9 +11,16 @@ import java.util.List;
 @Repository
 public class BookEditionsDaoImpl implements BookEditionsDao {
     private JdbcTemplate jdbcTemplate;
-
-    public BookEditionsDaoImpl() {
-    }
+    private static final String SQL_SELECT_BY_ID =
+            "select b.id as b_id, b.isbn as b_isbn, b.title as b_title, b.description as b_description, b.year_of_publication as b_year, p.id as p_id, p.name as p_name from book_editions as b inner join publishers as p on b.publisher_id = p.id where b.id=?";
+    private static final String SQL_SELECT_ALL =
+            "select b.id as b_id, b.isbn as b_isbn, b.title as b_title, b.description as b_description, b.year_of_publication as b_year, p.id as p_id, p.name as p_name from book_editions as b inner join publishers as p on b.publisher_id = p.id";
+    private static final String SQL_SELECT_BY_ISBN =
+            "select b.id as b_id, b.isbn as b_isbn, b.title as b_title, b.description as b_description, b.year_of_publication as b_year, p.id as p_id, p.name as p_name from book_editions as b inner join publishers as p on b.publisher_id = p.id where b.isbn like ?";
+    private static final String SQL_INSERT =
+            "insert into book_editions (isbn, publisher_id, title, description, year_of_publication) values (?,?,?,?,?)";
+    private static final String SQL_SELECT_BY_TITLE =
+            "select b.id as b_id, b.isbn as b_isbn, b.title as b_title, b.description as b_description, b.year_of_publication as b_year, p.id as p_id, p.name as p_name from book_editions as b inner join publishers as p on b.publisher_id = p.id where b.title like ?";
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -22,91 +29,33 @@ public class BookEditionsDaoImpl implements BookEditionsDao {
 
     @Override
     public BookEdition getBookEditionById(int id) {
-        String getBookEditionsQuery = "select " +
-                "b.id as b_id, " +
-                "b.isbn as b_isbn, " +
-                "b.title as b_title, " +
-                "b.description as b_description, " +
-                "b.year_of_publication as b_year, " +
-                "p.id as p_id, " +
-                "p.name as p_name " +
-                "from book_editions as b " +
-                "inner join publishers as p on b.publisher_id = p.id " +
-                "where b.id=?";
-        List<BookEdition> list = jdbcTemplate.query(getBookEditionsQuery, new Object[]{id}, new BookEditionMapper());
-        if (list.isEmpty()) {
-            return null;
-        } else {
-            return list.get(0);
-        }
+        return jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, new Object[]{id}, new BookEditionMapper());
     }
 
     @Override
     public List<BookEdition> getAllBookEditions() {
-        String getBookEditionsQuery = "select " +
-                "b.id as b_id, " +
-                "b.isbn as b_isbn, " +
-                "b.title as b_title, " +
-                "b.description as b_description, " +
-                "b.year_of_publication as b_year, " +
-                "p.id as p_id, " +
-                "p.name as p_name " +
-                "from book_editions as b " +
-                "inner join publishers as p on b.publisher_id = p.id";
-        return jdbcTemplate.query(getBookEditionsQuery, new BookEditionMapper());
+        return jdbcTemplate.query(SQL_SELECT_ALL, new BookEditionMapper());
     }
 
     @Override
     public BookEdition getBookEditionByIsbn(String isbn) {
-        String getBookEditionsQuery = "select " +
-                "b.id as b_id, " +
-                "b.isbn as b_isbn, " +
-                "b.title as b_title, " +
-                "b.description as b_description, " +
-                "b.year_of_publication as b_year, " +
-                "p.id as p_id, " +
-                "p.name as p_name " +
-                "from book_editions as b " +
-                "inner join publishers as p on b.publisher_id = p.id " +
-                "where b.isbn=?";
-        List<BookEdition> list = jdbcTemplate.query(getBookEditionsQuery, new Object[]{isbn}, new BookEditionMapper());
-        if (list.isEmpty()) {
-            return null;
-        } else {
-            return list.get(0);
-        }
+        //TODO если передать ISBN, которого нет в базе, вылетает исключение
+        return jdbcTemplate.queryForObject(SQL_SELECT_BY_ISBN, new Object[]{isbn}, new BookEditionMapper());
     }
 
     @Override
     public boolean addBookEdition(BookEdition bookEdition) {
-        String addBookEditionQuery = "insert into " +
-                "book_editions (isbn, publisher_id, title, description, year_of_publication)" +
-                " values (?,?,?,?,?)";
-        int rows = jdbcTemplate.update(addBookEditionQuery,
+        int rows = jdbcTemplate.update(SQL_INSERT,
                 bookEdition.getIsbn(),
                 bookEdition.getPublisher().getId(),
                 bookEdition.getTitle(),
                 bookEdition.getDescription(),
                 bookEdition.getYearOfPublication());
-        if (rows <= 0) {
-            return false;
-        }
-        return true;
+        return rows > 0;
     }
 
     @Override
     public List<BookEdition> getBookEditionByTitle(String title) {
-        String getBookEditionsQuery = "select " +
-                "b.id as b_id, " +
-                "b.isbn as b_isbn, " +
-                "b.title as b_title, " +
-                "b.description as b_description, " +
-                "b.year_of_publication as b_year, " +
-                "p.id as p_id, " +
-                "p.name as p_name " +
-                "from book_editions as b " +
-                "inner join publishers as p on b.publisher_id = p.id " +
-                "where b.title like ?";
-        return jdbcTemplate.query(getBookEditionsQuery, new Object[]{'%' + title + '%'}, new BookEditionMapper());
+        return jdbcTemplate.query(SQL_SELECT_BY_TITLE, new Object[]{'%' + title + '%'}, new BookEditionMapper());
     }
 }

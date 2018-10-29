@@ -38,10 +38,9 @@ class BookCopiesDaoImplTest {
 
     @Test
     void getBookCopiesById() {
-        List<BookCopy> list = new ArrayList<>();
-        list.add(new BookCopy());
-        when(jdbcTemplate.query(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(list);
-        assertEquals(list.get(0), bookCopiesDao.getBookCopiesById(0));
+        BookCopy bookCopy = new BookCopy();
+        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(bookCopy);
+        assertEquals(bookCopy, bookCopiesDao.getBookCopiesById(0));
     }
 
     @Test
@@ -54,10 +53,9 @@ class BookCopiesDaoImplTest {
 
     @Test
     void getBookCopiesByIsbn() {
-        List<BookCopy> list = new ArrayList<>();
-        list.add(new BookCopy());
-        when(jdbcTemplate.query(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(list);
-        assertEquals(list.get(0), bookCopiesDao.getBookCopiesByIsbn("isbn"));
+        BookCopy bookCopy = new BookCopy();
+        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(bookCopy);
+        assertEquals(bookCopy, bookCopiesDao.getBookCopiesByIsbn("isbn"));
     }
 
     @Test

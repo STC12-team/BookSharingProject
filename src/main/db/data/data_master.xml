@@ -4,4 +4,6 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
+    <include file="2018-10-28-insert-into_all_tables.xml" relativeToChangelogFile="true"/>
+
 </databaseChangeLog>

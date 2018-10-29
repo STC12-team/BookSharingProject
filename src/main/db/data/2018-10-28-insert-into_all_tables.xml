@@ -4,12 +4,6 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
     <changeSet id="2018-10-28-insert-into_all_tables" author="rmunirov">
-        <insert tableName="roles">
-            <column name="name" value="ROLE_ADMIN"/>
-        </insert>
-        <insert tableName="roles">
-            <column name="name" value="ROLE_USER"/>
-        </insert>
         <insert tableName="users">
             <column name="login" value="admin"/>
             <column name="password" value="$2a$10$7T9QeVarghtkYqlyaV4ftOPN1.NxLicrDyyPhV.OR5TaRkep.lYK2"/>

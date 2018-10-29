@@ -12,9 +12,14 @@ import java.util.List;
 @Repository
 public class UsersDaoImpl implements UsersDao {
     private JdbcTemplate jdbcTemplate;
-
-    public UsersDaoImpl() {
-    }
+    private static final String SQL_SELECT_BY_ID =
+            "select u.id as u_id, u.login as u_login, u.password as u_password, u.enabled as u_enabled, r.id as r_id, r.name as r_name from users as u inner join roles r on u.role_id = r.id where u.id=?";
+    private static final String SQL_SELECT_ALL =
+            "select u.id as u_id, u.login as u_login, u.password as u_password, u.enabled as u_enabled, r.id as r_id, r.name as r_name from users as u inner join roles r on u.role_id = r.id ";
+    private static final String SQL_SELECT_BY_LOGIN =
+            "select u.id as u_id, u.login as u_login, u.password as u_password, u.enabled as u_enabled, r.id as r_id, r.name as r_name from users as u inner join roles r on u.role_id = r.id where u.login=?";
+    private static final String SQL_INSERT =
+            "insert into users (login, password, role_id, enabled) values (?,?,?,?)";
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -23,72 +28,23 @@ public class UsersDaoImpl implements UsersDao {
 
     @Override
     public User getUserById(int id) {
-        String getUserQuery = "select " +
-                "u.id as u_id, " +
-                "u.login as u_login, " +
-                "u.password as u_password, " +
-                "u.enabled as u_enabled, " +
-                "r.id as r_id, " +
-                "r.name as r_name " +
-                "from users as u " +
-                "inner join roles r on u.role_id = r.id " +
-                "where u.id=?";
-        List<User> list = jdbcTemplate.query(getUserQuery, new Object[]{id}, new UserMapper());
-        if (list.isEmpty()) {
-            return null;
-        } else {
-            return list.get(0);
-        }
+        return jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, new Object[]{id}, new UserMapper());
     }
 
     @Override
     public List<User> getAllUsers() {
-        String getUserQuery = "select " +
-                "u.id as u_id, " +
-                "u.login as u_login, " +
-                "u.password as u_password, " +
-                "u.enabled as u_enabled, " +
-                "r.id as r_id, " +
-                "r.name as r_name " +
-                "from users as u " +
-                "inner join roles r on u.role_id = r.id ";
-        return jdbcTemplate.query(getUserQuery, new UserMapper());
+        return jdbcTemplate.query(SQL_SELECT_ALL, new UserMapper());
     }
 
     @Override
     public User getUserByLogin(String login) {
-        String getUserQuery = "select " +
-                "u.id as u_id, " +
-                "u.login as u_login, " +
-                "u.password as u_password, " +
-                "u.enabled as u_enabled, " +
-                "r.id as r_id, " +
-                "r.name as r_name " +
-                "from users as u " +
-                "inner join roles r on u.role_id = r.id " +
-                "where u.login=?";
-        List<User> list = jdbcTemplate.query(getUserQuery, new Object[]{login}, new UserMapper());
-        if (list.isEmpty()) {
-            return null;
-        } else {
-            return list.get(0);
-        }
+        return jdbcTemplate.queryForObject(SQL_SELECT_BY_LOGIN, new Object[]{login}, new UserMapper());
     }
 
     @Override
     public boolean addUser(User user) {
-        String getUserQuery = "insert into " +
-                "users (login, password, role_id, enabled)" +
-                " values (?,?,?,?)";
-        int rows = jdbcTemplate.update(getUserQuery,
-                user.getLogin(),
-                user.getPassword(),
-                user.getRoleId(),
-                "true");
-        if (rows <= 0) {
-            return false;
-        }
-        return true;
+        int rows = jdbcTemplate.update(SQL_INSERT, user.getLogin(), user.getPassword(), user.getRoleId(), "true");
+        return rows > 0;
     }
 
 }

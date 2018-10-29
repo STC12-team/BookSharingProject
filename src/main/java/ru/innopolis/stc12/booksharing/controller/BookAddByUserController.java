@@ -113,11 +113,13 @@ public class BookAddByUserController {
             return new ArrayList<>();
         }
         List<BookEdition> bookEditionList = bookEditionsService.getByName(typeValue);
-        BookEdition bookEdition = bookEditionsService.getByIsbn(typeValue);
         //TODO добавить реализацию поиска книги по автору в сервис и DAO
+/*
+        BookEdition bookEdition = bookEditionsService.getByIsbn(typeValue);
         if (bookEdition != null) {
             bookEditionList.add(bookEdition);
         }
+*/
         return bookEditionList;
     }
 }

@@ -50,6 +50,6 @@ class BookEditionsControllerTest {
     void addBookEdition() {
         when(bookEditionsService.addBookEdition(any())).thenReturn(true);
         bookEditionsController.setBookEditionsService(bookEditionsService);
-        assertEquals("addBookEdition", bookEditionsController.addBookEdition("", "", "", model));
+        assertEquals("addBookEdition", bookEditionsController.addBookEdition("title", "desc", "isbn", model));
     }
 }
