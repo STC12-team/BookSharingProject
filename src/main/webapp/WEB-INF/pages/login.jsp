@@ -16,10 +16,10 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <div class="form-group has-danger">
-                        <label class="sr-only" for="login">Login</label>
+                        <label class="sr-only" for="j_username">Login</label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><span class="fa fa-at"></span></div>
-                            <input type="text" name="j_username" class="form-control" id="login"
+                            <input type="text" name="j_username" class="form-control" id="j_username"
                                    placeholder="Введите имя пользователя" required autofocus>
                         </div>
                     </div>
@@ -28,6 +28,8 @@
                     <div class="form-control-feedback">
                         <span class="text-danger align-middle">
                                 ${loginError}
+                                <%--// TODO remove debug message.--%>
+                                ${SPRING_SECURITY_LAST_EXCEPTION.message}
                         </span>
                     </div>
                 </div>
@@ -36,10 +38,10 @@
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="sr-only" for="password">Password</label>
+                        <label class="sr-only" for="j_password">Password</label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><span class="fa fa-key"></span></div>
-                            <input type="password" name="j_password" class="form-control" id="password"
+                            <input type="password" name="j_password" class="form-control" id="j_password"
                                    placeholder="Введите пароль" required>
                         </div>
                     </div>
