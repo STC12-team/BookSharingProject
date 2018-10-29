@@ -12,9 +12,6 @@ import java.util.List;
 public class BookCopiesDaoImpl implements BookCopiesDao {
     private JdbcTemplate jdbcTemplate;
 
-    public BookCopiesDaoImpl() {
-    }
-
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;

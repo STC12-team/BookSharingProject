@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
 import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
@@ -41,13 +40,13 @@ public class BookAddByUserController {
         this.bookCopiesService = bookCopiesService;
     }
 
-    @RequestMapping(value = "/addBookByUser", method = RequestMethod.GET)
+    @GetMapping(value = "/addBookByUser")
     public String showPage(Model model) {
         model.addAttribute("showSendRequestForm", "false");
         return PAGE_NAME;
     }
 
-    @RequestMapping(value = "/addBookByUser/searchBook", method = RequestMethod.GET)
+    @GetMapping(value = "/addBookByUser/searchBook")
     public String searchBook(
             @RequestParam(value = "searchValue") String searchValue,
             Model model) {
@@ -61,7 +60,7 @@ public class BookAddByUserController {
         return PAGE_NAME;
     }
 
-    @RequestMapping(value = "/addBookByUser/chooseBook", method = RequestMethod.GET)
+    @GetMapping(value = "/addBookByUser/chooseBook")
     @ExceptionHandler(NumberFormatException.class)
     public String chooseBook(
             @RequestParam(value = "chooseBook") String isbn,
@@ -75,11 +74,15 @@ public class BookAddByUserController {
         return PAGE_NAME;
     }
 
-    @RequestMapping(value = "/addBookByUser/addBook", method = RequestMethod.GET)
+    @GetMapping(value = "/addBookByUser/addBook")
     @ExceptionHandler({NumberFormatException.class, NullPointerException.class})
     public String addBook(
             @RequestParam(value = "addBook") String isbn,
             Model model, Principal principal) {
+        if (principal == null) {
+            model.addAttribute(MESSAGE_ATTRIBUTE, "Доступ запрещен, пройдите авторизацию");
+            return PAGE_NAME;
+        }
         BookEdition bookEdition = bookEditionsService.getByIsbn(isbn);
         User user = userService.getUserByLogin(principal.getName());
         if (bookEdition == null || user == null) {
@@ -94,7 +97,7 @@ public class BookAddByUserController {
         return PAGE_NAME;
     }
 
-    @RequestMapping(value = "/addBookByUser/sendRequest", method = RequestMethod.POST)
+    @GetMapping(value = "/addBookByUser/sendRequest")
     public String sendRequest(
             @RequestParam(value = "bookName") String bookName,
             @RequestParam(value = "bookAuthor") String bookAuthor,
@@ -111,6 +114,7 @@ public class BookAddByUserController {
         }
         List<BookEdition> bookEditionList = bookEditionsService.getByName(typeValue);
         BookEdition bookEdition = bookEditionsService.getByIsbn(typeValue);
+        //TODO добавить реализацию поиска книги по автору в сервис и DAO
         if (bookEdition != null) {
             bookEditionList.add(bookEdition);
         }

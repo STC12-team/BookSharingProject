@@ -33,6 +33,7 @@ public class BookEditionsController {
         return "addBookEdition";
     }
 
+    //TODO реализовать согласно предложенной таблицы БД.
     @PostMapping(value = "/addBookEditionUrl")
     public String addBookEdition(
             @RequestParam(value = "bookEditionTitle", required = true) String title,

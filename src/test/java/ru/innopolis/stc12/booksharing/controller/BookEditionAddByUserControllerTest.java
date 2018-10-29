@@ -96,6 +96,12 @@ class BookEditionAddByUserControllerTest {
     }
 
     @Test
+    void addBookWhenPrincipalIsNull() {
+        assertEquals("addBookByUser", bookAddByUserController.addBook(anyString(), model, eq(null)));
+        verify(model, times(1)).addAttribute(anyString(), any());
+    }
+
+    @Test
     void addBookWhenBookOrUserIsNotNull() {
         when(bookEditionsService.getByIsbn(anyString())).thenReturn(bookEdition);
         when(userService.getUserByLogin(anyString())).thenReturn(user);
