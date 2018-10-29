@@ -62,12 +62,10 @@ class BookEditionAddByUserControllerTest {
     @Test
     void searchBookWhenSearchValueIsNotNull() {
         when(bookEditionsService.getByName(anyString())).thenReturn(bookEditionList);
-        when(bookEditionsService.getByIsbn(anyString())).thenReturn(bookEdition);
         when(bookEditionList.isEmpty()).thenReturn(false);
         assertEquals("addBookByUser", bookAddByUserController.searchBook(anyString(), model));
         verify(bookEditionList, times(1)).isEmpty();
         verify(bookEditionsService, times(1)).getByName(anyString());
-        verify(bookEditionsService, times(1)).getByIsbn(anyString());
         verify(model, times(1)).addAttribute(anyString(), any());
     }
 
