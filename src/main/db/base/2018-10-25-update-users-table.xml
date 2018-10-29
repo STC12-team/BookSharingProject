@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
 
@@ -9,11 +9,11 @@
                         newDataType="varchar(50)"/>
 
         <addColumn tableName="users"> <!-- Fix field type for spring security requirements -->
-            <column name="password" type="varchar(64)" />
+            <column name="password" type="varchar(64)"/>
         </addColumn>
 
         <addColumn tableName="users">
-            <column name="role_id" type="integer" />
+            <column name="role_id" type="integer"/>
         </addColumn>
 
         <addForeignKeyConstraint baseColumnNames="role_id"

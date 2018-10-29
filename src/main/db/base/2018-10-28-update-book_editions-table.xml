@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet id="2018-10-27-update-book_editions-table" author="rmunirov">
+        <modifyDataType tableName="book_editions" columnName="title"
+                        newDataType="varchar(255)"/>
+        <modifyDataType tableName="book_editions" columnName="isbn"
+                        newDataType="varchar(30)"/>
+
+        <addColumn tableName="book_editions">
+            <column name="publisher_id" remarks="Издатель" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <addColumn tableName="book_editions">
+            <column name="year_of_publication" remarks="Год издания" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="book_editions"
+                                 baseColumnNames="publisher_id"
+                                 constraintName="fk_book_editions_publishers"
+                                 deferrable="true"
+                                 initiallyDeferred="true"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedTableName="publishers"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

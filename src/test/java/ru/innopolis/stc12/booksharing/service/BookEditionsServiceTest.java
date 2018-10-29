@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class BookEditionsServiceTest {
@@ -40,11 +41,11 @@ class BookEditionsServiceTest {
 
     @Test
     void addBookEdition() {
-        BookEdition bookEdition = new BookEdition("title", "desc", "isbn");
+        BookEdition bookEdition = new BookEdition();
         ArgumentCaptor<BookEdition> valueCapture = ArgumentCaptor.forClass(BookEdition.class);
-        doNothing().when(bookEditionsDao).addBookEdition(valueCapture.capture());
+        when(bookEditionsDao.addBookEdition(valueCapture.capture())).thenReturn(true);
         bookEditionsService.setBookEditionsDao(bookEditionsDao);
-        bookEditionsService.addBookEdition(bookEdition.getTitle(), bookEdition.getDescription(), bookEdition.getIsbn());
+        bookEditionsService.addBookEdition(bookEdition);
         assertEquals(bookEdition, valueCapture.getValue());
     }
 }

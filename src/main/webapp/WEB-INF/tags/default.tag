@@ -18,6 +18,9 @@
             <a class="nav-link" href="/about">О проекте<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
+            <a class="nav-link" href="/addBookByUser">Добавить книгу пользователя<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
             <a class="nav-link" href="/bookEditions">Книжные издания<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
