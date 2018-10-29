@@ -1,7 +1,7 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
-<t:default title="Book sharing">
+<t:default title="Букшеринг">
     <jsp:body>
         <form action="/addBookEditionUrl" method="post">
             <input type="text" name="bookEditionTitle" placeholder="title"><br/>

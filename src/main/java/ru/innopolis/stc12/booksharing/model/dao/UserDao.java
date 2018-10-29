@@ -8,4 +8,5 @@ public interface UserDao {
     User getUserByLogin(String login);
 
     List<User> getAllUsers();
+    User addUser(String login, String passwordHash);
 }

@@ -46,7 +46,7 @@ public class LoginController {
 
             return new ModelAndView("catalog");
         }
-        model.addAttribute("loginError", "Check your credentials");
+        model.addAttribute("loginError", "Проверьте правильность ввода имени пользователя/пароля");
         return new ModelAndView("login");
     }
 }
