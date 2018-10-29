@@ -1,8 +1,9 @@
+
 package ru.innopolis.stc12.booksharing.model.dao.mapper;
 
+import org.springframework.jdbc.core.RowMapper;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
 
-import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

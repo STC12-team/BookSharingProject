@@ -2,27 +2,27 @@ package ru.innopolis.stc12.booksharing.model.pojo;
 
 import java.util.Objects;
 
-public class Role {
-    private int id;
+public class Publisher {
+    private Integer id;
     private String name;
 
-    public Role(Integer id, String name) {
+    public Publisher() {
+    }
+
+    public Publisher(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Role(String name) {
+    public Publisher(String name) {
         this.name = name;
     }
 
-    public Role() {
-    }
-
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -36,7 +36,7 @@ public class Role {
 
     @Override
     public String toString() {
-        return "Role{" +
+        return "Publisher{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
@@ -46,9 +46,9 @@ public class Role {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return Objects.equals(id, role.id) &&
-                Objects.equals(name, role.name);
+        Publisher publisher = (Publisher) o;
+        return Objects.equals(id, publisher.id) &&
+                Objects.equals(name, publisher.name);
     }
 
     @Override

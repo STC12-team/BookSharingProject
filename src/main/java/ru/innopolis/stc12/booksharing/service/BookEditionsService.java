@@ -11,24 +11,24 @@ import java.util.List;
 public class BookEditionsService {
     private BookEditionsDao bookEditionsDao;
 
-    public BookEditionsService(BookEditionsDao bookEditionsDao) {
-        this.bookEditionsDao = bookEditionsDao;
-    }
-
-    public BookEditionsService() {
-    }
-
     @Autowired
     public void setBookEditionsDao(BookEditionsDao bookEditionsDao) {
         this.bookEditionsDao = bookEditionsDao;
+    }
+
+    public BookEdition getByIsbn(String isbn) {
+        return bookEditionsDao.getBookEditionByIsbn(isbn);
+    }
+
+    public List<BookEdition> getByName(String name) {
+        return bookEditionsDao.getBookEditionByTitle(name);
     }
 
     public List<BookEdition> getAllBookEditions() {
         return bookEditionsDao.getAllBookEditions();
     }
 
-    public void addBookEdition(String title, String description, String isbn) {
-        BookEdition bookEdition = new BookEdition(title, description, isbn);
-        bookEditionsDao.addBookEdition(bookEdition);
+    public boolean addBookEdition(BookEdition bookEdition) {
+        return bookEditionsDao.addBookEdition(bookEdition);
     }
 }

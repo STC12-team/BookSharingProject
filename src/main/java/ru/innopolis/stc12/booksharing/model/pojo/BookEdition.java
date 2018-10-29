@@ -3,30 +3,55 @@ package ru.innopolis.stc12.booksharing.model.pojo;
 import java.util.Objects;
 
 public class BookEdition {
-    private int id;
+    private Integer id;
+    private String isbn;
+    private Publisher publisher;
     private String title;
     private String description;
-    private String isbn;
+    private Integer yearOfPublication;
 
-    public BookEdition(String title, String description, String isbn) {
-        this.title = title;
-        this.description = description;
-        this.isbn = isbn;
+    public BookEdition() {
     }
 
-    public BookEdition(int id, String title, String description, String isbn) {
+    public BookEdition(Integer id, String isbn, Publisher publisher, String title, String description, Integer yearOfPublication) {
         this.id = id;
+        this.isbn = isbn;
+        this.publisher = publisher;
         this.title = title;
         this.description = description;
-        this.isbn = isbn;
+        this.yearOfPublication = yearOfPublication;
     }
 
-    public int getId() {
+    public BookEdition(String isbn, Publisher publisher, String title, String description, Integer yearOfPublication) {
+        this.isbn = isbn;
+        this.publisher = publisher;
+        this.title = title;
+        this.description = description;
+        this.yearOfPublication = yearOfPublication;
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
     }
 
     public String getTitle() {
@@ -45,21 +70,23 @@ public class BookEdition {
         this.description = description;
     }
 
-    public String getIsbn() {
-        return isbn;
+    public Integer getYearOfPublication() {
+        return yearOfPublication;
     }
 
-    public void setIsbn(String isbn) {
-        this.isbn = isbn;
+    public void setYearOfPublication(Integer yearOfPublication) {
+        this.yearOfPublication = yearOfPublication;
     }
 
     @Override
     public String toString() {
         return "BookEdition{" +
                 "id=" + id +
+                ", isbn='" + isbn + '\'' +
+                ", publisher=" + publisher +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", isbn='" + isbn + '\'' +
+                ", yearOfPublication=" + yearOfPublication +
                 '}';
     }
 
@@ -68,14 +95,16 @@ public class BookEdition {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BookEdition that = (BookEdition) o;
-        return id == that.id &&
+        return Objects.equals(id, that.id) &&
+                Objects.equals(isbn, that.isbn) &&
+                Objects.equals(publisher, that.publisher) &&
                 Objects.equals(title, that.title) &&
                 Objects.equals(description, that.description) &&
-                Objects.equals(isbn, that.isbn);
+                Objects.equals(yearOfPublication, that.yearOfPublication);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, isbn);
+        return Objects.hash(id, isbn, publisher, title, description, yearOfPublication);
     }
 }

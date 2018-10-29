@@ -57,7 +57,9 @@
             <div class="row" style="padding-top: 1rem">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <button type="submit" class="btn btn-success"><span class="fa fa-sign-in"></span>Войти</button>
+                    <button type="submit" class="btn btn-success" value="Login"><span class="fa fa-sign-in"></span>
+                        Войти
+                    </button>
                 </div>
             </div>
         </form>

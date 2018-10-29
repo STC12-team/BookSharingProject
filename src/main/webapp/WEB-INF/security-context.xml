@@ -13,6 +13,7 @@
     <http auto-config="true">
         <csrf disabled="true"/>
         <intercept-url pattern="/user**" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/addBook**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/catalog**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <form-login login-processing-url="/j_username_security_check"
@@ -36,9 +37,9 @@
             <!-- Changes for sql request, got `login` & `role` as expected from spring -->
             <jdbc-user-service data-source-ref="dataSource"
                                users-by-username-query=
-                                       "SELECT login AS username, password, enabled from users where login=?"
+                                       "SELECT login, password, enabled from users where login=?"
                                authorities-by-username-query=
-                                       "SELECT u.login AS username, r.name AS user_role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.login = ?"/>
+                                       "SELECT u.login, r.name FROM users u JOIN roles r ON u.role_id = r.id WHERE u.login = ?"/>
         </authentication-provider>
     </authentication-manager>
 </beans:beans>

@@ -9,9 +9,8 @@ import ru.innopolis.stc12.booksharing.service.BookEditionsService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class BookEditionsControllerTest {
@@ -49,8 +48,8 @@ class BookEditionsControllerTest {
 
     @Test
     void addBookEdition() {
-        doNothing().when(bookEditionsService).addBookEdition(isA(String.class), isA(String.class), isA(String.class));
+        when(bookEditionsService.addBookEdition(any())).thenReturn(true);
         bookEditionsController.setBookEditionsService(bookEditionsService);
-        assertEquals("addBookEdition", bookEditionsController.addBookEdition(anyString(), anyString(), anyString(), model));
+        assertEquals("addBookEdition", bookEditionsController.addBookEdition("title", "desc", "isbn", model));
     }
 }

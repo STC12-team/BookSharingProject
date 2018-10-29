@@ -15,7 +15,6 @@ public class LoginController {
         if (error != null) {
             model.addAttribute("loginError", error);
         }
-
         return "login";
     }
 }

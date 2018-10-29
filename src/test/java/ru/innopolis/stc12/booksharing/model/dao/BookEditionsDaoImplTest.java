@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
+import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,11 +39,9 @@ class BookEditionsDaoImplTest {
 
     @Test
     void getBookEditionById() {
-        BookEdition bookEdition = new BookEdition("title", "desc", "isbn");
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class),
-                any(RowMapper.class))).thenReturn(bookEdition);
+        BookEdition bookEdition = new BookEdition();
+        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(bookEdition);
         assertEquals(bookEdition, bookEditionsDao.getBookEditionById(5));
-
     }
 
     @Test
@@ -55,22 +54,35 @@ class BookEditionsDaoImplTest {
 
     @Test
     void getBookEditionByIsbn() {
-        BookEdition bookEdition = new BookEdition("title", "desc", "isbn");
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class),
-                any(RowMapper.class))).thenReturn(bookEdition);
-        assertEquals(bookEdition, bookEditionsDao.getBookEditionByIsbn("22325235"));
+        BookEdition bookEdition = new BookEdition();
+        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(bookEdition);
+        assertEquals(bookEdition, bookEditionsDao.getBookEditionByIsbn("isbn"));
     }
 
     @Test
     void addBookEdition() {
-        BookEdition bookEdition = new BookEdition("title", "desc", "isbn");
+        BookEdition bookEdition = new BookEdition(1,
+                "ISBN",
+                new Publisher(1, "name"),
+                "Title",
+                "Description",
+                2018);
         ArgumentCaptor<String> valueCapture1 = ArgumentCaptor.forClass(String.class);
-        ArgumentCaptor<String> valueCapture2 = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<Integer> valueCapture2 = ArgumentCaptor.forClass(Integer.class);
         ArgumentCaptor<String> valueCapture3 = ArgumentCaptor.forClass(String.class);
-        when(jdbcTemplate.update(anyString(), valueCapture1.capture(), valueCapture2.capture(), valueCapture3.capture())).thenReturn(3);
+        ArgumentCaptor<String> valueCapture4 = ArgumentCaptor.forClass(String.class);
+        ArgumentCaptor<Integer> valueCapture5 = ArgumentCaptor.forClass(Integer.class);
+        when(jdbcTemplate.update(anyString(),
+                valueCapture1.capture(),
+                valueCapture2.capture(),
+                valueCapture3.capture(),
+                valueCapture4.capture(),
+                valueCapture5.capture())).thenReturn(5);
         bookEditionsDao.addBookEdition(bookEdition);
-        assertEquals(valueCapture1.getValue(), bookEdition.getTitle());
-        assertEquals(valueCapture2.getValue(), bookEdition.getDescription());
-        assertEquals(valueCapture3.getValue(), bookEdition.getIsbn());
+        assertEquals(valueCapture1.getValue(), bookEdition.getIsbn());
+        assertEquals(valueCapture2.getValue(), bookEdition.getPublisher().getId());
+        assertEquals(valueCapture3.getValue(), bookEdition.getTitle());
+        assertEquals(valueCapture4.getValue(), bookEdition.getDescription());
+        assertEquals(valueCapture5.getValue(), bookEdition.getYearOfPublication());
     }
 }
