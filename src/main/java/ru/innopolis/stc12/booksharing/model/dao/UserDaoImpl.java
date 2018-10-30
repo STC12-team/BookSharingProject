@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
     private static final String SQL_SELECT_USER_BY_LOGIN =
             "SELECT u.id, u.login, u.password, r.name AS role FROM users u JOIN roles r ON u.role_id = r.id WHERE u.login = ?";
     private static final String SQL_INSERT_USER =
-        "INSERT INTO users (login, password, role_id) values (?,?,?)";
+        "INSERT INTO users (login, password, role_id, enabled) values (?,?,?,?)";
 
     public UserDaoImpl() {
 
@@ -55,7 +55,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public User addUser(String login, String passwordHash) {
         logger.debug("Insert User login = " + login);
-        jdbcTemplate.update(SQL_INSERT_USER,    login, passwordHash, ROLE_USER_ID);
+        jdbcTemplate.update(SQL_INSERT_USER,    login, passwordHash, ROLE_USER_ID, 1);
         return getUserByLogin(login);
     }
 }
