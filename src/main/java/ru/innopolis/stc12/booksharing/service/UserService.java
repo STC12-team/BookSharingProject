@@ -1,23 +1,18 @@
 package ru.innopolis.stc12.booksharing.service;
 
-import com.google.common.hash.Hashing;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.innopolis.stc12.booksharing.model.dao.UserDao;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
 
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class UserService {
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserDao userDao;
-
-    @Autowired
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
 
     public UserService() {
 
@@ -25,6 +20,16 @@ public class UserService {
 
     public UserService(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    @Autowired
+    public void setUserDao(UserDao userDao) {
+        this.userDao = userDao;
+    }
+
+    @Autowired
+    public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public List<User> getUsers() {
@@ -36,7 +41,6 @@ public class UserService {
         if (login != null) {
             user = this.userDao.getUserByLogin(login);
         }
-
         return user;
     }
 
@@ -44,9 +48,16 @@ public class UserService {
         User user;
         if (login != null && password != null) {
             user = this.getUserByLogin(login);
-            return Objects.equals(user.getPassword(), Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString());
+            if (user != null) {
+                return bCryptPasswordEncoder.matches(password, user.getPassword());
+            }
         }
-
         return false;
     }
+
+    public User addUser(String login, String password) {
+        String cryptPassword = bCryptPasswordEncoder.encode(password);
+        return userDao.addUser(login, cryptPassword);
+    }
+
 }

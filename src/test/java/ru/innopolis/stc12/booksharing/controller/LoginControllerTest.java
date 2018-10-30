@@ -3,11 +3,7 @@ package ru.innopolis.stc12.booksharing.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import ru.innopolis.stc12.booksharing.model.dao.UserDao;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
-import ru.innopolis.stc12.booksharing.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
