@@ -1,5 +1,6 @@
 package ru.innopolis.stc12.booksharing.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,8 +12,9 @@ import java.util.List;
 
 @Controller
 public class CatalogController {
-    private static final String MESSAGE_ATTRIBUTE = "message";
+    private static final String ERROR_MESSAGE_ATTRIBUTE = "errorMessage";
     private BookCopiesService bookCopiesService;
+    private Logger logger = Logger.getLogger(CatalogController.class);
 
 
     @Autowired
@@ -26,7 +28,8 @@ public class CatalogController {
         if (!bookCopies.isEmpty()) {
             model.addAttribute("bookCopies", bookCopies);
         } else {
-            model.addAttribute(MESSAGE_ATTRIBUTE, "Что то пошло не так :(");
+            model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Что то пошло не так :(");
+            logger.error("BookCopies is Empty");
         }
         return "catalog";
     }

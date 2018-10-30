@@ -7,14 +7,17 @@
         <h1>Вы в каталоге ${pageContext.request.userPrincipal.name} </h1>
         <p class="lead">${user}</p>
 
-        <c:if test="${not empty message}">
+        <c:if test="${not empty errorMessage}">
             <div class="alert alert-warning">
-                    ${message}
+                    ${errorMessage}
             </div>
         </c:if>
         <c:choose>
             <c:when test="${not empty bookCopies}">
                 <t:bookcopieslist bookCopies="${bookCopies}"/>
+            </c:when>
+            <c:when test="${empty bookCopies}">
+                There is no books
             </c:when>
         </c:choose>
     </jsp:body>
