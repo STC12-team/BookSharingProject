@@ -31,6 +31,14 @@ public class User {
         this.role = role;
     }
 
+    public User(long id, String login, String password, int roleId, String role) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.roleId = roleId;
+        this.role = role;
+    }
+
     public long getId() {
         return id;
     }
@@ -78,6 +86,7 @@ public class User {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", roleId=" + roleId +
+                ", role='" + role + '\'' +
                 '}';
     }
 
@@ -89,11 +98,12 @@ public class User {
         return id == user.id &&
                 roleId == user.roleId &&
                 Objects.equals(login, user.login) &&
-                Objects.equals(password, user.password);
+                Objects.equals(password, user.password) &&
+                Objects.equals(role, user.role);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, roleId);
+        return Objects.hash(id, login, password, roleId, role);
     }
 }

@@ -13,6 +13,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 class LoginControllerTest {
     private LoginController loginController;
+
     @Mock
     private Model model;
 
@@ -29,8 +30,7 @@ class LoginControllerTest {
 
     @Test
     void getLoginPageGet() {
-        when(model.addAttribute(any(), any())).thenReturn(model);
-
+        when(model.addAttribute("error")).thenReturn(model);
         assertEquals("login", loginController.getLoginPage("", model));
     }
 }
