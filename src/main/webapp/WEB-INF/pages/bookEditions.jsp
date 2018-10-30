@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<t:default title="Букшеринг">
+<t:default title="Каталог Изданий Книг">
     <jsp:body>
         <table class="table">
             <TR>
