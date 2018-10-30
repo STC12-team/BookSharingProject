@@ -44,17 +44,6 @@ public class UserService {
         return user;
     }
 
-    public boolean validateUser(String login, String password) {
-        User user;
-        if (login != null && password != null) {
-            user = this.getUserByLogin(login);
-            if (user != null) {
-                return bCryptPasswordEncoder.matches(password, user.getPassword());
-            }
-        }
-        return false;
-    }
-
     public User addUser(String login, String password) {
         String cryptPassword = bCryptPasswordEncoder.encode(password);
         return userDao.addUser(login, cryptPassword);
