@@ -23,7 +23,7 @@ public class CatalogController {
     @GetMapping(value = "/catalog")
     public String showCatalogPage(Model model) {
         List<BookCopy> bookCopies = bookCopiesService.getAllBookCopies();
-        if (bookCopies != null) {
+        if (!bookCopies.isEmpty()) {
             model.addAttribute("bookCopies", bookCopies);
         } else {
             model.addAttribute(MESSAGE_ATTRIBUTE, "Что то пошло не так :(");

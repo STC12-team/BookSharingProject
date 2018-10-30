@@ -7,28 +7,15 @@
         <h1>Вы в каталоге ${pageContext.request.userPrincipal.name} </h1>
         <p class="lead">${user}</p>
 
-        <table class="table">
-            <TR>
-                <TD>ID</TD>
-                <TD>TITLE</TD>
-                <TD>PUBLISHER</TD>
-                <TD>YEAR OF PUBLICATION</TD>
-                <TD>DESCRIPTION</TD>
-                <TD>ISBN</TD>
-                <TD>OWNER</TD>
-            </TR>
-            <c:forEach var="bookCopy" items="${bookCopies}">
-
-                <TR>
-                    <TD>${bookCopy.id}</TD>
-                    <TD>${bookCopy.bookEdition.title}</TD>
-                    <TD>${bookCopy.bookEdition.publisher.name}</TD>
-                    <TD>${bookCopy.bookEdition.yearOfPublication}</TD>
-                    <TD>${bookCopy.bookEdition.description}</TD>
-                    <TD>${bookCopy.bookEdition.isbn}</TD>
-                    <TD>${bookCopy.user.login}</TD>
-                </TR>
-            </c:forEach>
-        </table>
+        <c:if test="${not empty message}">
+            <div class="alert alert-warning">
+                    ${message}
+            </div>
+        </c:if>
+        <c:choose>
+            <c:when test="${not empty bookCopies}">
+                <t:bookcopieslist bookCopies="${bookCopies}"/>
+            </c:when>
+        </c:choose>
     </jsp:body>
 </t:default>
