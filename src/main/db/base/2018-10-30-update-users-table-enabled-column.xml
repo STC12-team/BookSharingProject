@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="2018-10-30-update-users-table-enabled-column" author="shagiev">
+        <sql endDelimiter="\nGO" splitStatements="true" stripComments="true">
+            UPDATE users SET enabled=1 WHERE enabled IS NULL;
+            <comment>Set default enabled value</comment>
+        </sql>
+        <addNotNullConstraint tableName="users"
+                              columnName="enabled"
+                              columnDataType="integer"
+                              defaultNullValue="1"
+        />
+    </changeSet>
+</databaseChangeLog>
