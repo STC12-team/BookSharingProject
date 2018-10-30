@@ -49,20 +49,8 @@ class UserServiceTest {
         Assertions.assertEquals(user, userService.getUserByLogin(anyString()));
     }
 
-//    @Test
-//    void addUser() {
-//        User user = new User();
-//        when(bCryptPasswordEncoder.encode(anyString())).thenReturn(anyString());
-//        ArgumentCaptor<User> captor = ArgumentCaptor.forClass(User.class);
-//        when(userDao.addUser(captor.capture())).thenReturn(true);
-//        Assertions.assertEquals(user, userService.addUser(user));
-//    }
-
-//    @Test
-//    void addUser() {
-//        User user = new User();
-//        when(bCryptPasswordEncoder.encode(anyString())).thenReturn(anyString());
-//        when(userDao.addUser(anyString(), anyString())).thenReturn(user);
-//        Assertions.assertEquals(user, userService.addUser(anyString(), anyString()));
-//    }
+    @Test
+    void addUser() {
+        // TODO add this test!
+    }
 }
