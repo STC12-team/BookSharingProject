@@ -4,17 +4,26 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.ui.Model;
+import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
+import ru.innopolis.stc12.booksharing.service.BookCopiesService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 public class CatalogControllerTest {
     private CatalogController catalogController;
+
+    @Mock
+    private BookCopiesService bookCopiesService;
+
     @Mock
     private Model model;
+
 
     @BeforeEach
     void setUp() {
@@ -29,15 +38,10 @@ public class CatalogControllerTest {
 
     @Test
     void getCatalogPageWithLoginSuccess() {
-        when(model.containsAttribute(any())).thenReturn(true);
-
-        assertEquals("catalog", catalogController.getCatalogPage(any(), model));
+        List<BookCopy> list = new ArrayList<>();
+        catalogController.setBookCopiesService(bookCopiesService);
+        when(bookCopiesService.getAllBookCopies()).thenReturn(list);
+        assertEquals("catalog", catalogController.showCatalogPage(model));
     }
 
-    @Test
-    void getCatalogPageWithLoginError() {
-        when(model.containsAttribute(any())).thenReturn(false);
-
-        assertEquals("redirect:login", catalogController.getCatalogPage(any(), model));
-    }
 }

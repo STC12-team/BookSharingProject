@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import ru.innopolis.stc12.booksharing.model.dao.BookCopiesDao;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
 
+import java.util.List;
+
 @Service
 public class BookCopiesService {
     private BookCopiesDao bookCopiesDao;
@@ -16,5 +18,9 @@ public class BookCopiesService {
 
     public boolean addBook(BookCopy book) {
         return bookCopiesDao.addBookCopies(book);
+    }
+
+    public List<BookCopy> getAllBookCopies() {
+        return bookCopiesDao.getAllBookCopies();
     }
 }

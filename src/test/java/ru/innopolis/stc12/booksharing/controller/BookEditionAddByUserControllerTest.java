@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class BookEditionAddByUserControllerTest {
-    private BookAddByUserController bookAddByUserController;
+    private BookCopiesController bookCopiesController;
     @Mock
     private Model model;
     @Mock
@@ -41,21 +41,21 @@ class BookEditionAddByUserControllerTest {
     @BeforeEach
     void setUp() {
         initMocks(this);
-        bookAddByUserController = new BookAddByUserController();
-        bookAddByUserController.setBookEditionsService(bookEditionsService);
-        bookAddByUserController.setUsersService(userService);
-        bookAddByUserController.setBookCopiesService(bookCopiesService);
+        bookCopiesController = new BookCopiesController();
+        bookCopiesController.setBookEditionsService(bookEditionsService);
+        bookCopiesController.setUsersService(userService);
+        bookCopiesController.setBookCopiesService(bookCopiesService);
     }
 
     @Test
     void showPage() {
-        assertEquals("addBookByUser", bookAddByUserController.showPage(model));
+        assertEquals("addBookByUser", bookCopiesController.showPage(model));
         verify(model, times(1)).addAttribute(anyString(), anyString());
     }
 
     @Test
     void searchBookWhenSearchValueIsNull() {
-        assertEquals("addBookByUser", bookAddByUserController.searchBook(null, model));
+        assertEquals("addBookByUser", bookCopiesController.searchBook(null, model));
         verify(model, times(2)).addAttribute(anyString(), anyString());
     }
 
@@ -63,7 +63,7 @@ class BookEditionAddByUserControllerTest {
     void searchBookWhenSearchValueIsNotNull() {
         when(bookEditionsService.getByName(anyString())).thenReturn(bookEditionList);
         when(bookEditionList.isEmpty()).thenReturn(false);
-        assertEquals("addBookByUser", bookAddByUserController.searchBook(anyString(), model));
+        assertEquals("addBookByUser", bookCopiesController.searchBook(anyString(), model));
         verify(bookEditionList, times(1)).isEmpty();
         verify(bookEditionsService, times(1)).getByName(anyString());
         verify(model, times(1)).addAttribute(anyString(), any());
@@ -72,14 +72,14 @@ class BookEditionAddByUserControllerTest {
     @Test
     void chooseBookWhenBookNotFound() {
         when(bookEditionsService.getByIsbn(anyString())).thenReturn(null);
-        assertEquals("addBookByUser", bookAddByUserController.chooseBook(anyString(), model));
+        assertEquals("addBookByUser", bookCopiesController.chooseBook(anyString(), model));
         verify(bookEditionsService, times(1)).getByIsbn(anyString());
     }
 
     @Test
     void chooseBookWhenBookIsFound() {
         when(bookEditionsService.getByIsbn(anyString())).thenReturn(bookEdition);
-        assertEquals("addBookByUser", bookAddByUserController.chooseBook(anyString(), model));
+        assertEquals("addBookByUser", bookCopiesController.chooseBook(anyString(), model));
         verify(bookEditionsService, times(1)).getByIsbn(anyString());
     }
 
@@ -88,14 +88,14 @@ class BookEditionAddByUserControllerTest {
         when(bookEditionsService.getByIsbn(anyString())).thenReturn(null);
         when(userService.getUserByLogin(anyString())).thenReturn(null);
         when(principal.getName()).thenReturn("name");
-        assertEquals("addBookByUser", bookAddByUserController.addBook(anyString(), model, principal));
+        assertEquals("addBookByUser", bookCopiesController.addBook(anyString(), model, principal));
         verify(bookEditionsService, times(1)).getByIsbn(anyString());
         verify(userService, times(1)).getUserByLogin(anyString());
     }
 
     @Test
     void addBookWhenPrincipalIsNull() {
-        assertEquals("addBookByUser", bookAddByUserController.addBook(anyString(), model, eq(null)));
+        assertEquals("addBookByUser", bookCopiesController.addBook(anyString(), model, eq(null)));
         verify(model, times(1)).addAttribute(anyString(), any());
     }
 
@@ -105,7 +105,7 @@ class BookEditionAddByUserControllerTest {
         when(userService.getUserByLogin(anyString())).thenReturn(user);
         when(principal.getName()).thenReturn("name");
         when(bookCopiesService.addBook(any())).thenReturn(true);
-        assertEquals("addBookByUser", bookAddByUserController.addBook(anyString(), model, principal));
+        assertEquals("addBookByUser", bookCopiesController.addBook(anyString(), model, principal));
         verify(bookEditionsService, times(1)).getByIsbn(anyString());
         verify(userService, times(1)).getUserByLogin(anyString());
         verify(model, times(1)).addAttribute(anyString(), any());
@@ -113,7 +113,7 @@ class BookEditionAddByUserControllerTest {
 
     @Test
     void sendRequest() {
-        assertEquals("addBookByUser", bookAddByUserController.sendRequest("", "", "", model));
+        assertEquals("addBookByUser", bookCopiesController.sendRequest("", "", "", model));
         verify(model, times(1)).addAttribute(anyString(), any());
     }
 }

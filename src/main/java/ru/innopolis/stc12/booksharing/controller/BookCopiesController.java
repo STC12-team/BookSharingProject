@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class BookAddByUserController {
+public class BookCopiesController {
     private static final String MESSAGE_ATTRIBUTE = "message";
     private static final String PAGE_NAME = "addBookByUser";
     private BookEditionsService bookEditionsService;

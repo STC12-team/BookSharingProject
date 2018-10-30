@@ -12,10 +12,10 @@
 
     <http auto-config="true">
         <csrf disabled="true"/>
+        <intercept-url pattern="/catalog**" access="permitAll()"/>
         <intercept-url pattern="/user**" access="hasRole('ROLE_USER')"/>
-        <intercept-url pattern="/addBook**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/addBookEdition**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/catalog**" access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')"/>
         <form-login login-processing-url="/j_username_security_check"
                     username-parameter="j_username"
                     password-parameter="j_password"
