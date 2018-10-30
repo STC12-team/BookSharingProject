@@ -1,6 +1,8 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.innopolis.stc12.booksharing.model.dao.mapper.UserMapper;
@@ -8,16 +10,19 @@ import ru.innopolis.stc12.booksharing.model.pojo.User;
 
 import java.util.List;
 
-//TODO своя реализация, на проверку, какую будем оставлять? (pojo надо будет доработать)
 @Repository
 public class UsersDaoImpl implements UsersDao {
     private JdbcTemplate jdbcTemplate;
+    private static Logger logger = Logger.getLogger(UsersDaoImpl.class);
+
+    private static final int ROLE_USER_ID = 2;
+    private static final int USER_ENABLED = 1;
     private static final String SQL_SELECT_BY_ID =
             "select u.id as u_id, u.login as u_login, u.password as u_password, u.enabled as u_enabled, r.id as r_id, r.name as r_name from users as u inner join roles r on u.role_id = r.id where u.id=?";
     private static final String SQL_SELECT_ALL =
             "select u.id as u_id, u.login as u_login, u.password as u_password, u.enabled as u_enabled, r.id as r_id, r.name as r_name from users as u inner join roles r on u.role_id = r.id ";
     private static final String SQL_SELECT_BY_LOGIN =
-            "select u.id as u_id, u.login as u_login, u.password as u_password, u.enabled as u_enabled, r.id as r_id, r.name as r_name from users as u inner join roles r on u.role_id = r.id where u.login=?";
+            "select u.id, u.login, u.password, u.enabled, r.id as role_id, r.name as role_name from users as u inner join roles r on u.role_id = r.id where u.login=?";
     private static final String SQL_INSERT =
             "insert into users (login, password, role_id, enabled) values (?,?,?,?)";
 
@@ -33,18 +38,29 @@ public class UsersDaoImpl implements UsersDao {
 
     @Override
     public List<User> getAllUsers() {
+        logger.debug("Get all users");
         return jdbcTemplate.query(SQL_SELECT_ALL, new UserMapper());
     }
 
     @Override
     public User getUserByLogin(String login) {
-        return jdbcTemplate.queryForObject(SQL_SELECT_BY_LOGIN, new Object[]{login}, new UserMapper());
+        logger.debug("Get user by login: " + login);
+        User user;
+        try {
+            user = jdbcTemplate.queryForObject(SQL_SELECT_BY_LOGIN, new Object[]{login}, new UserMapper());
+        } catch (DataAccessException daException) {
+            logger.debug("User not found: " + login);
+            return null;
+        }
+
+        return user;
     }
 
     @Override
-    public boolean addUser(User user) {
-        int rows = jdbcTemplate.update(SQL_INSERT, user.getLogin(), user.getPassword(), user.getRoleId(), "true");
-        return rows > 0;
+    public User addUser(String login, String passwordHash) {
+        logger.debug("Insert User login = " + login);
+        jdbcTemplate.update(SQL_INSERT,    login, passwordHash, ROLE_USER_ID, USER_ENABLED);
+        return getUserByLogin(login);
     }
 
 }

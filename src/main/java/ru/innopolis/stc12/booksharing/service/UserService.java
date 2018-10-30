@@ -4,7 +4,7 @@ package ru.innopolis.stc12.booksharing.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.innopolis.stc12.booksharing.model.dao.UserDao;
+import ru.innopolis.stc12.booksharing.model.dao.UsersDao;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
 
 import java.util.List;
@@ -12,18 +12,18 @@ import java.util.List;
 @Service
 public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private UserDao userDao;
+    private UsersDao userDao;
 
     public UserService() {
 
     }
 
-    public UserService(UserDao userDao) {
+    public UserService(UsersDao userDao) {
         this.userDao = userDao;
     }
 
     @Autowired
-    public void setUserDao(UserDao userDao) {
+    public void setUserDao(UsersDao userDao) {
         this.userDao = userDao;
     }
 

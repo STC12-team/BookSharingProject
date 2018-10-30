@@ -4,7 +4,6 @@ import ru.innopolis.stc12.booksharing.model.pojo.User;
 
 import java.util.List;
 
-//TODO своя реализация, на проверку, какую будем оставлять? (pojo надо будет доработать)
 public interface UsersDao {
     User getUserById(int id);
 
@@ -12,5 +11,5 @@ public interface UsersDao {
 
     User getUserByLogin(String login);
 
-    boolean addUser(User bookCopies);
+    User addUser(String login, String passwordHash);
 }
