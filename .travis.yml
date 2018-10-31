@@ -4,6 +4,15 @@ install: true
 
 dist: trusty
 
+deploy:
+  provider: heroku
+  app: stc12-book-sharing
+  on:
+      branch:
+      - develop
+  api_key:
+      secure: $HEROKU_API_KEY
+
 jdk:
 - oraclejdk8
 
