@@ -1,27 +1,31 @@
 package ru.innopolis.stc12.booksharing.model.pojo;
 
+import java.sql.Timestamp;
 import java.util.Objects;
 
-public class BookCopy {
+public class BookQueue {
     private Integer id;
     private BookEdition bookEdition;
     private User user;
-    private BookCopiesStatus status;
+    private Timestamp addedAt;
+    private BookQueueStatus status;
 
-    public BookCopy(Integer id, BookEdition bookEdition, User user, BookCopiesStatus status) {
+    public BookQueue(Integer id, BookEdition bookEdition, User user, Timestamp addedAt, BookQueueStatus status) {
         this.id = id;
         this.bookEdition = bookEdition;
         this.user = user;
+        this.addedAt = addedAt;
         this.status = status;
     }
 
-    public BookCopy(BookEdition bookEdition, User user, BookCopiesStatus status) {
+    public BookQueue(BookEdition bookEdition, User user, Timestamp addedAt, BookQueueStatus status) {
         this.bookEdition = bookEdition;
         this.user = user;
+        this.addedAt = addedAt;
         this.status = status;
     }
 
-    public BookCopy() {
+    public BookQueue() {
     }
 
     public Integer getId() {
@@ -48,20 +52,29 @@ public class BookCopy {
         this.user = user;
     }
 
-    public BookCopiesStatus getStatus() {
+    public Timestamp getAddedAt() {
+        return addedAt;
+    }
+
+    public void setAddedAt(Timestamp addedAt) {
+        this.addedAt = addedAt;
+    }
+
+    public BookQueueStatus getStatus() {
         return status;
     }
 
-    public void setStatus(BookCopiesStatus status) {
+    public void setStatus(BookQueueStatus status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
-        return "BookCopy{" +
+        return "BookQueue{" +
                 "id=" + id +
                 ", bookEdition=" + bookEdition +
                 ", user=" + user +
+                ", addedAt=" + addedAt +
                 ", status=" + status +
                 '}';
     }
@@ -70,15 +83,16 @@ public class BookCopy {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        BookCopy bookCopy = (BookCopy) o;
-        return Objects.equals(id, bookCopy.id) &&
-                Objects.equals(bookEdition, bookCopy.bookEdition) &&
-                Objects.equals(user, bookCopy.user) &&
-                status == bookCopy.status;
+        BookQueue bookQueue = (BookQueue) o;
+        return Objects.equals(id, bookQueue.id) &&
+                Objects.equals(bookEdition, bookQueue.bookEdition) &&
+                Objects.equals(user, bookQueue.user) &&
+                Objects.equals(addedAt, bookQueue.addedAt) &&
+                status == bookQueue.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, bookEdition, user, status);
+        return Objects.hash(id, bookEdition, user, addedAt, status);
     }
 }

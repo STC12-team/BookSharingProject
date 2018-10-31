@@ -14,5 +14,8 @@
     <include file="2018-10-28-create-book_copies-table.xml" relativeToChangelogFile="true"/>
     <include file="2018-10-29-update-users-table.xml" relativeToChangelogFile="true" />
     <include file="2018-10-30-update-users-table-enabled-column.xml" relativeToChangelogFile="true" />
+    <include file="2018-10-30-create-book_queue-table.xml" relativeToChangelogFile="true"/>
+    <include file="2018-10-31-create-book_holders-table.xml" relativeToChangelogFile="true"/>
+    <include file="2018-10-30-update-book_copies-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>

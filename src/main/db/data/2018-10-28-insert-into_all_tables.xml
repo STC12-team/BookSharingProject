@@ -8,7 +8,7 @@
             <column name="login" value="admin"/>
             <column name="password" value="$2a$10$7T9QeVarghtkYqlyaV4ftOPN1.NxLicrDyyPhV.OR5TaRkep.lYK2"/>
             <column name="role_id" value="1"/>
-            <column name="enabled" value="true"/>
+            <column name="enabled" value="1"/>
         </insert>
         <insert tableName="publishers">
             <column name="name" value="эксмо"/>
@@ -29,6 +29,16 @@
             <column name="description" value="Авторы Lonely Planet собрали самые интересные и вдохновляющие
             способы путешествовать более чем по 150 странам."/>
             <column name="year_of_publication" value="2018"/>
+        </insert>
+        <insert tableName="book_copies">
+            <column name="book_edition_id" value="1"/>
+            <column name="owner_id" value="1"/>
+            <column name="status" value="free"/>
+        </insert>
+        <insert tableName="book_holders">
+            <column name="book_copy_id" value="1"/>
+            <column name="user_id" value="1"/>
+            <column name="get_at" value="2018-10-30 15:55:00"/>
         </insert>
     </changeSet>
 </databaseChangeLog>
