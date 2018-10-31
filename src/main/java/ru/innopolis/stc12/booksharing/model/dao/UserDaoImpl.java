@@ -11,9 +11,9 @@ import ru.innopolis.stc12.booksharing.model.pojo.User;
 import java.util.List;
 
 @Repository
-public class UsersDaoImpl implements UsersDao {
+public class UserDaoImpl implements UserDao {
     private JdbcTemplate jdbcTemplate;
-    private static Logger logger = Logger.getLogger(UsersDaoImpl.class);
+    private static Logger logger = Logger.getLogger(UserDaoImpl.class);
 
     private static final int ROLE_USER_ID = 2;
     private static final int USER_ENABLED = 1;
@@ -22,7 +22,7 @@ public class UsersDaoImpl implements UsersDao {
     private static final String SQL_SELECT_ALL =
             "select u.id as u_id, u.login as u_login, u.password as u_password, u.enabled as u_enabled, r.id as r_id, r.name as r_name from users as u inner join roles r on u.role_id = r.id ";
     private static final String SQL_SELECT_BY_LOGIN =
-            "select u.id, u.login, u.password, u.enabled, r.id as role_id, r.name as role_name from users as u inner join roles r on u.role_id = r.id where u.login=?";
+            "select u.id, u.login, u.password, u.enabled, u.role_id, r.name as role_name from users as u inner join roles r on u.role_id = r.id where u.login=?";
     private static final String SQL_INSERT =
             "insert into users (login, password, role_id, enabled) values (?,?,?,?)";
 

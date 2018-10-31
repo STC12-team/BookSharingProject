@@ -46,7 +46,7 @@ class BookCopyMapperTest {
                 "be_title",
                 "be_description",
                 2018);
-        User user = new User(1, "u_login", "u_password", "r_name");
+        User user = new User(1, "u_login", "u_password", 0, "r_name", 0);
         BookCopy bookCopy = new BookCopy(1, bookEdition, user);
         assertEquals(bookCopy, bookCopyMapper.mapRow(resultSet, 0));
     }

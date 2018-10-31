@@ -8,6 +8,7 @@
         <insert tableName="users">
             <column name="id" value="1"/>
             <column name="login" value="admin"/>
+            <!--Пароль администратора по-умолчанию sa-->
             <column name="password" value="$2a$06$KZiZRTRUvXjPJ0vWFZj7beAKsGy0AGGCKZtzGUnKkcl46bHX5dgMG"/>
             <column name="role_id" value="1"/>
             <column name="enabled" value="1"/>

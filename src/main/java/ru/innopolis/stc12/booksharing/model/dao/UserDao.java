@@ -4,7 +4,7 @@ import ru.innopolis.stc12.booksharing.model.pojo.User;
 
 import java.util.List;
 
-public interface UsersDao {
+public interface UserDao {
     User getUserById(int id);
 
     List<User> getAllUsers();

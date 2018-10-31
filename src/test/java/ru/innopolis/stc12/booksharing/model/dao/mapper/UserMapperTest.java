@@ -16,13 +16,10 @@ class UserMapperTest {
         Mockito.when(resultSetMock.getLong("id")).thenReturn((long) 1);
         Mockito.when(resultSetMock.getString("login")).thenReturn("Mocked login");
         Mockito.when(resultSetMock.getString("password")).thenReturn("Mocked password");
-        Mockito.when(resultSetMock.getString("role")).thenReturn("Mocked role");
+        Mockito.when(resultSetMock.getString("role_name")).thenReturn("Mocked role");
         UserMapper userMapper = new UserMapper();
         User userEdition = userMapper.mapRow(resultSetMock, 0);
-        User userExpected = new User(1,
-                "Mocked login",
-                "Mocked password",
-                "Mocked role");
+        User userExpected = new User(1, "Mocked login", "Mocked password", 0, "Mocked role", 0);
         assertEquals(userExpected, userEdition);
     }
 }
