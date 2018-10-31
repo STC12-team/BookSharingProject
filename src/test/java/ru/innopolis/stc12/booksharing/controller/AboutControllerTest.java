@@ -32,9 +32,6 @@ class AboutControllerTest {
     @Test
     void exceptionCalledProperly() {
         when(model.addAttribute(any(), any())).thenThrow(new TestException("Exception is thrown"));
-
-        assertThrows(TestException.class, () -> {
-            aboutController.getAboutPage(model);
-        });
+        assertThrows(TestException.class, () -> aboutController.getAboutPage(model));
     }
 }

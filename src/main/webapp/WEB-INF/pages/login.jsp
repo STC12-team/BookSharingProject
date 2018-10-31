@@ -28,8 +28,6 @@
                     <div class="form-control-feedback">
                         <span class="text-danger align-middle">
                                 ${loginError}
-                                <%--// TODO remove debug message.--%>
-                                ${SPRING_SECURITY_LAST_EXCEPTION.message}
                         </span>
                     </div>
                 </div>
