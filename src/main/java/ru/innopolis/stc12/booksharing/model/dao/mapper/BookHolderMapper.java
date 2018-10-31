@@ -23,7 +23,8 @@ public class BookHolderMapper implements RowMapper<BookHolder> {
                 rs.getString(20),
                 rs.getString(21),
                 rs.getInt(24),
-                rs.getString(25)
+                rs.getString(25),
+                rs.getInt(23)
         );
         BookCopy bookCopy = new BookCopy(
                 rs.getInt(7),
@@ -36,7 +37,8 @@ public class BookHolderMapper implements RowMapper<BookHolder> {
                 rs.getString(27),
                 rs.getString(28),
                 rs.getInt(31),
-                rs.getString(32)
+                rs.getString(32),
+                rs.getInt(30)
         );
         return new BookHolder(
                 rs.getInt(1),
