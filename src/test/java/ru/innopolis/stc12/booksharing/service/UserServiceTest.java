@@ -3,9 +3,12 @@ package ru.innopolis.stc12.booksharing.service;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.innopolis.stc12.booksharing.model.dao.UserDao;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
@@ -24,6 +27,12 @@ class UserServiceTest {
 
     @Mock
     private UserDao userDao;
+
+    @Mock
+    SecurityContext securityContext;
+
+    @Mock
+    Authentication authentication;
 
     @Mock
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -47,6 +56,14 @@ class UserServiceTest {
         when(userDao.getUserByLogin(anyString())).thenReturn(user);
         userService.setUserDao(userDao);
         Assertions.assertEquals(user, userService.getUserByLogin(anyString()));
+    }
+
+    @Test
+    void currentUserDetails() {
+        when(securityContext.getAuthentication()).thenReturn(authentication);
+        SecurityContextHolder.setContext(securityContext);
+        UserDetails userDetails = UserService.currentUserDetails(); // how to properly test static in current case ?
+        Assertions.assertEquals(userDetails, UserService.currentUserDetails());
     }
 
     @Test
