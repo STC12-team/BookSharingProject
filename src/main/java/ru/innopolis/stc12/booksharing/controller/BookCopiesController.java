@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
 import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
@@ -89,7 +90,7 @@ public class BookCopiesController {
             model.addAttribute(MESSAGE_ATTRIBUTE, "Что то пошло не так:(");
             return PAGE_NAME;
         }
-        if (bookCopiesService.addBook(new BookCopy(bookEdition, user))) {
+        if (bookCopiesService.addBook(new BookCopy(bookEdition, user, BookCopiesStatus.FREE))) {
             model.addAttribute(MESSAGE_ATTRIBUTE, "Книга успешно добавлена");
         } else {
             model.addAttribute(MESSAGE_ATTRIBUTE, "Что то пошло не так:(");
