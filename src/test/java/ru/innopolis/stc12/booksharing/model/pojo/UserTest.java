@@ -37,13 +37,8 @@ class UserTest {
     }
 
     @Test
-    void userControllerWithRoleNamedParameterCanBeUsedAndObjectCreated() {
-        Assertions.assertEquals(new User(new Role(0, "ROLE_ADMIN")).getClass(), User.class);
-    }
-
-    @Test
     void valuesCanBeSetWithRoleAsInt() {
-        User user = new User(1, "Test", "secret", 1);
+        User user = new User(1, "Test", "secret", 1, "", 1);
 
         Assertions.assertEquals(1, user.getId());
         Assertions.assertEquals("Test", user.getLogin());
@@ -53,7 +48,7 @@ class UserTest {
 
     @Test
     void valuesCanBeSetWithRoleAsString() {
-        User user = new User(1, "Test", "secret", "ROLE_ADMIN");
+        User user = new User(1, "Test", "secret", 1, "ROLE_ADMIN", 1);
 
         Assertions.assertEquals(1, user.getId());
         Assertions.assertEquals("Test", user.getLogin());
@@ -63,7 +58,7 @@ class UserTest {
 
     @Test
     void valuesCanBeSetWithAllParameters() {
-        User user = new User(1, "Test", "secret", 1, "ROLE_ADMIN");
+        User user = new User(1, "Test", "secret", 1, "ROLE_ADMIN", 1);
 
         Assertions.assertEquals(1, user.getId());
         Assertions.assertEquals("Test", user.getLogin());
@@ -81,22 +76,22 @@ class UserTest {
 
     @Test
     void hashCodeOfDifferentUsersAreNotEquals() {
-        User user1 = new User(new Role(0, "ROLE_ADMIN"));
-        User user2 = new User(new Role(1, "ROLE_USER"));
+        User user1 = new User(1, "", "", 0, "ROLE_ADMIN",1);
+        User user2 = new User(1, "", "", 1, "ROLE_USER",1);
         Assertions.assertNotEquals(user1.hashCode(), user2.hashCode());
     }
 
     @Test
     void sameUserObjectsAreEquals() {
-        User user1 = new User(new Role(0, "ROLE_ADMIN"));
-        User user2 = new User(new Role(0, "ROLE_ADMIN"));
+        User user1 = new User(1, "", "", 0, "ROLE_ADMIN",1);
+        User user2 = new User(1, "", "", 0, "ROLE_ADMIN",1);
         Assertions.assertTrue(user1.equals(user2));
     }
 
     @Test
     void differentUserObjectsAreNotEquals() {
-        User user1 = new User(new Role(0, "ROLE_ADMIN"));
-        User user2 = new User(new Role(1, "ROLE_USER"));
+        User user1 = new User(1, "", "", 0, "ROLE_ADMIN",1);
+        User user2 = new User(1, "", "", 1, "ROLE_USER",1);
         Assertions.assertFalse(user1.equals(user2));
     }
 
@@ -108,7 +103,8 @@ class UserTest {
                 ", password='" + "password" + '\'' +
                 ", roleId=" + "1" +
                 ", role='" + "role" + '\'' +
+                ", enabled='" + "1" + '\'' +
                 '}';
-        Assertions.assertEquals(mock, new User(1, "login", "password", 1, "role").toString());
+        Assertions.assertEquals(mock, new User(1, "login", "password", 1, "role", 1).toString());
     }
 }

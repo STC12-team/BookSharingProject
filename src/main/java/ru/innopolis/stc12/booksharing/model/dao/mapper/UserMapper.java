@@ -10,6 +10,11 @@ import java.sql.SQLException;
 public class UserMapper implements RowMapper<User> {
     @Override
     public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-        return new User(rs.getLong("id"), rs.getString("login"), rs.getString("password"), rs.getString("role"));
+        return new User(rs.getLong("id"),
+                        rs.getString("login"),
+                        rs.getString("password"),
+                        rs.getInt("role_id"),
+                        rs.getString("role_name"),
+                        rs.getInt("enabled"));
     }
 }

@@ -8,35 +8,18 @@ public class User {
     private String password;
     private int roleId;
     private String role;
+    private int enabled;
 
     public User() {
-
     }
 
-    User(Role role) {
-        this.setRoleId(role.getId());
-    }
-
-    public User(long id, String login, String password, int roleId) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.roleId = roleId;
-    }
-
-    public User(long id, String login, String password, String role) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.role = role;
-    }
-
-    public User(long id, String login, String password, int roleId, String role) {
+    public User(long id, String login, String password, int roleId, String role, int enabled) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.roleId = roleId;
         this.role = role;
+        this.enabled = enabled;
     }
 
     public long getId() {
@@ -79,6 +62,14 @@ public class User {
         this.role = role;
     }
 
+    public int getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(int enabled) {
+        this.enabled = enabled;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -87,6 +78,7 @@ public class User {
                 ", password='" + password + '\'' +
                 ", roleId=" + roleId +
                 ", role='" + role + '\'' +
+                ", enabled='" + enabled + '\'' +
                 '}';
     }
 
@@ -99,11 +91,12 @@ public class User {
                 roleId == user.roleId &&
                 Objects.equals(login, user.login) &&
                 Objects.equals(password, user.password) &&
-                Objects.equals(role, user.role);
+                Objects.equals(role, user.role) &&
+                Objects.equals(enabled, user.enabled);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, roleId, role);
+        return Objects.hash(id, login, password, roleId, role, enabled);
     }
 }

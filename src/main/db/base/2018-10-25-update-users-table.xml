@@ -13,7 +13,9 @@
         </addColumn>
 
         <addColumn tableName="users">
-            <column name="role_id" type="integer"/>
+            <column name="role_id" type="integer">
+                <constraints nullable="false" unique="false"/>
+            </column>
         </addColumn>
 
         <addForeignKeyConstraint baseColumnNames="role_id"
