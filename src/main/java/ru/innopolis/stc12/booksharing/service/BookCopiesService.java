@@ -17,10 +17,18 @@ public class BookCopiesService {
     }
 
     public boolean addBook(BookCopy book) {
-        return bookCopiesDao.addBookCopies(book);
+        return bookCopiesDao.addBookCopy(book);
     }
 
     public List<BookCopy> getAllBookCopies() {
         return bookCopiesDao.getAllBookCopies();
+    }
+
+    public BookCopy getBookCopyById(Integer id) {
+        return bookCopiesDao.getBookCopiesById(id);
+    }
+
+    public boolean updateBookCopy(BookCopy bookCopy) {
+        return bookCopiesDao.updateBookCopy(bookCopy);
     }
 }

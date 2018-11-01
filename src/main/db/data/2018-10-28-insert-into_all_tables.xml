@@ -4,6 +4,13 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
     <changeSet id="2018-10-28-insert-into_all_tables" author="rmunirov">
+        <insert tableName="users">
+            <column name="id" value="2"/>
+            <column name="login" value="user1"/>
+            <column name="password" value="$2a$06$KZiZRTRUvXjPJ0vWFZj7beAKsGy0AGGCKZtzGUnKkcl46bHX5dgMG"/>
+            <column name="role_id" value="2"/>
+            <column name="enabled" value="1"/>
+        </insert>
         <insert tableName="publishers">
             <column name="name" value="эксмо"/>
         </insert>
@@ -27,12 +34,18 @@
         <insert tableName="book_copies">
             <column name="book_edition_id" value="1"/>
             <column name="owner_id" value="1"/>
-            <column name="status" value="free"/>
+            <column name="status" value="FREE"/>
         </insert>
         <insert tableName="book_holders">
             <column name="book_copy_id" value="1"/>
             <column name="user_id" value="1"/>
             <column name="get_at" value="2018-10-30 15:55:00"/>
+        </insert>
+        <insert tableName="book_queue">
+            <column name="book_edition_id" value="1"/>
+            <column name="user_id" value="2"/>
+            <column name="added_at" value="2018-10-30 15:55:00"/>
+            <column name="status" value="WAIT"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

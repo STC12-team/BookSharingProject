@@ -16,7 +16,7 @@ public class BookHoldersService {
         this.bookHoldersDao = bookHoldersDao;
     }
 
-    List<BookHolder> getBookHoldersByUserLogin(String login) {
+    public List<BookHolder> getBookHoldersByUserLogin(String login) {
         return bookHoldersDao.getBookHoldersByUserLogin(login);
     }
 }

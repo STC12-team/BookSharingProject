@@ -40,7 +40,7 @@ public class BookEditionsController {
             @RequestParam(value = "bookEditionDescription", required = true) String description,
             @RequestParam(value = "bookEditionIsbn", required = true) String isbn,
             Model model) {
-        BookEdition bookEdition = new BookEdition(isbn, new Publisher(1, "эксмо"), title, description, 2018);
+        BookEdition bookEdition = new BookEdition(isbn, title, description, new Publisher(1, "эксмо"), 2018);
         bookEditionsService.addBookEdition(bookEdition);
         return "addBookEdition";
     }

@@ -3,10 +3,7 @@ package ru.innopolis.stc12.booksharing.model.dao.mapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
-import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
-import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.model.pojo.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,14 +37,15 @@ class BookCopyMapperTest {
         when(resultSet.getString("u_password")).thenReturn("u_password");
         when(resultSet.getString("r_name")).thenReturn("r_name");
         when(resultSet.getInt("bc_id")).thenReturn(1);
+        when(resultSet.getString("bc_status")).thenReturn(BookCopiesStatus.FREE.toString());
         BookEdition bookEdition = new BookEdition(1,
-                "be_isbn",
-                new Publisher(1, "p_name"),
                 "be_title",
                 "be_description",
+                "be_isbn",
+                new Publisher(1, "p_name"),
                 2018);
         User user = new User(1, "u_login", "u_password", 0, "r_name", 0);
-        BookCopy bookCopy = new BookCopy(1, bookEdition, user, null);
+        BookCopy bookCopy = new BookCopy(1, bookEdition, user, BookCopiesStatus.FREE);
         assertEquals(bookCopy, bookCopyMapper.mapRow(resultSet, 0));
     }
 }

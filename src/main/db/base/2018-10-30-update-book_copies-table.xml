@@ -6,7 +6,7 @@
     <changeSet id="2018-10-30-update-book_copies-table" author="rmunirov">
         <sql>
             DROP TYPE IF EXISTS book_copies_status;
-            CREATE TYPE book_copies_status AS ENUM ('free', 'busy');
+            CREATE TYPE book_copies_status AS ENUM ('FREE', 'BUSY');
         </sql>
         <addColumn tableName="book_copies">
             <column name="status" type="book_copies_status"/>

@@ -13,9 +13,9 @@ public class BookHolderMapper implements RowMapper<BookHolder> {
         BookEdition bookEdition = new BookEdition(
                 rs.getInt(11),
                 rs.getString(12),
-                new Publisher(rs.getInt(17), rs.getString(18)),
                 rs.getString(13),
                 rs.getString(14),
+                new Publisher(rs.getInt(17), rs.getString(18)),
                 rs.getInt(16)
         );
         User owner = new User(
