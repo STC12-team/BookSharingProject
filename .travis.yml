@@ -4,6 +4,15 @@ install: true
 
 dist: trusty
 
+deploy:
+  provider: heroku
+  app: stc12-book-sharing
+  on:
+      branch:
+      - develop
+  api_key:
+      secure: $HEROKU_API_KEY
+
 jdk:
 - oraclejdk8
 
@@ -12,7 +21,7 @@ os:
 
 branches:
   only:
-  - master
+  - develop
 
 
 before_cache:
@@ -24,8 +33,15 @@ cache:
   - $HOME/.gradle/caches/
   - $HOME/.gradle/wrapper/
 
+services:
+- postgresql
+
+before_script:
+- psql -c 'create database book_sharing_project;' -U postgres
+
 script:
 - ./gradlew assemble
 - ./gradlew clean build sonarqube -s
+- ./gradlew update
 - rm -rf .scannerwork
 

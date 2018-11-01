@@ -1,8 +1,11 @@
 plugins {
     id 'java'
     id "org.sonarqube" version "2.6.2"
-
+    id "org.liquibase.gradle" version "2.0.1"
+    id 'jacoco'
+    id 'war'
 }
+apply from: 'https://raw.github.com/gretty-gradle-plugin/gretty/master/pluginScripts/gretty.plugin'
 
 group 'ru.innopolis.stc12'
 version '1.0-SNAPSHOT'
@@ -19,7 +22,6 @@ sonarqube {
         property "sonar.jacoco.reportPaths", "$rootProject.buildDir/jacoco/alltest.exec"
     }
 }
-apply plugin: 'jacoco'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 compileJava.options.encoding = 'UTF-8'
@@ -30,7 +32,20 @@ repositories {
 
 dependencies {
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.2.0-M1'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.22.0'
     compile 'log4j:log4j:1.2.17'
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '4.3.20.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-web', version: '4.2.9.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-taglibs', version: '4.2.9.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-config', version: '4.2.9.RELEASE'
+    compile group: 'jstl', name: 'jstl', version: '1.2'
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.20.RELEASE'
+    compile group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
+    compile 'com.github.jsimone:webapp-runner:8.5.11.3'
+    compile 'com.google.guava:guava:26.0-jre'
+    liquibaseRuntime 'org.liquibase:liquibase-core:3.6.2'
+    liquibaseRuntime 'org.liquibase:liquibase-groovy-dsl:2.0.1'
+    liquibaseRuntime 'org.postgresql:postgresql:42.2.5'
 }
 
 test {
@@ -44,3 +59,28 @@ tasks.withType(Test) {
         destinationFile = file("$rootProject.buildDir/jacoco/alltest.exec")
     }
 }
+
+liquibase {
+    activities {
+        main {
+            changeLogFile 'src/main/db/changelog.xml'
+            url project.properties['url'] ?: System.getenv("HEROKU_DATABASE_URL") ?: System.getenv("DATABASE_URL")
+            username project.properties['username'] ?: System.getenv("DATABASE_USERNAME")
+            password project.properties['password'] ?: System.getenv("DATABASE_PASSWORD")
+        }
+    }
+}
+
+task stage() {
+    dependsOn clean, war
+}
+war.mustRunAfter clean
+
+task copyToLib(type: Copy) {
+    into "$buildDir/server"
+    from(configurations.compile) {
+        include "webapp-runner*"
+    }
+}
+
+stage.dependsOn(copyToLib)
