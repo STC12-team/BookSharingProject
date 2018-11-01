@@ -64,7 +64,7 @@ liquibase {
     activities {
         main {
             changeLogFile 'src/main/db/changelog.xml'
-            url project.properties['url'] ?: System.getenv("DATABASE_URL")
+            url project.properties['url'] ?: System.getenv("HEROKU_DATABASE_URL") ?: System.getenv("DATABASE_URL")
             username project.properties['username'] ?: System.getenv("DATABASE_USERNAME")
             password project.properties['password'] ?: System.getenv("DATABASE_PASSWORD")
         }
