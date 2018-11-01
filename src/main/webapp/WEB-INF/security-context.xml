@@ -14,7 +14,7 @@
         <csrf disabled="true"/>
         <intercept-url pattern="/catalog**" access="permitAll()"/>
         <intercept-url pattern="/user**" access="hasRole('ROLE_USER')"/>
-        <intercept-url pattern="/taken**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/taken**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"/>
         <intercept-url pattern="/addBookEdition**" access="hasRole('ROLE_ADMIN')"/>
         <intercept-url pattern="/admin**" access="hasRole('ROLE_ADMIN')"/>
         <form-login login-processing-url="/j_username_security_check"

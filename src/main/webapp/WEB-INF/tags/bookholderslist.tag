@@ -13,9 +13,11 @@
                 <p>Дата начала чтения: ${book.getAt}</p>
                 <c:choose>
                     <c:when test="${empty book.gaveAt}">
-                        <button type="submit" name="bookCopyId" value="${book.bookCopy.id}" class="btn btn-info">
-                            <span>Дочитал</span>
-                        </button>
+                        <c:if test="${book.bookCopy.status == 'BUSY'}">
+                            <button type="submit" name="bookCopyId" value="${book.bookCopy.id}" class="btn btn-info">
+                                <span>Дочитал</span>
+                            </button>
+                        </c:if>
                         <c:if test="${book.bookCopy.status == 'FREE'}">
                             <button type="submit" name="handed" value="${book.bookCopy.id}" class="btn btn-info">
                                 <span>Передал</span>

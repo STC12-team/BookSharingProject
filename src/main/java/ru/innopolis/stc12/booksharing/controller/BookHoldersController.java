@@ -3,6 +3,7 @@ package ru.innopolis.stc12.booksharing.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.innopolis.stc12.booksharing.model.pojo.*;
@@ -51,15 +52,21 @@ public class BookHoldersController {
     }
 
     @GetMapping("/takenBooks/readEnd")
+    @ExceptionHandler(NumberFormatException.class)
     public String readEnd(
             @RequestParam(value = "bookCopyId") String bookCopyId,
             Model model) {
         BookCopy bookCopy = bookCopiesService.getBookCopyById(Integer.valueOf(bookCopyId));
+        if (bookCopy == null) {
+            model.addAttribute(MESSAGE_ATTRIBUTE, "Что то пошло не так:(");
+            return PAGE_NAME;
+        }
         bookCopy.setStatus(BookCopiesStatus.FREE);
         if (bookCopiesService.updateBookCopy(bookCopy)) {
             model.addAttribute(MESSAGE_ATTRIBUTE, "Книга отмечена как прочитанная");
         } else {
             model.addAttribute(MESSAGE_ATTRIBUTE, "Что то пошло не так:(");
+            return PAGE_NAME;
         }
         List<BookQueue> bookQueueList = bookQueueService.getBookQueueByBookEditionId(bookCopy.getBookEdition().getId());
         if (bookQueueList.isEmpty()) {
