@@ -35,8 +35,6 @@
         <addForeignKeyConstraint baseTableName="book_holders"
                                  baseColumnNames="book_copy_id"
                                  constraintName="fk_book_holders_book_copies"
-                                 deferrable="true"
-                                 initiallyDeferred="true"
                                  onDelete="CASCADE"
                                  onUpdate="RESTRICT"
                                  referencedTableName="book_copies"
@@ -45,11 +43,17 @@
         <addForeignKeyConstraint baseTableName="book_holders"
                                  baseColumnNames="user_id"
                                  constraintName="fk_book_holders_users"
-                                 deferrable="true"
-                                 initiallyDeferred="true"
                                  onDelete="CASCADE"
                                  onUpdate="RESTRICT"
                                  referencedTableName="users"
+                                 referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint baseTableName="book_holders"
+                                 baseColumnNames="next_holder_id"
+                                 constraintName="fk_book_holders_book_holders"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedTableName="book_holders"
                                  referencedColumnNames="id"
         />
     </changeSet>

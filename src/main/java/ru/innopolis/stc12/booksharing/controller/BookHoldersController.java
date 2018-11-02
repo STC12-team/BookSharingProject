@@ -1,5 +1,6 @@
 package ru.innopolis.stc12.booksharing.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Controller
 public class BookHoldersController {
+    private static final Logger LOGGER = Logger.getLogger(BookHoldersController.class);
     private BookHoldersService bookHoldersService;
     private static final String MESSAGE_ATTRIBUTE = "message";
     private static final String TRANSFER_MESSAGE_ATTRIBUTE = "transfer_message";
@@ -58,25 +60,29 @@ public class BookHoldersController {
             Model model) {
         BookCopy bookCopy = bookCopiesService.getBookCopyById(Integer.valueOf(bookCopyId));
         if (bookCopy == null) {
-            model.addAttribute(MESSAGE_ATTRIBUTE, "Что то пошло не так:(");
+            LOGGER.warn("Не удалось найти книгу с id - " + bookCopyId);
+            model.addAttribute(MESSAGE_ATTRIBUTE, "Не удалось найти книгу, попробуйте позднее.");
             return PAGE_NAME;
         }
         bookCopy.setStatus(BookCopiesStatus.FREE);
         if (bookCopiesService.updateBookCopy(bookCopy)) {
             model.addAttribute(MESSAGE_ATTRIBUTE, "Книга отмечена как прочитанная");
         } else {
-            model.addAttribute(MESSAGE_ATTRIBUTE, "Что то пошло не так:(");
+            LOGGER.warn("Не удалось отменить книгу прочитанной с id - " + bookCopyId);
+            model.addAttribute(MESSAGE_ATTRIBUTE, "Не удалось отметить книгу прочитанной, попробуйте позднее.");
             return PAGE_NAME;
         }
         List<BookQueue> bookQueueList = bookQueueService.getBookQueueByBookEditionId(bookCopy.getBookEdition().getId());
         if (bookQueueList.isEmpty()) {
             model.addAttribute(TRANSFER_MESSAGE_ATTRIBUTE, "Эта книга ни кому не нужна...");
+            //TODO предложить вернуть владельцу
         } else {
             model.addAttribute(TRANSFER_MESSAGE_ATTRIBUTE, "Следующий на очереди:");
             BookQueue bookQueue = getFirstUserFromQueue(bookQueueList);
             bookQueue.setStatus(BookQueueStatus.GETTING);
             bookQueueService.updateBookQueue(bookQueue);
             model.addAttribute("user", bookQueue.getUser());
+            //TODO отправить уведомление следующему читателю, о том, что он может взять книгу
         }
         return PAGE_NAME;
     }
