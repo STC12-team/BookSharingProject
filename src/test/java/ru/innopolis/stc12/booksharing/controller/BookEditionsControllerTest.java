@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.ui.Model;
 import ru.innopolis.stc12.booksharing.service.BookEditionsService;
+import ru.innopolis.stc12.booksharing.service.PublisherService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -24,6 +25,9 @@ class BookEditionsControllerTest {
     @Mock
     private BookEditionsService bookEditionsService;
 
+    @Mock
+    private PublisherService publisherService;
+
     @BeforeEach
     void setUp() {
         initMocks(this);
@@ -35,7 +39,7 @@ class BookEditionsControllerTest {
     @Test
     void getBookEditionsPage() {
         when(model.addAttribute(any(), any())).thenReturn(model);
-        bookEditionsController.setBookEditionsService(bookEditionsService);
+        bookEditionsController.setBookEditionsService(bookEditionsService, publisherService);
         assertEquals("bookEditions", bookEditionsController.getBookEditionsPage(model));
     }
 
@@ -49,7 +53,12 @@ class BookEditionsControllerTest {
     @Test
     void addBookEdition() {
         when(bookEditionsService.addBookEdition(any())).thenReturn(true);
-        bookEditionsController.setBookEditionsService(bookEditionsService);
-        assertEquals("addBookEdition", bookEditionsController.addBookEdition("title", "desc", "isbn", model));
+        bookEditionsController.setBookEditionsService(bookEditionsService, publisherService);
+        assertEquals(
+            "addBookEdition",
+            bookEditionsController.addBookEdition(
+                "title", "desc", "Amazon", "isbn", model
+            )
+        );
     }
 }
