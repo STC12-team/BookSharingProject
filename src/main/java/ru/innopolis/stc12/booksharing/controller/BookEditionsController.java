@@ -49,7 +49,7 @@ public class BookEditionsController {
             Model model
     ) {
         Publisher publisher = publisherService.getByNameOrCreate(publisherName);
-        BookEdition bookEdition = new BookEdition(isbn, publisher, title, description, 2018);
+        BookEdition bookEdition = new BookEdition(title, description, isbn, publisher, 2018);
         bookEditionsService.addBookEdition(bookEdition);
         return "addBookEdition";
     }

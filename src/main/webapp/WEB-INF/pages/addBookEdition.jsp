@@ -54,7 +54,8 @@
                         <label class="sr-only" for="bookEditionPublisher">Publisher</label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><span class="fa fa-book"></span></div>
-                            <input type="text" name="bookEditionPublisher" class="form-control" id="bookEditionPublisher"
+                            <input type="text" name="bookEditionPublisher" class="form-control"
+                                   id="bookEditionPublisher"
                                    placeholder="Издание" required autofocus>
                         </div>
                     </div>
