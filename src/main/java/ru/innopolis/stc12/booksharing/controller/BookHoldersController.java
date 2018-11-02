@@ -15,6 +15,7 @@ import ru.innopolis.stc12.booksharing.service.BookQueueService;
 import java.security.Principal;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class BookHoldersController {
@@ -91,6 +92,7 @@ public class BookHoldersController {
         if (list.size() <= 1) {
             return list.get(0);
         }
-        return list.stream().min(Comparator.comparing(BookQueue::getAddedAt)).get();
+        Optional<BookQueue> min = list.stream().min(Comparator.comparing(BookQueue::getAddedAt));
+        return min.orElse(null);
     }
 }
