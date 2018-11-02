@@ -24,10 +24,10 @@ class BookEditionMapperTest {
         BookEditionMapper bookEditionMapper = new BookEditionMapper();
         BookEdition bookEdition = bookEditionMapper.mapRow(resultSetMock, 0);
         BookEdition bookEditionExpected = new BookEdition(1,
-                "Mocked ISBN",
-                new Publisher(1, "Mocked name"),
                 "Mocked Title",
                 "Mocked Description",
+                "Mocked ISBN",
+                new Publisher(1, "Mocked name"),
                 2018);
         assertEquals(bookEditionExpected, bookEdition);
     }

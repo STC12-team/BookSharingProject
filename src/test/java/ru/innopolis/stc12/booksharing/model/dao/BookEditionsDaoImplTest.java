@@ -62,10 +62,10 @@ class BookEditionsDaoImplTest {
     @Test
     void addBookEdition() {
         BookEdition bookEdition = new BookEdition(1,
-                "ISBN",
-                new Publisher(1, "name"),
                 "Title",
                 "Description",
+                "ISBN",
+                new Publisher(1, "name"),
                 2018);
         ArgumentCaptor<String> valueCapture1 = ArgumentCaptor.forClass(String.class);
         ArgumentCaptor<Integer> valueCapture2 = ArgumentCaptor.forClass(Integer.class);

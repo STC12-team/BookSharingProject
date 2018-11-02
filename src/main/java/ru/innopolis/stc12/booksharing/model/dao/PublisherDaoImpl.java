@@ -11,7 +11,6 @@ import java.util.List;
 
 @Repository
 public class PublisherDaoImpl implements PublisherDao {
-    private JdbcTemplate jdbcTemplate;
     private static final String SQL_SELECT_BY_ID =
             "select id, name from publishers where id = ?";
     private static final String SQL_SELECT_BY_NAME =
@@ -20,6 +19,7 @@ public class PublisherDaoImpl implements PublisherDao {
             "select id, name from publishers";
     private static final String SQL_INSERT =
             "insert into publishers (name) values (?)";
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {

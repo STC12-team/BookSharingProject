@@ -55,10 +55,10 @@ class BookEditionsControllerTest {
         when(bookEditionsService.addBookEdition(any())).thenReturn(true);
         bookEditionsController.setBookEditionsService(bookEditionsService, publisherService);
         assertEquals(
-            "addBookEdition",
-            bookEditionsController.addBookEdition(
-                "title", "desc", "Amazon", "isbn", model
-            )
+                "addBookEdition",
+                bookEditionsController.addBookEdition(
+                        "title", "desc", "Amazon", "isbn", model
+                )
         );
     }
 }

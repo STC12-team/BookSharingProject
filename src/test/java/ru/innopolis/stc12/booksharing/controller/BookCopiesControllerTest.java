@@ -19,7 +19,7 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-class BookEditionAddByUserControllerTest {
+class BookCopiesControllerTest {
     private BookCopiesController bookCopiesController;
     @Mock
     private Model model;
