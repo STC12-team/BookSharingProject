@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.innopolis.stc12.booksharing.exceptions.UnexpectedEmptyListException;
 import ru.innopolis.stc12.booksharing.model.pojo.*;
 import ru.innopolis.stc12.booksharing.service.BookCopiesService;
 import ru.innopolis.stc12.booksharing.service.BookHoldersService;
@@ -15,6 +16,7 @@ import ru.innopolis.stc12.booksharing.service.BookQueueService;
 import java.security.Principal;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class BookHoldersController {
@@ -42,7 +44,7 @@ public class BookHoldersController {
     }
 
     @GetMapping("/takenBooks")
-    public String takenBooks(Model model, Principal principal) {
+    String takenBooks(Model model, Principal principal) {
         if (principal == null) {
             model.addAttribute(MESSAGE_ATTRIBUTE, "У Вас нет прав на просмотр данной страницы!");
             return PAGE_NAME;
@@ -55,7 +57,7 @@ public class BookHoldersController {
 
     @GetMapping("/takenBooks/readEnd")
     @ExceptionHandler(NumberFormatException.class)
-    public String readEnd(
+    String readEnd(
             @RequestParam(value = "bookCopyId") String bookCopyId,
             Model model) {
         BookCopy bookCopy = bookCopiesService.getBookCopyById(Integer.valueOf(bookCopyId));
@@ -88,9 +90,14 @@ public class BookHoldersController {
     }
 
     private BookQueue getFirstUserFromQueue(List<BookQueue> list) {
-        if (list.size() <= 1) {
+        if (list.size() == 1) {
             return list.get(0);
         }
-        return list.stream().min(Comparator.comparing(BookQueue::getAddedAt)).get();
+        Optional<BookQueue> min = list.stream().min(Comparator.comparing(BookQueue::getAddedAt));
+        if (min.isPresent()) {
+            return min.get();
+        } else {
+            throw new UnexpectedEmptyListException("Ошибка получения читателя из очереди");
+        }
     }
 }
