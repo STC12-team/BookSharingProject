@@ -15,6 +15,7 @@ sonarqube {
         property "sonar.sourceEncoding", "UTF-8"
         property "sonar.projectName", "bookSharingProject"
         property "sonar.projectKey", "bookSharing"
+        property "sonar.exclusions", "src/main/java/ru/innopolis/stc12/booksharing/model/pojo"
         property "sonar.organization", "stc12team"
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.language", "java"
