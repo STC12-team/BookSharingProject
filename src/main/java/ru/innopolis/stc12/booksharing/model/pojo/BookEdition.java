@@ -4,29 +4,29 @@ import java.util.Objects;
 
 public class BookEdition {
     private Integer id;
-    private String isbn;
-    private Publisher publisher;
     private String title;
     private String description;
+    private String isbn;
+    private Publisher publisher;
     private Integer yearOfPublication;
 
     public BookEdition() {
     }
 
-    public BookEdition(Integer id, String isbn, Publisher publisher, String title, String description, Integer yearOfPublication) {
+    public BookEdition(Integer id, String title, String description, String isbn, Publisher publisher, Integer yearOfPublication) {
         this.id = id;
-        this.isbn = isbn;
-        this.publisher = publisher;
         this.title = title;
         this.description = description;
+        this.isbn = isbn;
+        this.publisher = publisher;
         this.yearOfPublication = yearOfPublication;
     }
 
-    public BookEdition(String isbn, Publisher publisher, String title, String description, Integer yearOfPublication) {
-        this.isbn = isbn;
-        this.publisher = publisher;
+    public BookEdition(String title, String description, String isbn, Publisher publisher, Integer yearOfPublication) {
         this.title = title;
         this.description = description;
+        this.isbn = isbn;
+        this.publisher = publisher;
         this.yearOfPublication = yearOfPublication;
     }
 

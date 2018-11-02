@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet id="2018-10-31-create-book_holders-table" author="rmunirov">
+        <createTable tableName="book_holders" remarks="Держатели книг">
+            <column name="id" remarks="Идентификатор держателя" type="serial">
+                <constraints
+                        nullable="false"
+                        primaryKey="true"
+                        primaryKeyName="book_holders_pkey"
+                />
+            </column>
+            <column name="book_copy_id" remarks="Идентификатор экземпляра книги" type="integer">
+                <constraints
+                        nullable="false"
+                />
+            </column>
+            <column name="user_id" remarks="Идентификатор держателя книги" type="integer">
+                <constraints
+                        nullable="false"
+                />
+            </column>
+            <column name="get_at" remarks="Дата\Время получения экземпляра книги" type="timestamp">
+                <constraints
+                        nullable="false"
+                />
+            </column>
+            <column name="gave_at" remarks="Дата\Время передачи экземпляра книги" type="timestamp">
+            </column>
+            <column name="next_holder_id" remarks="Идентификатор следующего держателя из этой таблицы" type="integer">
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="book_holders"
+                                 baseColumnNames="book_copy_id"
+                                 constraintName="fk_book_holders_book_copies"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedTableName="book_copies"
+                                 referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint baseTableName="book_holders"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_book_holders_users"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint baseTableName="book_holders"
+                                 baseColumnNames="next_holder_id"
+                                 constraintName="fk_book_holders_book_holders"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedTableName="book_holders"
+                                 referencedColumnNames="id"
+        />
+    </changeSet>
+</databaseChangeLog>

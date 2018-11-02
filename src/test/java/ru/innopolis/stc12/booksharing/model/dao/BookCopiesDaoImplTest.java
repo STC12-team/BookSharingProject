@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
 import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
@@ -67,7 +68,8 @@ class BookCopiesDaoImplTest {
         when(user.getId()).thenReturn((long) 1);
         when(bookCopy.getBookEdition().getId()).thenReturn(1);
         when(bookCopy.getUser().getId()).thenReturn((long) 1);
-        assertEquals(true, bookCopiesDao.addBookCopies(bookCopy));
+        when(bookCopy.getStatus()).thenReturn(BookCopiesStatus.FREE);
+        assertEquals(true, bookCopiesDao.addBookCopy(bookCopy));
     }
 
     @Test
@@ -79,6 +81,7 @@ class BookCopiesDaoImplTest {
         when(user.getId()).thenReturn((long) 1);
         when(bookCopy.getBookEdition().getId()).thenReturn(1);
         when(bookCopy.getUser().getId()).thenReturn((long) 1);
-        assertEquals(false, bookCopiesDao.addBookCopies(bookCopy));
+        when(bookCopy.getStatus()).thenReturn(BookCopiesStatus.FREE);
+        assertEquals(false, bookCopiesDao.addBookCopy(bookCopy));
     }
 }

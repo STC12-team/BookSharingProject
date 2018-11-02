@@ -11,5 +11,7 @@ public interface BookCopiesDao {
 
     BookCopy getBookCopiesByIsbn(String isbn);
 
-    boolean addBookCopies(BookCopy bookCopy);
+    boolean addBookCopy(BookCopy bookCopy);
+
+    boolean updateBookCopy(BookCopy bookCopy);
 }

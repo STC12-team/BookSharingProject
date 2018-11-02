@@ -5,10 +5,25 @@
                    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
     <changeSet id="2018-10-28-insert-into_all_tables" author="rmunirov">
         <insert tableName="users">
-            <column name="login" value="admin"/>
-            <column name="password" value="$2a$10$7T9QeVarghtkYqlyaV4ftOPN1.NxLicrDyyPhV.OR5TaRkep.lYK2"/>
-            <column name="role_id" value="1"/>
-            <column name="enabled" value="true"/>
+            <column name="id" value="2"/>
+            <column name="login" value="user2"/>
+            <column name="password" value="$2a$06$KZiZRTRUvXjPJ0vWFZj7beAKsGy0AGGCKZtzGUnKkcl46bHX5dgMG"/>
+            <column name="role_id" value="2"/>
+            <column name="enabled" value="1"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" value="3"/>
+            <column name="login" value="user3"/>
+            <column name="password" value="$2a$06$KZiZRTRUvXjPJ0vWFZj7beAKsGy0AGGCKZtzGUnKkcl46bHX5dgMG"/>
+            <column name="role_id" value="2"/>
+            <column name="enabled" value="1"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" value="4"/>
+            <column name="login" value="user4"/>
+            <column name="password" value="$2a$06$KZiZRTRUvXjPJ0vWFZj7beAKsGy0AGGCKZtzGUnKkcl46bHX5dgMG"/>
+            <column name="role_id" value="2"/>
+            <column name="enabled" value="1"/>
         </insert>
         <insert tableName="publishers">
             <column name="name" value="эксмо"/>
@@ -29,6 +44,45 @@
             <column name="description" value="Авторы Lonely Planet собрали самые интересные и вдохновляющие
             способы путешествовать более чем по 150 странам."/>
             <column name="year_of_publication" value="2018"/>
+        </insert>
+        <insert tableName="book_copies">
+            <column name="book_edition_id" value="1"/>
+            <column name="owner_id" value="1"/>
+            <column name="status" value="FREE"/>
+        </insert>
+        <insert tableName="book_copies">
+            <column name="book_edition_id" value="2"/>
+            <column name="owner_id" value="1"/>
+            <column name="status" value="FREE"/>
+        </insert>
+        <insert tableName="book_holders">
+            <column name="book_copy_id" value="1"/>
+            <column name="user_id" value="1"/>
+            <column name="get_at" value="2018-10-30 15:55:00"/>
+        </insert>
+        <insert tableName="book_holders">
+            <column name="book_copy_id" value="2"/>
+            <column name="user_id" value="1"/>
+            <column name="get_at" value="2018-10-30 15:55:00"/>
+            <column name="gave_at" value="2018-10-30 20:55:00"/>
+        </insert>
+        <insert tableName="book_queue">
+            <column name="book_edition_id" value="1"/>
+            <column name="user_id" value="2"/>
+            <column name="added_at" value="2018-10-30 15:55:00"/>
+            <column name="status" value="WAIT"/>
+        </insert>
+        <insert tableName="book_queue">
+            <column name="book_edition_id" value="1"/>
+            <column name="user_id" value="3"/>
+            <column name="added_at" value="2018-10-30 14:55:00"/>
+            <column name="status" value="WAIT"/>
+        </insert>
+        <insert tableName="book_queue">
+            <column name="book_edition_id" value="1"/>
+            <column name="user_id" value="4"/>
+            <column name="added_at" value="2018-10-30 17:55:00"/>
+            <column name="status" value="WAIT"/>
         </insert>
     </changeSet>
 </databaseChangeLog>

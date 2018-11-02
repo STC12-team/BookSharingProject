@@ -25,7 +25,7 @@ class BookCopiesServiceTest {
 
     @Test
     void addBook() {
-        when(bookCopiesDao.addBookCopies(any())).thenReturn(true);
+        when(bookCopiesDao.addBookCopy(any())).thenReturn(true);
         assertEquals(true, bookCopiesService.addBook(any()));
     }
 }

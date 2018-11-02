@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+    <changeSet id="2018-10-31-create-book_holders-table" author="rmunirov">
+        <sql>
+            DROP TYPE IF EXISTS book_queue_status;
+            CREATE TYPE book_queue_status AS ENUM ('WAIT', 'GETTING', 'DELAY');
+        </sql>
+        <createTable tableName="book_queue" remarks="Очередь на книги">
+            <column name="id" remarks="Идентификатор члена очереди" type="serial">
+                <constraints
+                        nullable="false"
+                        primaryKey="true"
+                        primaryKeyName="book_queue_pkey"
+                />
+            </column>
+            <column name="book_edition_id" remarks="Идентификатор книги" type="integer">
+                <constraints
+                        nullable="false"
+                />
+            </column>
+            <column name="user_id" remarks="Идентификатор пользователя-члена очереди" type="integer">
+                <constraints
+                        nullable="false"
+                />
+            </column>
+            <column name="added_at" remarks="Дата\Время добавления в очередь" type="timestamp">
+                <constraints
+                        nullable="false"
+                />
+            </column>
+            <column name="status" remarks="Статус" type="book_queue_status">
+                <constraints
+                        nullable="false"
+                />
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="book_queue"
+                                 baseColumnNames="book_edition_id"
+                                 constraintName="fk_book_queue_book_editions"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedTableName="book_editions"
+                                 referencedColumnNames="id"
+        />
+        <addForeignKeyConstraint baseTableName="book_queue"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_book_queue_users"
+                                 onDelete="CASCADE"
+                                 onUpdate="RESTRICT"
+                                 referencedTableName="users"
+                                 referencedColumnNames="id"
+        />
+
+    </changeSet>
+</databaseChangeLog>

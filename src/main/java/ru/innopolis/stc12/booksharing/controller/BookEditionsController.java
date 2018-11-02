@@ -11,14 +11,20 @@ import ru.innopolis.stc12.booksharing.exceptions.TestException;
 import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
 import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
 import ru.innopolis.stc12.booksharing.service.BookEditionsService;
+import ru.innopolis.stc12.booksharing.service.PublisherService;
 
 @Controller
 public class BookEditionsController {
     BookEditionsService bookEditionsService;
+    PublisherService publisherService;
 
     @Autowired
-    public void setBookEditionsService(BookEditionsService bookEditionsService) {
+    public void setBookEditionsService(
+            BookEditionsService bookEditionsService,
+            PublisherService publisherService
+    ) {
         this.bookEditionsService = bookEditionsService;
+        this.publisherService = publisherService;
     }
 
     @GetMapping(value = "/bookEditions")
@@ -38,9 +44,12 @@ public class BookEditionsController {
     public String addBookEdition(
             @RequestParam(value = "bookEditionTitle", required = true) String title,
             @RequestParam(value = "bookEditionDescription", required = true) String description,
+            @RequestParam(value = "bookEditionPublisher", required = true) String publisherName,
             @RequestParam(value = "bookEditionIsbn", required = true) String isbn,
-            Model model) {
-        BookEdition bookEdition = new BookEdition(isbn, new Publisher(1, "эксмо"), title, description, 2018);
+            Model model
+    ) {
+        Publisher publisher = publisherService.getByNameOrCreate(publisherName);
+        BookEdition bookEdition = new BookEdition(title, description, isbn, publisher, 2018);
         bookEditionsService.addBookEdition(bookEdition);
         return "addBookEdition";
     }

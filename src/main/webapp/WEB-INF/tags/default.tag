@@ -31,6 +31,9 @@
             <a class="nav-link" href="/addBookEdition">Добавить книжное издание<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
+            <a class="nav-link" href="/takenBooks">Взятые книги<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
             <a class="nav-link" href="/login">Войти<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item active">
