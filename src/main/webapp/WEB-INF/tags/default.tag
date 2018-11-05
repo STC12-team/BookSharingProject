@@ -18,26 +18,29 @@
         <li class="nav-item active">
             <a class="nav-link" href="/about">О проекте<span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/addBookByUser">Добавить книгу пользователя<span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+            <a class="nav-link" href="/userProfile">Профиль пользователя</a>
         </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/catalog">Каталог книг<span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+            <a class="nav-link" href="/addBookByUser">Добавить книгу пользователя</a>
         </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/bookEditions">Книжные издания<span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+            <a class="nav-link" href="/catalog">Каталог книг</a>
         </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/addBookEdition">Добавить книжное издание<span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+            <a class="nav-link" href="/bookEditions">Книжные издания</a>
         </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/takenBooks">Взятые книги<span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+            <a class="nav-link" href="/addBookEdition">Добавить книжное издание</a>
         </li>
-        <li class="nav-item active">
+        <li class="nav-item">
+            <a class="nav-link" href="/takenBooks">Взятые книги</a>
+        </li>
+        <li class="nav-item">
             <a class="nav-link" href="/login">Войти<span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/register">Зарегистрироваться<span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+            <a class="nav-link" href="/register">Зарегистрироваться</a>
         </li>
     </ul>
 </div>
