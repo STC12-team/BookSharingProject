@@ -5,12 +5,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.innopolis.stc12.booksharing.exceptions.TestException;
+import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
 
 @Controller
 public class LoginController {
     @GetMapping(value = "/login")
-    @ExceptionHandler(TestException.class)
+    @ExceptionHandler(ControllerException.class)
     public String getLoginPage(@RequestParam(value = "error", required = false) String error, Model model) {
         if (error != null) {
             model.addAttribute("loginError", error);

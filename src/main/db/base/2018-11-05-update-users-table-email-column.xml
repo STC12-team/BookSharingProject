@@ -6,7 +6,6 @@
 
     <changeSet id="2018-11-05-update-users-table-email-column" author="artemzi">
 
-        <!-- TODO set nullable to false after registration process will be fixed with adding new fields -->
         <addColumn tableName="users">
             <column name="email" type="varchar(60)">
                 <constraints

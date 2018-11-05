@@ -26,7 +26,7 @@
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <props>
-                <prop key="ru.innopolis.stc12.booksharing.exceptions.TestException">
+                <prop key="ru.innopolis.stc12.booksharing.exceptions.ControllerException">
                     exception
                 </prop>
             </props>

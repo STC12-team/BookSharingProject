@@ -6,7 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import ru.innopolis.stc12.booksharing.exceptions.TestException;
+import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
 import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
@@ -22,7 +22,7 @@ public class ProfileController {
     }
 
     @GetMapping(value = "/userProfile")
-    @ExceptionHandler(TestException.class)
+    @ExceptionHandler(ControllerException.class)
     public String getProfilePage(Model model) {
 
         UserDetails authenticatedUserDetails = userService.getAuthenticatedUserDetails();

@@ -35,7 +35,7 @@
         <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="user_details"
                                  constraintName="fk_user_details_user_id"
-                                 deferrable="true"
+                                 deferrable="false"
                                  initiallyDeferred="true"
                                  onDelete="CASCADE"
                                  onUpdate="RESTRICT"
