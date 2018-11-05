@@ -8,16 +8,18 @@ public class UserDetails {
     private String firstName;
     private String lastName;
     private String surname;
+    private String email; // TODO remove field from here after User pojo refactoring
 
     public UserDetails() {
     }
 
-    public UserDetails(long id, long userId, String firstName, String lastName, String surname) {
+    public UserDetails(long id, long userId, String firstName, String lastName, String surname, String email) {
         this.id = id;
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.surname = surname;
+        this.email = email;
     }
 
     public long getId() {
@@ -60,6 +62,14 @@ public class UserDetails {
         this.surname = surname;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
         return "UserDetails{" +
@@ -68,6 +78,7 @@ public class UserDetails {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
                 '}';
     }
 
@@ -80,11 +91,12 @@ public class UserDetails {
                 userId == that.userId &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
-                Objects.equals(surname, that.surname);
+                Objects.equals(surname, that.surname) &&
+                Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, firstName, lastName, surname);
+        return Objects.hash(id, userId, firstName, lastName, surname, email);
     }
 }

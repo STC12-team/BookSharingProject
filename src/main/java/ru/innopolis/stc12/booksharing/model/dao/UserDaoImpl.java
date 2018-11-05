@@ -12,7 +12,6 @@ import ru.innopolis.stc12.booksharing.model.dao.mapper.UserDetailsMapper;
 import ru.innopolis.stc12.booksharing.model.dao.mapper.UserMapper;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
 import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
-import ru.innopolis.stc12.booksharing.service.UserService;
 
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +32,7 @@ public class UserDaoImpl implements UserDao {
     private static final String SQL_INSERT =
             "insert into users (login, password, role_id, enabled) values (?,?,?,?)";
     private static final String SQL_SELECT_USER_DETAILS =
-            "select d.id, u.email, d.firstname, d.surname, d.lastname from users as u inner join user_details as d on u.id = d.user_id";
+            "select d.id, d.user_id, d.firstname, d.surname, d.lastname, u.email from users as u inner join user_details as d on d.user_id = ?";
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -86,7 +85,8 @@ public class UserDaoImpl implements UserDao {
                     new Object[]{currentUser.getId()},
                     new UserDetailsMapper());
         } catch (NullPointerException | DataAccessException e) {
-            logger.error("Cannot find authenticated user details");
+//            logger.error("Cannot find authenticated user details");
+            e.printStackTrace();
         }
 
         return authenticatedUserDetails;
@@ -96,16 +96,13 @@ public class UserDaoImpl implements UserDao {
     /**
      * Get authenticated user from session helper
      *
-     * @return org.springframework.security.core.userdetails.UserDetails
+     * @return User
      */
-    private static org.springframework.security.core.userdetails.UserDetails currentUserDetails(){
+    private static org.springframework.security.core.userdetails.User currentUserDetails(){
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         if (authentication != null) {
-            Object principal = authentication.getPrincipal();
-            return principal instanceof UserDetails ?
-                    (org.springframework.security.core.userdetails.UserDetails) principal :
-                    null;
+            return (org.springframework.security.core.userdetails.User) authentication.getPrincipal();
         }
         return null;
     }

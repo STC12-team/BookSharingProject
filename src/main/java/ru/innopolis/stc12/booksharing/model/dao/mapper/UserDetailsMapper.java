@@ -13,6 +13,7 @@ public class UserDetailsMapper implements RowMapper<UserDetails> {
                 rs.getLong("user_id"),
                 rs.getString("firstname"),
                 rs.getString("lastname"),
-                rs.getString("surname"));
+                rs.getString("surname"),
+                rs.getString("email"));
     }
 }
