@@ -4,11 +4,18 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
+import ru.innopolis.stc12.booksharing.model.dao.mapper.UserDetailsMapper;
 import ru.innopolis.stc12.booksharing.model.dao.mapper.UserMapper;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
+import ru.innopolis.stc12.booksharing.service.UserService;
 
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class UserDaoImpl implements UserDao {
@@ -25,6 +32,8 @@ public class UserDaoImpl implements UserDao {
             "select u.id, u.login, u.password, u.enabled, u.role_id, r.name as role_name from users as u inner join roles r on u.role_id = r.id where u.login=?";
     private static final String SQL_INSERT =
             "insert into users (login, password, role_id, enabled) values (?,?,?,?)";
+    private static final String SQL_SELECT_USER_DETAILS =
+            "select d.id, u.email, d.firstname, d.surname, d.lastname from users as u inner join user_details as d on u.id = d.user_id";
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -33,7 +42,14 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserById(int id) {
-        return jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, new Object[]{id}, new UserMapper());
+        User user;
+        try {
+            user = jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, new Object[]{id}, new UserMapper());
+        } catch (DataAccessException daException) {
+            logger.debug("User not found by id: " + id);
+            return null;
+        }
+        return user;
     }
 
     @Override
@@ -54,6 +70,44 @@ public class UserDaoImpl implements UserDao {
         }
 
         return user;
+    }
+
+    @Override
+    public UserDetails getUserDetails() {
+        User currentUser;
+        UserDetails authenticatedUserDetails = null;
+
+        try {
+            String authenticatedUserLogin = Objects.requireNonNull(UserDaoImpl.currentUserDetails()).getUsername();
+            currentUser = getUserByLogin(authenticatedUserLogin);
+
+            authenticatedUserDetails = jdbcTemplate.queryForObject(
+                    SQL_SELECT_USER_DETAILS,
+                    new Object[]{currentUser.getId()},
+                    new UserDetailsMapper());
+        } catch (NullPointerException | DataAccessException e) {
+            logger.error("Cannot find authenticated user details");
+        }
+
+        return authenticatedUserDetails;
+    }
+
+
+    /**
+     * Get authenticated user from session helper
+     *
+     * @return org.springframework.security.core.userdetails.UserDetails
+     */
+    private static org.springframework.security.core.userdetails.UserDetails currentUserDetails(){
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        Authentication authentication = securityContext.getAuthentication();
+        if (authentication != null) {
+            Object principal = authentication.getPrincipal();
+            return principal instanceof UserDetails ?
+                    (org.springframework.security.core.userdetails.UserDetails) principal :
+                    null;
+        }
+        return null;
     }
 
     @Override

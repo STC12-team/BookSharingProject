@@ -59,14 +59,6 @@ class UserServiceTest {
     }
 
     @Test
-    void currentUserDetails() {
-        when(securityContext.getAuthentication()).thenReturn(authentication);
-        SecurityContextHolder.setContext(securityContext);
-        UserDetails userDetails = UserService.currentUserDetails(); // how to properly test static in current case ?
-        Assertions.assertEquals(userDetails, UserService.currentUserDetails());
-    }
-
-    @Test
     void addUser() {
         // TODO add this test!
     }

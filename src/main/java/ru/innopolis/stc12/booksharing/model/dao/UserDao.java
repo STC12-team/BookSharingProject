@@ -1,6 +1,7 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
 import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 
 import java.util.List;
 
@@ -10,6 +11,13 @@ public interface UserDao {
     List<User> getAllUsers();
 
     User getUserByLogin(String login);
+
+    /**
+     * Get user details for current authenticated user
+     *
+     * @return UserDetails
+     */
+    UserDetails getUserDetails();
 
     User addUser(String login, String passwordHash);
 }

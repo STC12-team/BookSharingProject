@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.innopolis.stc12.booksharing.model.dao.UserDao;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 
 import java.util.List;
 
@@ -54,21 +54,10 @@ public class UserService {
     }
 
     /**
-     * Get authenticated user from session helper
      *
-     * yep it must be static (also from SonarLint recommendations)
-     * we do not need an instance in the controller when asking for
-     * UserDetails interface, at least for now
-     *
-     * @return UserDetails
+     * @return ru.innopolis.stc12.booksharing.model.pojo.UserDetails
      */
-    public static UserDetails currentUserDetails(){
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        Authentication authentication = securityContext.getAuthentication();
-        if (authentication != null) {
-            Object principal = authentication.getPrincipal();
-            return principal instanceof UserDetails ? (UserDetails) principal : null;
-        }
-        return null;
+    public UserDetails getAuthenticatedUserDetails() {
+        return userDao.getUserDetails();
     }
 }
