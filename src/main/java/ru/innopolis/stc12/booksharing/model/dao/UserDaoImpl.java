@@ -77,7 +77,7 @@ public class UserDaoImpl implements UserDao {
         UserDetails authenticatedUserDetails = null;
 
         try {
-            String authenticatedUserLogin = Objects.requireNonNull(UserDaoImpl.currentUserDetails()).getUsername();
+            String authenticatedUserLogin = Objects.requireNonNull(UserDaoImpl.getCurrentUserDetails()).getUsername();
             currentUser = getUserByLogin(authenticatedUserLogin);
 
             authenticatedUserDetails = jdbcTemplate.queryForObject(
@@ -97,7 +97,7 @@ public class UserDaoImpl implements UserDao {
      *
      * @return User
      */
-    private static org.springframework.security.core.userdetails.User currentUserDetails(){
+    private static org.springframework.security.core.userdetails.User getCurrentUserDetails(){
         SecurityContext securityContext = SecurityContextHolder.getContext();
         Authentication authentication = securityContext.getAuthentication();
         if (authentication != null) {
