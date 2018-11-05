@@ -23,7 +23,7 @@ public class ProfileController {
 
     @GetMapping(value = "/userProfile")
     @ExceptionHandler(TestException.class)
-    public String getAboutPage(Model model) {
+    public String getProfilePage(Model model) {
 
         UserDetails authenticatedUserDetails = userService.getAuthenticatedUserDetails();
         if (authenticatedUserDetails == null) {

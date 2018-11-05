@@ -85,8 +85,7 @@ public class UserDaoImpl implements UserDao {
                     new Object[]{currentUser.getId()},
                     new UserDetailsMapper());
         } catch (NullPointerException | DataAccessException e) {
-//            logger.error("Cannot find authenticated user details");
-            e.printStackTrace();
+            logger.error("Cannot find authenticated user details");
         }
 
         return authenticatedUserDetails;
