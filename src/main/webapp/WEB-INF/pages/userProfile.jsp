@@ -4,14 +4,16 @@
 
 <t:default title="Профиль пользователя">
     <jsp:body>
-        <h1>Profile page</h1>
-
         <c:if test="${not empty errorMessage}">
             <div class="alert alert-warning">
                     ${errorMessage}
             </div>
         </c:if>
 
-        <p>${userDetails}</p>
+        <c:choose>
+            <c:when test="${userDetails != null}">
+                <t:userdetail userDetails="${userDetails}"/>
+            </c:when>
+        </c:choose>
     </jsp:body>
 </t:default>
