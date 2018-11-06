@@ -4,6 +4,7 @@
 
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 <head>
     <meta http-equiv=Content-Type content="text/html;charset=UTF-8">
@@ -18,27 +19,38 @@
         <li class="nav-item active">
             <a class="nav-link" href="/about">О проекте<span class="sr-only">(current)</span></a>
         </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/addBookByUser">Добавить книгу пользователя<span class="sr-only">(current)</span></a>
+        <li class="nav-item">
+            <a class="nav-link" href="/catalog">Каталог книг</a>
         </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/catalog">Каталог книг<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/bookEditions">Книжные издания<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/addBookEdition">Добавить книжное издание<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/takenBooks">Взятые книги<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/login">Войти<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item active">
-            <a class="nav-link" href="/register">Зарегистрироваться<span class="sr-only">(current)</span></a>
-        </li>
+        <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+            <li class="nav-item">
+                <a class="nav-link" href="/login?logout">Выйти</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/userProfile">Профиль</a>
+            </li>
+        </sec:authorize>
+        <sec:authorize access="hasRole('ROLE_ADMIN')">
+            <li class="nav-item">
+                <a class="nav-link" href="/bookEditions">Книжные издания</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/addBookEdition">Добавить книжное издание</a>
+            </li>
+        </sec:authorize>
+        <sec:authorize access="hasRole('ROLE_USER')">
+            <li class="nav-item">
+                <a class="nav-link" href="/addBookByUser">Добавить книгу пользователя</a>
+            </li>
+        </sec:authorize>
+        <sec:authorize access="!hasRole('ROLE_ADMIN') and !hasRole('ROLE_USER')">
+            <li class="nav-item">
+                <a class="nav-link" href="/login">Войти</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/register">Зарегистрироваться</a>
+            </li>
+        </sec:authorize>
     </ul>
 </div>
 <div id="body">
