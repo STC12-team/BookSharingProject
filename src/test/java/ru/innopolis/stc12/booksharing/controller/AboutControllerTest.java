@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.ui.Model;
-import ru.innopolis.stc12.booksharing.exceptions.TestException;
+import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -31,7 +31,7 @@ class AboutControllerTest {
 
     @Test
     void exceptionCalledProperly() {
-        when(model.addAttribute(any(), any())).thenThrow(new TestException("Exception is thrown"));
-        assertThrows(TestException.class, () -> aboutController.getAboutPage(model));
+        when(model.addAttribute(any(), any())).thenThrow(new ControllerException("Exception is thrown"));
+        assertThrows(ControllerException.class, () -> aboutController.getAboutPage(model));
     }
 }

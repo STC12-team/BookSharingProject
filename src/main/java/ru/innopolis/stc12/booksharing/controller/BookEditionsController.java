@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.innopolis.stc12.booksharing.exceptions.TestException;
+import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
 import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
 import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
 import ru.innopolis.stc12.booksharing.service.BookEditionsService;
@@ -28,7 +28,7 @@ public class BookEditionsController {
     }
 
     @GetMapping(value = "/bookEditions")
-    @ExceptionHandler(TestException.class)
+    @ExceptionHandler(ControllerException.class)
     public String getBookEditionsPage(Model model) {
         model.addAttribute("bookEditions", bookEditionsService.getAllBookEditions());
         return "bookEditions";

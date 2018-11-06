@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="2018-11-05-update-users-table-email-column" author="artemzi">
+
+        <addColumn tableName="users">
+            <column name="email" type="varchar(60)">
+                <constraints
+                        nullable="true"
+                        unique="true"
+                        uniqueConstraintName="users_email_uk"/>
+            </column>
+        </addColumn>
+
+    </changeSet>
+</databaseChangeLog>

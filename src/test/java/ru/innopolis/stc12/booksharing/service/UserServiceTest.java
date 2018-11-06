@@ -8,15 +8,17 @@ import org.mockito.Mock;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.innopolis.stc12.booksharing.model.dao.UserDao;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -29,13 +31,7 @@ class UserServiceTest {
     private UserDao userDao;
 
     @Mock
-    SecurityContext securityContext;
-
-    @Mock
-    Authentication authentication;
-
-    @Mock
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    private UserDetails userDetails;
 
     @BeforeEach
     void setUp() {
@@ -59,11 +55,12 @@ class UserServiceTest {
     }
 
     @Test
-    void currentUserDetails() {
-        when(securityContext.getAuthentication()).thenReturn(authentication);
-        SecurityContextHolder.setContext(securityContext);
-        UserDetails userDetails = UserService.currentUserDetails(); // how to properly test static in current case ?
-        Assertions.assertEquals(userDetails, UserService.currentUserDetails());
+    void getAuthenticatedUserDetails() {
+        User user = new User();
+        when(userDao.getUserByLogin(anyString())).thenReturn(user);
+        when(userDao.getUserDetails()).thenReturn(userDetails);
+        userService.getAuthenticatedUserDetails();
+        verify(userDao, times(1)).getUserDetails();
     }
 
     @Test
