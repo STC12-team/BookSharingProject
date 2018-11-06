@@ -37,28 +37,40 @@
                     <a class="nav-link" href="#">Мои книги<span class="sr-only">(current)</span></a>
                 </li>
             </ul>
-            <ul class="nav navbar-nav flex-row justify-content-between ml-auto">
+            <ul class="nav navbar-nav ml-auto">
                 <li class="dropdown order-1">
-                    <button type="button" id="dropdownMenu1" data-toggle="dropdown"
-                            class="btn btn-outline-secondary dropdown-toggle">Login <span class="caret"></span></button>
-                    <ul class="dropdown-menu dropdown-menu-right mt-2">
+                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
+                            data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                        Войти
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right mt-2" style="width: 300px">
                         <li class="px-3 py-2">
                             <form class="form" role="form">
                                 <div class="form-group">
-                                    <input id="emailInput" placeholder="Email" class="form-control form-control-sm"
-                                           type="text" required="">
+                                    <label for="userName">Логин</label>
+                                    <input type="text" class="form-control" id="userName"
+                                           placeholder="email@example.com">
                                 </div>
                                 <div class="form-group">
-                                    <input id="passwordInput" placeholder="Password"
-                                           class="form-control form-control-sm" type="text" required="">
+                                    <label for="userPassword">Пароль</label>
+                                    <input type="password" class="form-control" id="userPassword"
+                                           placeholder="Password">
                                 </div>
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-primary btn-block">Login</button>
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="dropdownCheck2">
+                                    <label class="form-check-label" for="dropdownCheck2">
+                                        Запомнить меня
+                                    </label>
+                                    <br>
                                 </div>
-                                <div class="form-group text-center">
-                                    <small><a href="#" data-toggle="modal" data-target="#modalPassword">Forgot
-                                        password?</a></small>
-                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Войти</button>
+                                <button type="submit" class="btn btn-outline-warning btn-sm w-100"
+                                        style="margin-top: 20px">Забыл пароль
+                                </button>
+                                <button type="submit" class="btn btn-outline-warning btn-sm w-100"
+                                        style="margin-top: 5px">Зарегистрироваться
+                                </button>
                             </form>
                         </li>
                     </ul>

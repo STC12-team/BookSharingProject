@@ -4,7 +4,7 @@
 <t:default title="Библиотека">
     <jsp:body>
         <style>
-            .btn {
+            .btn-margin {
                 margin-bottom: 30px;
             }
         </style>
@@ -28,7 +28,7 @@
                 <div class="col-sm-9">
                     <div class="row">
                         <div class="col-sm-4">
-                            <div class="btn-group">
+                            <div class="btn-group btn-margin">
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Сортировка
@@ -41,7 +41,7 @@
                             </div>
                         </div>
                         <div class="col-sm-4">
-                            <div class="btn-group">
+                            <div class="btn-group btn-margin">
                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
                                         data-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="col-sm-4">
-                            <button type="button" class="btn btn-primary btn-sm">Лучшие книги</button>
+                            <button type="button btn-margin" class="btn btn-primary btn-sm">Лучшие книги</button>
                         </div>
                     </div>
                     <div class="card-columns">
