@@ -32,7 +32,7 @@ public class UserDaoImpl implements UserDao {
     private static final String SQL_INSERT =
             "insert into users (login, password, role_id, enabled) values (?,?,?,?)";
     private static final String SQL_SELECT_USER_DETAILS =
-            "select d.id, d.user_id, d.firstname, d.surname, d.lastname, u.email from users as u inner join user_details as d on d.user_id = ?";
+            "select d.id, d.user_id, d.firstname, d.surname, d.lastname, u.email from users as u inner join user_details as d on u.id = d.user_id where d.user_id = ?";
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
