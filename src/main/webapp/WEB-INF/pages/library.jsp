@@ -60,7 +60,7 @@
                                 <c:forEach var="bookEdition" items="${bookEditionList}">
                                     <div class="card">
                                         <a href="${bookEdition.id}">
-                                            <img class="card-img-top" src="/images/132x185_no_picture.png"
+                                            <img class="card-img-top" src="/images/no_cover.png"
                                                  alt="${bookEdition.title}">
                                         </a>
                                         <div class="card-body text-truncate" data-toogle="tooltip" data-placement="top"
