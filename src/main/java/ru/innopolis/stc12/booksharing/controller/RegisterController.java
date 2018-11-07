@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import ru.innopolis.stc12.booksharing.exceptions.TestException;
+import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
@@ -22,13 +22,13 @@ public class RegisterController {
     }
 
     @GetMapping(value = "/register")
-    @ExceptionHandler(TestException.class)
+    @ExceptionHandler(ControllerException.class)
     public String getRegisterPage(Model model) {
         return "register";
     }
 
     @PostMapping(value = "/register")
-    @ExceptionHandler(TestException.class)
+    @ExceptionHandler(ControllerException.class)
     public ModelAndView postRegisterPage(@RequestParam(value = "newLogin") String login,
                                          @RequestParam(value = "newPassword") String password,
                                          Model model) {
