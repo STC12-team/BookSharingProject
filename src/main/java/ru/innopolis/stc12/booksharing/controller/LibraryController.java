@@ -18,6 +18,12 @@ public class LibraryController {
         this.bookEditionsService = bookEditionsService;
     }
 
+    /**
+     * Returns a page with BookEditions list
+     *
+     * @param model Spring interface model
+     * @return the page with name "library"
+     */
     @GetMapping("/library")
     public String getLibraryPage(Model model) {
         //TODO предусмотреть вывод только части книг, разделить на страницы

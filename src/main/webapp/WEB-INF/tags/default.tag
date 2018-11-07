@@ -1,7 +1,6 @@
 <%@tag description="Default page skeleton" pageEncoding="UTF-8" %>
 <%@attribute name="scripts" fragment="true" %>
 <%@attribute name="title" required="true" rtexprvalue="true" type="java.lang.String" %>
-
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
@@ -18,9 +17,9 @@
     <h1>Book sharing</h1>
     <p>Получил удовольствие/полезность от книги - поделись с другими!</p>
 </div>
-<t:menu/>
 <div id="body">
     <div class="container">
+        <t:menu/>
         <t:search/>
         <div class="wrapper">
             <jsp:doBody/>
