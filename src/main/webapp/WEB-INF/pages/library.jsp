@@ -1,110 +1,82 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <t:default title="Библиотека">
     <jsp:body>
-        <style>
-            .btn-margin {
-                margin-bottom: 30px;
-            }
-        </style>
         <div class="container-fluid">
             <div class="row">
+                    <%--Категории--%>
                 <div class="col-sm-3">
                     <h2>Категории</h2>
-                    <ul class="nav nav-pills flex-column">
-                        <li class="nav-item"><a class="nav-link active" href="#section1">Наука, образование</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#section2">Классика</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#section3">Приключения</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#section3">Проза</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#section3">Справочная литература</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#section3">Триллеры</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#section3">Ужасы</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#section3">Фантастика</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#section3">Философия</a></li>
-                    </ul>
-                    <br>
+                    <div class="list-group">
+                        <a href="#" class="list-group-item list-group-item-action active">Наука, образование</a>
+                        <a href="#" class="list-group-item list-group-item-action">Классика</a>
+                        <a href="#" class="list-group-item list-group-item-action">Приключения</a>
+                        <a href="#" class="list-group-item list-group-item-action">Проза</a>
+                        <a href="#" class="list-group-item list-group-item-action disabled">Справочная литература</a>
+                        <a href="#" class="list-group-item list-group-item-action">Триллеры</a>
+                        <a href="#" class="list-group-item list-group-item-action">Ужасы</a>
+                        <a href="#" class="list-group-item list-group-item-action">Фантастика</a>
+                        <a href="#" class="list-group-item list-group-item-action">Философия</a>
+                    </div>
                 </div>
+
                 <div class="col-sm-9">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <div class="btn-group btn-margin">
-                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Сортировка
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Название</a>
-                                    <a class="dropdown-item" href="#">Автор</a>
-                                    <a class="dropdown-item" href="#">Дата добавления</a>
-                                </div>
+                        <%--Фильтры--%>
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar">
+                        <div class="btn-group mr-2 mb-4" role="group" aria-label="Sort group">
+                            <button type="button" id="sortGroup" class="btn btn-primary btn-sm dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Сортировка
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="sortGroup">
+                                <a class="dropdown-item" href="#">Название</a>
+                                <a class="dropdown-item" href="#">Автор</a>
+                                <a class="dropdown-item" href="#">Дата добавления</a>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="btn-group btn-margin">
-                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
-                                        data-toggle="dropdown"
-                                        aria-haspopup="true" aria-expanded="false">
-                                    Отображение
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Все книги</a>
-                                    <a class="dropdown-item" href="#">Свободные</a>
-                                </div>
+                        <div class="btn-group mr-2 mb-4" role="group" aria-label="View group">
+                            <button type="button" id="viewGroup" class="btn btn-primary btn-sm dropdown-toggle"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Отображение
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="viewGroup">
+                                <a class="dropdown-item" href="#">Все книги</a>
+                                <a class="dropdown-item" href="#">Свободные</a>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <button type="button btn-margin" class="btn btn-primary btn-sm">Лучшие книги</button>
+                        <div class="btn-group mr-2 mb-4" role="group" aria-label="Best book group">
+                            <button type="button" class="btn btn-primary btn-sm">Лучшие книги</button>
+                        </div>
+                        <div class="btn-group mr-2 mb-4" role="group" aria-label="Best book group">
+                            <button type="button" class="btn btn-primary btn-sm">Новые поступления</button>
                         </div>
                     </div>
-                    <div class="card-columns">
-                        <div class="card">
-                            <img class="card-img-top" src="/images/132x185_no_picture.png" alt="Книга">
-                            <div class="card-body">
-                                <h5 class="card-title">Название книги</h5>
+                        <%--Список книг--%>
+                    <c:choose>
+                        <c:when test="${not empty bookEditionList}">
+                            <div class="card-columns text-center">
+                                <c:forEach var="bookEdition" items="${bookEditionList}">
+                                    <div class="card">
+                                        <a href="${bookEdition.id}">
+                                            <img class="card-img-top" src="/images/132x185_no_picture.png"
+                                                 alt="${bookEdition.title}">
+                                        </a>
+                                        <div class="card-body text-truncate" data-toogle="tooltip" data-placement="top"
+                                             title="${bookEdition.title}">
+                                            <a href="${bookEdition.id}" class="card-link">${bookEdition.title}</a>
+                                        </div>
+                                    </div>
+                                </c:forEach>
                             </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="/images/132x185_no_picture.png" alt="Книга">
-                            <div class="card-body">
-                                <h5 class="card-title text-truncate">Название книги Название книги</h5>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="alert alert-warning" role="alert">
+                                По Вашему запросу книг не найдено!
                             </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="/images/132x185_no_picture.png" alt="Книга">
-                            <div class="card-body">
-                                <h5 class="card-title text-truncate">Название книги Название книги Название книги</h5>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="/images/132x185_no_picture.png" alt="Книга">
-                            <div class="card-body">
-                                <h5 class="card-title text-truncate">Название книги Название книги Название книги
-                                    Название книги</h5>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="/images/132x185_no_picture.png" alt="Книга">
-                            <div class="card-body">
-                                <h5 class="card-title text-truncate">Название книги Название книги Название книги
-                                    Название книги Название книги</h5>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="/images/132x185_no_picture.png" alt="Книга">
-                            <div class="card-body">
-                                <h5 class="card-title text-truncate">Название книги Название книги Название книги
-                                    Название книги Название книги Название книги</h5>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="/images/132x185_no_picture.png" alt="Книга">
-                            <div class="card-body">
-                                <h5 class="card-text text-truncate">Название книги Название книги Название книги
-                                    Название книги Название книги Название книги Название книги</h5>
-                            </div>
-                        </div>
-                    </div>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>

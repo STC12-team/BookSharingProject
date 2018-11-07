@@ -18,104 +18,11 @@
     <h1>Book sharing</h1>
     <p>Получил удовольствие/полезность от книги - поделись с другими!</p>
 </div>
-
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/library">BookSharing</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/about">О проекте<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/library">Каталог книг<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Мои книги<span class="sr-only">(current)</span></a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav ml-auto">
-                <li class="dropdown order-1">
-                    <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
-                            data-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                        Войти
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right mt-2" style="width: 300px">
-                        <li class="px-3 py-2">
-                            <form class="form" role="form">
-                                <div class="form-group">
-                                    <label for="userName">Логин</label>
-                                    <input type="text" class="form-control" id="userName"
-                                           placeholder="email@example.com">
-                                </div>
-                                <div class="form-group">
-                                    <label for="userPassword">Пароль</label>
-                                    <input type="password" class="form-control" id="userPassword"
-                                           placeholder="Password">
-                                </div>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="dropdownCheck2">
-                                    <label class="form-check-label" for="dropdownCheck2">
-                                        Запомнить меня
-                                    </label>
-                                    <br>
-                                </div>
-                                <button type="submit" class="btn btn-primary w-100">Войти</button>
-                                <button type="submit" class="btn btn-outline-warning btn-sm w-100"
-                                        style="margin-top: 20px">Забыл пароль
-                                </button>
-                                <button type="submit" class="btn btn-outline-warning btn-sm w-100"
-                                        style="margin-top: 5px">Зарегистрироваться
-                                </button>
-                            </form>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-<%--
-<div class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-            <a class="nav-link" href="/about">О проекте<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/userProfile">Профиль пользователя</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/addBookByUser">Добавить книгу пользователя</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/catalog">Каталог книг</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/bookEditions">Книжные издания</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/addBookEdition">Добавить книжное издание</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/takenBooks">Взятые книги</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/login">Войти<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/register">Зарегистрироваться</a>
-        </li>
-    </ul>
-</div>
---%>
-
+<t:menu/>
 <div id="body">
     <div class="container">
-        <div class="wrapper" style="margin-top: 5rem;">
+        <t:search/>
+        <div class="wrapper">
             <jsp:doBody/>
         </div>
     </div>
