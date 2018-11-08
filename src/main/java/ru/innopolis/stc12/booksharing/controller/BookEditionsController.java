@@ -15,15 +15,16 @@ import ru.innopolis.stc12.booksharing.service.PublisherService;
 
 @Controller
 public class BookEditionsController {
-    BookEditionsService bookEditionsService;
-    PublisherService publisherService;
+    private BookEditionsService bookEditionsService;
+    private PublisherService publisherService;
 
     @Autowired
-    public void setBookEditionsService(
-            BookEditionsService bookEditionsService,
-            PublisherService publisherService
-    ) {
+    public void setBookEditionsService(BookEditionsService bookEditionsService) {
         this.bookEditionsService = bookEditionsService;
+    }
+
+    @Autowired
+    public void setPublisherService(PublisherService publisherService) {
         this.publisherService = publisherService;
     }
 
