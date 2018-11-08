@@ -1,6 +1,8 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import ru.innopolis.stc12.booksharing.model.dao.mapper.BookEditionMapper;
@@ -11,6 +13,7 @@ import java.util.List;
 @Repository
 public class BookEditionsDaoImpl implements BookEditionsDao {
     private JdbcTemplate jdbcTemplate;
+    private static Logger logger = Logger.getLogger(BookEditionsDaoImpl.class);
     private static final String SQL_SELECT_BY_ID =
             "select b.id as b_id, b.isbn as b_isbn, b.title as b_title, b.description as b_description, b.year_of_publication as b_year, p.id as p_id, p.name as p_name from book_editions as b inner join publishers as p on b.publisher_id = p.id where b.id=?";
     private static final String SQL_SELECT_ALL =
@@ -39,8 +42,14 @@ public class BookEditionsDaoImpl implements BookEditionsDao {
 
     @Override
     public BookEdition getBookEditionByIsbn(String isbn) {
-        //TODO если передать ISBN, которого нет в базе, вылетает исключение
-        return jdbcTemplate.queryForObject(SQL_SELECT_BY_ISBN, new Object[]{isbn}, new BookEditionMapper());
+        BookEdition bookEdition;
+        try {
+            bookEdition = jdbcTemplate.queryForObject(SQL_SELECT_BY_ISBN, new Object[]{isbn}, new BookEditionMapper());
+        } catch (DataAccessException daException) {
+            logger.debug("BookEdition not found by isbn: " + isbn);
+            return null;
+        }
+        return bookEdition;
     }
 
     @Override

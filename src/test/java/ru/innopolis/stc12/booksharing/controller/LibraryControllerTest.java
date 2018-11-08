@@ -29,6 +29,6 @@ class LibraryControllerTest {
     @Test
     void getLibraryPage() {
         when(bookEditionsService.getAllBookEditions()).thenReturn(new ArrayList<>());
-        assertEquals("/library", libraryController.getLibraryPage(model));
+        assertEquals("/library", libraryController.getLibraryPage("", model));
     }
 }
