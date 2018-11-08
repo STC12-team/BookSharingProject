@@ -2,13 +2,8 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<t:default title="Профиль пользователя">
+<t:default title="Редактирование профиля">
     <jsp:body>
-        <c:if test="${not empty profileEditResultMessage}">
-            <div class="alert alert-success">
-                    ${profileEditResultMessage}
-            </div>
-        </c:if>
         <c:if test="${not empty errorMessage}">
             <div class="alert alert-warning">
                     ${errorMessage}
@@ -17,7 +12,7 @@
 
         <c:choose>
             <c:when test="${userDetails != null}">
-                <t:userdetail userDetails="${userDetails}"/>
+                <t:userdetailsedit userDetails="${userDetails}"/>
             </c:when>
         </c:choose>
     </jsp:body>

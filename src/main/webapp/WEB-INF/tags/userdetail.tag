@@ -4,6 +4,14 @@
 
 <div class="row">
     <div class="col">
+        <form action="/userEdit" method="get">
+            <button type="submit" class="btn btn-info float-right">Редактировать</button>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
         <img src="https://via.placeholder.com/250" class="img-fluid" alt="">
     </div>
     <div class="col">
