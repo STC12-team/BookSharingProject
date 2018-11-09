@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
 import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 import ru.innopolis.stc12.booksharing.service.UserService;
@@ -20,6 +21,7 @@ public class ProfileController {
     private Logger logger = Logger.getLogger(ProfileController.class);
     private UserService userService;
     private UserDetails authenticatedUserDetails;
+    private boolean userPasswordConfirmed = false;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -54,14 +56,31 @@ public class ProfileController {
 
     @PostMapping(value = "/userEdit")
     @ExceptionHandler(ControllerException.class)
-    public ModelAndView getProfileEditPage(@RequestParam(value = "firstName", required = false) String firstName,
+    public RedirectView getProfileEditPage(@RequestParam(value = "firstName", required = false) String firstName,
                                      @RequestParam(value = "lastName", required = false) String lastName,
                                      @RequestParam(value = "surname", required = false) String surname,
                                      Model model) {
+        if (!userPasswordConfirmed) {
+            model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Confirm your password before editing profile");
+            return new RedirectView("userProfile");
+        }
+
         // TODO check values, update database, redirect with message
         model.addAttribute(MODEL_UPDATED_ATTRIBUTE, "Record was updated");
         model.addAttribute("userDetails", authenticatedUserDetails);
 
-        return new ModelAndView("userProfile");
+        return new RedirectView("userProfile");
+    }
+
+    @PostMapping(value = "/userConfirmation")
+    @ExceptionHandler(ControllerException.class)
+    public RedirectView getProfileEditPage(@RequestParam(value = "password__confirmation") String password,
+                                     Model model) {
+        if (password != null && !password.isEmpty()) {
+            // TODO check password
+            userPasswordConfirmed = true;
+            return new RedirectView("userEdit");
+        }
+        return new RedirectView("userProfile");
     }
 }
