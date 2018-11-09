@@ -59,6 +59,14 @@ class BookEditionsDaoImplTest {
         assertEquals(bookEdition, bookEditionsDao.getBookEditionByIsbn("isbn"));
     }
 
+
+    @Test
+    void getBookEditionsByPublisher() {
+        List<BookEdition> bookEditions = new ArrayList<>();
+        when(jdbcTemplate.query(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(bookEditions);
+        assertEquals(bookEditions, bookEditionsDao.getBookEditionsByPublisher("some publisher"));
+    }
+
     @Test
     void addBookEdition() {
         BookEdition bookEdition = new BookEdition(1,

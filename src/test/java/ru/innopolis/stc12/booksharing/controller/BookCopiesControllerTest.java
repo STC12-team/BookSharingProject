@@ -67,6 +67,8 @@ class BookCopiesControllerTest {
         verify(bookEditionList, times(1)).isEmpty();
         verify(bookEditionsService, times(1)).getByName(anyString());
         verify(model, times(1)).addAttribute(anyString(), any());
+        when(bookEditionsService.getByIsbn(anyString())).thenReturn(bookEdition);
+        assertEquals("addBookByUser", bookCopiesController.searchBook("ISBN 978-3-642-11746-6", model));
     }
 
     @Test
@@ -74,6 +76,7 @@ class BookCopiesControllerTest {
         when(bookEditionsService.getByIsbn(anyString())).thenReturn(null);
         assertEquals("addBookByUser", bookCopiesController.chooseBook(anyString(), model));
         verify(bookEditionsService, times(1)).getByIsbn(anyString());
+        assertEquals("addBookByUser", bookCopiesController.chooseBook("ISBN 0-596-00681-0", model));
     }
 
     @Test

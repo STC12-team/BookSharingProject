@@ -14,4 +14,6 @@ public interface BookEditionsDao {
     boolean addBookEdition(BookEdition bookEdition);
 
     List<BookEdition> getBookEditionByTitle(String name);
+
+    List<BookEdition> getBookEditionsByPublisher(String publisher);
 }
