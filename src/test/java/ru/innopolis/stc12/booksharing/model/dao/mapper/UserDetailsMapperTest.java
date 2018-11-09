@@ -20,9 +20,10 @@ class UserDetailsMapperTest {
         Mockito.when(resultSetMock.getString("surname")).thenReturn("Mocked surname");
         Mockito.when(resultSetMock.getString("lastname")).thenReturn("Mocked lastname");
         Mockito.when(resultSetMock.getString("email")).thenReturn("Mocked email");
+        Mockito.when(resultSetMock.getString("password")).thenReturn("Mocked password");
         UserDetailsMapper mapper = new UserDetailsMapper();
         UserDetails details = mapper.mapRow(resultSetMock, 0);
-        UserDetails detailsExpected = new UserDetails(1, 1, "Mocked firstname", "Mocked lastname", "Mocked surname", "Mocked email");
+        UserDetails detailsExpected = new UserDetails(1, 1, "Mocked firstname", "Mocked lastname", "Mocked surname", "Mocked email", "Mocked password");
         assertEquals(detailsExpected, details);
     }
 }
