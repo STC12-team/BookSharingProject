@@ -14,6 +14,7 @@ public class UserDetailsMapper implements RowMapper<UserDetails> {
                 rs.getString("firstname"),
                 rs.getString("lastname"),
                 rs.getString("surname"),
-                rs.getString("email"));
+                rs.getString("email"),
+                rs.getString("password"));
     }
 }

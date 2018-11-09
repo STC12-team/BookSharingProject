@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import ru.innopolis.stc12.booksharing.model.dao.mapper.UserDetailsMapper;
 import ru.innopolis.stc12.booksharing.model.dao.mapper.UserMapper;
@@ -32,7 +33,7 @@ public class UserDaoImpl implements UserDao {
     private static final String SQL_INSERT =
             "insert into users (login, password, role_id, enabled) values (?,?,?,?)";
     private static final String SQL_SELECT_USER_DETAILS =
-            "select d.id, d.user_id, d.firstname, d.surname, d.lastname, u.email from users as u inner join user_details as d on u.id = d.user_id where d.user_id = ?";
+            "select d.id, d.user_id, d.firstname, d.surname, d.lastname, u.email, u.password from users as u inner join user_details as d on u.id = d.user_id where d.user_id = ?";
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -113,4 +114,9 @@ public class UserDaoImpl implements UserDao {
         return getUserByLogin(login);
     }
 
+    @Override
+    public boolean checkUserPasswordMatches(String currentPassword, String password) {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder.matches(password, currentPassword);
+    }
 }

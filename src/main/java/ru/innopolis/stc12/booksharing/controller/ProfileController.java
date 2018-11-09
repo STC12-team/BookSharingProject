@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
@@ -50,6 +51,10 @@ public class ProfileController {
             logger.error("Cannot get authenticated user");
         } else {
             model.addAttribute("userDetails", authenticatedUserDetails);
+            if (!userPasswordConfirmed) {
+                model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Confirm your password before editing profile");
+                return "userProfile";
+            }
         }
         return "userEdit";
     }
@@ -59,16 +64,12 @@ public class ProfileController {
     public RedirectView getProfileEditPage(@RequestParam(value = "firstName", required = false) String firstName,
                                      @RequestParam(value = "lastName", required = false) String lastName,
                                      @RequestParam(value = "surname", required = false) String surname,
-                                     Model model) {
-        if (!userPasswordConfirmed) {
-            model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Confirm your password before editing profile");
-            return new RedirectView("userProfile");
-        }
-
+                                     Model model, SessionStatus status) {
         // TODO check values, update database, redirect with message
         model.addAttribute(MODEL_UPDATED_ATTRIBUTE, "Record was updated");
         model.addAttribute("userDetails", authenticatedUserDetails);
-
+        userPasswordConfirmed = false; // set value back to false after editing for reconfirmation on next visit
+        status.setComplete(); // clean up session attributes
         return new RedirectView("userProfile");
     }
 
@@ -77,10 +78,13 @@ public class ProfileController {
     public RedirectView getProfileEditPage(@RequestParam(value = "password__confirmation") String password,
                                      Model model) {
         if (password != null && !password.isEmpty()) {
-            // TODO check password
-            userPasswordConfirmed = true;
-            return new RedirectView("userEdit");
+            boolean passwordMatch = userService.confirmPassword(password);
+            if (passwordMatch) {
+                userPasswordConfirmed = true;
+                return new RedirectView("userEdit");
+            }
         }
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Wrong password");
         return new RedirectView("userProfile");
     }
 }

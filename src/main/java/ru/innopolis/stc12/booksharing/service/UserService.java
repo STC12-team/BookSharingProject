@@ -60,4 +60,15 @@ public class UserService {
     public UserDetails getAuthenticatedUserDetails() {
         return userDao.getUserDetails();
     }
+
+    /**
+     * Used for user password confirmation
+     *
+     * @param password
+     * @return boolean password confirmed
+     */
+    public boolean confirmPassword(String password) {
+        String currentPassword =  getAuthenticatedUserDetails().getPassword();
+        return userDao.checkUserPasswordMatches(currentPassword, password);
+    }
 }
