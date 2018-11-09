@@ -10,13 +10,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
 import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
 import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
+import ru.innopolis.stc12.booksharing.service.BookCopiesService;
 import ru.innopolis.stc12.booksharing.service.BookEditionsService;
+import ru.innopolis.stc12.booksharing.service.BookQueueService;
 import ru.innopolis.stc12.booksharing.service.PublisherService;
 
 @Controller
 public class BookEditionsController {
     private BookEditionsService bookEditionsService;
     private PublisherService publisherService;
+    private BookCopiesService bookCopiesService;
+    private BookQueueService bookQueueService;
 
     @Autowired
     public void setBookEditionsService(BookEditionsService bookEditionsService) {
@@ -26,6 +30,16 @@ public class BookEditionsController {
     @Autowired
     public void setPublisherService(PublisherService publisherService) {
         this.publisherService = publisherService;
+    }
+
+    @Autowired
+    public void setBookCopiesService(BookCopiesService bookCopiesService) {
+        this.bookCopiesService = bookCopiesService;
+    }
+
+    @Autowired
+    public void setBookQueueService(BookQueueService bookQueueService) {
+        this.bookQueueService = bookQueueService;
     }
 
     @GetMapping(value = "/bookEditions")
@@ -43,15 +57,30 @@ public class BookEditionsController {
     //TODO реализовать согласно предложенной таблицы БД.
     @PostMapping(value = "/addBookEditionUrl")
     public String addBookEdition(
-            @RequestParam(value = "bookEditionTitle", required = true) String title,
-            @RequestParam(value = "bookEditionDescription", required = true) String description,
-            @RequestParam(value = "bookEditionPublisher", required = true) String publisherName,
-            @RequestParam(value = "bookEditionIsbn", required = true) String isbn,
+            @RequestParam(value = "bookEditionTitle") String title,
+            @RequestParam(value = "bookEditionDescription") String description,
+            @RequestParam(value = "bookEditionPublisher") String publisherName,
+            @RequestParam(value = "bookEditionIsbn") String isbn,
             Model model
     ) {
         Publisher publisher = publisherService.getByNameOrCreate(publisherName);
         BookEdition bookEdition = new BookEdition(title, description, isbn, publisher, 2018);
         bookEditionsService.addBookEdition(bookEdition);
         return "addBookEdition";
+    }
+
+    @GetMapping(value = "/bookEditionDesc")
+    public String showBookEditionDescriptionPage(
+            @RequestParam(value = "bookEditionId") Integer id,
+            Model model) {
+        BookEdition bookEdition = bookEditionsService.getById(id);
+        int countBookCopy = bookCopiesService.getBookCopyCountByBookEditionId(id);
+        int countBookCopyIsStatusFree = bookCopiesService.getBookCopyCountByBookEditionIdInStatusFree(id);
+        int countUserInQueue = bookQueueService.getUserCountByBookEditionId(id);
+        model.addAttribute("bookEdition", bookEdition);
+        model.addAttribute("countBookCopy", countBookCopy);
+        model.addAttribute("countBookCopyIsStatusFree", countBookCopyIsStatusFree);
+        model.addAttribute("userCountInQueue", countUserInQueue);
+        return "bookEditionDescription";
     }
 }

@@ -31,4 +31,8 @@ public class BookEditionsService {
     public boolean addBookEdition(BookEdition bookEdition) {
         return bookEditionsDao.addBookEdition(bookEdition);
     }
+
+    public BookEdition getById(int id) {
+        return bookEditionsDao.getBookEditionById(id);
+    }
 }
