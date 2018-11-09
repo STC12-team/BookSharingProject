@@ -26,9 +26,6 @@ class PublisherServiceTest {
     @BeforeEach
     void setUp() {
         initMocks(this);
-
-        publisherService = new PublisherService();
-        publisherDao = mock(PublisherDao.class);
     }
 
     @Test
@@ -36,7 +33,6 @@ class PublisherServiceTest {
         List<Publisher> list = new ArrayList<>();
         list.add(new Publisher("Test publisher"));
         when(publisherDao.getAllPublishers()).thenReturn(list);
-        publisherService.setPublisherDao(publisherDao);
         assertEquals(list, publisherService.getAllPublishers());
     }
 
@@ -45,7 +41,6 @@ class PublisherServiceTest {
         Publisher publisher = new Publisher("Test name");
         ArgumentCaptor<Publisher> valueCapture = ArgumentCaptor.forClass(Publisher.class);
         when(publisherDao.addPublisher(valueCapture.capture())).thenReturn(true);
-        publisherService.setPublisherDao(publisherDao);
         publisherService.addPublisher(publisher);
         assertEquals(publisher, valueCapture.getValue());
     }
@@ -56,13 +51,11 @@ class PublisherServiceTest {
         Publisher publisher = new Publisher(name);
         ArgumentCaptor<String> nameCaptor = ArgumentCaptor.forClass(String.class);
         when(publisherDao.getPublisherByName(nameCaptor.capture())).thenReturn(publisher);
-        publisherService.setPublisherDao(publisherDao);
         assertEquals(publisher, publisherService.getByName(name));
     }
 
     @Test
     void getByNameOrCreate() {
         String name = "Test name";
-
     }
 }

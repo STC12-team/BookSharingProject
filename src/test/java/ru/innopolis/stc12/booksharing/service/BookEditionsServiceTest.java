@@ -26,16 +26,12 @@ class BookEditionsServiceTest {
     @BeforeEach
     void setUp() {
         initMocks(this);
-
-        bookEditionsService = new BookEditionsService();
-        bookEditionsDao = mock(BookEditionsDao.class);
     }
 
     @Test
     void getAllBookEditions() {
         List<BookEdition> list = new ArrayList<>();
         when(bookEditionsDao.getAllBookEditions()).thenReturn(list);
-        bookEditionsService.setBookEditionsDao(bookEditionsDao);
         assertEquals(list, bookEditionsService.getAllBookEditions());
     }
 
@@ -44,7 +40,6 @@ class BookEditionsServiceTest {
         BookEdition bookEdition = new BookEdition();
         ArgumentCaptor<BookEdition> valueCapture = ArgumentCaptor.forClass(BookEdition.class);
         when(bookEditionsDao.addBookEdition(valueCapture.capture())).thenReturn(true);
-        bookEditionsService.setBookEditionsDao(bookEditionsDao);
         bookEditionsService.addBookEdition(bookEdition);
         assertEquals(bookEdition, valueCapture.getValue());
     }

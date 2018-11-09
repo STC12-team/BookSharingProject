@@ -18,7 +18,6 @@ class BookEditionsControllerTest {
     @InjectMocks
     private BookEditionsController bookEditionsController;
 
-
     @Mock
     private Model model;
 
@@ -31,18 +30,13 @@ class BookEditionsControllerTest {
     @BeforeEach
     void setUp() {
         initMocks(this);
-
-        bookEditionsController = new BookEditionsController();
-        bookEditionsService = mock(BookEditionsService.class);
     }
 
     @Test
     void getBookEditionsPage() {
         when(model.addAttribute(any(), any())).thenReturn(model);
-        bookEditionsController.setBookEditionsService(bookEditionsService, publisherService);
         assertEquals("bookEditions", bookEditionsController.getBookEditionsPage(model));
     }
-
 
     @Test
     void showAddBookEdition() {
@@ -53,7 +47,6 @@ class BookEditionsControllerTest {
     @Test
     void addBookEdition() {
         when(bookEditionsService.addBookEdition(any())).thenReturn(true);
-        bookEditionsController.setBookEditionsService(bookEditionsService, publisherService);
         assertEquals(
                 "addBookEdition",
                 bookEditionsController.addBookEdition(
