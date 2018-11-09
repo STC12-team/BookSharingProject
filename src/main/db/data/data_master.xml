@@ -6,6 +6,8 @@
 
     <include file="2018-10-28-insert-roles-value.xml" relativeToChangelogFile="true"/>
     <include file="2018-10-30-insert-default-admin.xml" relativeToChangelogFile="true"/>
+    <include file="2018-11-09-update-default-admin.xml" relativeToChangelogFile="true"/>
+    <include file="2018-11-09-insert-default-admin-details.xml" relativeToChangelogFile="true"/>
     <!--<include file="2018-10-28-insert-into_all_tables.xml" relativeToChangelogFile="true"/>-->
 
 </databaseChangeLog>

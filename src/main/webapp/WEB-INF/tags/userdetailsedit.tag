@@ -1,5 +1,4 @@
 <%@tag description="User details template" pageEncoding="UTF-8" %>
-<%@tag import="ru.innopolis.stc12.booksharing.model.pojo.UserDetails" %>
 <%@attribute name="userDetails" required="true" type="ru.innopolis.stc12.booksharing.model.pojo.UserDetails" %>
 
 <div class="row">
@@ -68,7 +67,7 @@
                         <label class="sr-only" for="email">Почта</label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <input type="email" name="email" class="form-control" id="email"
-                                   placeholder="${userDetails.email}" autofocus disabled>
+                                   placeholder="${userDetails.email}" disabled>
                         </div>
                     </div>
                 </div>
@@ -76,6 +75,24 @@
                     <div class="form-control-feedback">
                             <span class="text-danger align-middle">
                                 <!-- email Error -->
+                            </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group has-danger">
+                        <label class="sr-only" for="password">Пароль</label>
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <input type="password" name="password" class="form-control" id="password"
+                                   placeholder="Новый пароль" disabled>
+                        </div> <!-- TODO: implement it -->
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-control-feedback">
+                            <span class="text-danger align-middle">
+                                <!-- password Error -->
                             </span>
                     </div>
                 </div>

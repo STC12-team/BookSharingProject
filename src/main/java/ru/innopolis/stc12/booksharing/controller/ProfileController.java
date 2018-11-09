@@ -65,11 +65,16 @@ public class ProfileController {
                                      @RequestParam(value = "lastName", required = false) String lastName,
                                      @RequestParam(value = "surname", required = false) String surname,
                                      Model model, SessionStatus status) {
-        // TODO check values, update database, redirect with message
-        model.addAttribute(MODEL_UPDATED_ATTRIBUTE, "Record was updated");
         model.addAttribute("userDetails", authenticatedUserDetails);
-        userPasswordConfirmed = false; // set value back to false after editing for reconfirmation on next visit
-        status.setComplete(); // clean up session attributes
+        boolean updated = userService.updateUserDetails(firstName, lastName, surname);
+        if (updated) {
+            model.addAttribute(MODEL_UPDATED_ATTRIBUTE, "Record was updated");
+            userPasswordConfirmed = false; // set value back to false after editing for reconfirmation on next visit
+            status.setComplete(); // clean up session attributes
+            return new RedirectView("userProfile");
+        }
+
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Cannot update user details");
         return new RedirectView("userProfile");
     }
 

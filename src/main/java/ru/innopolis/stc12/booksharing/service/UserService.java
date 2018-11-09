@@ -71,4 +71,25 @@ public class UserService {
         String currentPassword =  getAuthenticatedUserDetails().getPassword();
         return userDao.checkUserPasswordMatches(currentPassword, password);
     }
+
+    public boolean updateUserDetails(String firstName, String lastName, String surname) {
+        UserDetails currentUserDetails = getAuthenticatedUserDetails();
+        if (currentUserDetails == null) {
+            return false;
+        }
+        // TODO: after email confirmation & edit with password edit will be available refactor this
+        if (!firstName.equals("")) {
+            currentUserDetails.setFirstName(firstName);
+        }
+
+        if (!lastName.equals("")) {
+            currentUserDetails.setLastName(lastName);
+        }
+
+        if (!surname.equals("")) {
+            currentUserDetails.setSurname(surname);
+        }
+
+        return userDao.updateUserDetails(currentUserDetails);
+    }
 }
