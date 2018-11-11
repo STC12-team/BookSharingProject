@@ -41,6 +41,6 @@ public class RegisterController {
         User user = userService.addUser(login, password);
         model.addAttribute("user", user);
 
-        return new ModelAndView("catalog");
+        return new ModelAndView("library");
     }
 }

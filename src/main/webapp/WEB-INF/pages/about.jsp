@@ -10,7 +10,5 @@
         <c:if test="${username != null}">
             <h3>Welcome ${username}</h3>
         </c:if>
-        <br />
-        <a class="btn btn-lg btn-primary" href="index.jsp" role="button">Back</a>
     </jsp:body>
 </t:default>
