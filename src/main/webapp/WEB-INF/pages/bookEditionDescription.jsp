@@ -4,7 +4,7 @@
     <jsp:body>
         <t:bookdescription bookEdition="${bookEdition}"
                            countBookCopy="${countBookCopy}"
-                           countBookCopyIsStatusFree="${countBookCopyIsStatusFree}"
+                           countBookCopyInStatusFree="${countBookCopyInStatusFree}"
                            userCountInQueue="${userCountInQueue}"
         />
     </jsp:body>

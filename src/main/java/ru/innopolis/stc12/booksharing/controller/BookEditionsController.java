@@ -3,10 +3,7 @@ package ru.innopolis.stc12.booksharing.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
 import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
 import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
@@ -69,17 +66,15 @@ public class BookEditionsController {
         return "addBookEdition";
     }
 
-    @GetMapping(value = "/bookEditionDesc")
-    public String showBookEditionDescriptionPage(
-            @RequestParam(value = "bookEditionId") Integer id,
-            Model model) {
+    @GetMapping(value = "/bookEditionDesc/{id}")
+    public String showBookEditionDescriptionPage(@PathVariable Integer id, Model model) {
         BookEdition bookEdition = bookEditionsService.getById(id);
         int countBookCopy = bookCopiesService.getBookCopyCountByBookEditionId(id);
-        int countBookCopyIsStatusFree = bookCopiesService.getBookCopyCountByBookEditionIdInStatusFree(id);
+        int countBookCopyInStatusFree = bookCopiesService.getBookCopyCountByBookEditionIdInStatusFree(id);
         int countUserInQueue = bookQueueService.getUserCountByBookEditionId(id);
         model.addAttribute("bookEdition", bookEdition);
         model.addAttribute("countBookCopy", countBookCopy);
-        model.addAttribute("countBookCopyIsStatusFree", countBookCopyIsStatusFree);
+        model.addAttribute("countBookCopyInStatusFree", countBookCopyInStatusFree);
         model.addAttribute("userCountInQueue", countUserInQueue);
         return "bookEditionDescription";
     }

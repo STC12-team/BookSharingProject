@@ -59,13 +59,13 @@
                             <div class="card-columns text-center">
                                 <c:forEach var="bookEdition" items="${bookEditionList}">
                                     <div class="card">
-                                        <a href="/bookEditionDesc?bookEditionId=${bookEdition.id}">
+                                        <a href="/bookEditionDesc/${bookEdition.id}">
                                             <img class="card-img-top" src="/images/no_cover.png"
                                                  alt="${bookEdition.title}">
                                         </a>
                                         <div class="card-body text-truncate" data-toogle="tooltip" data-placement="top"
                                              title="${bookEdition.title}">
-                                            <a href="/bookEditionDesc?bookEditionId=${bookEdition.id}"
+                                            <a href="/bookEditionDesc/${bookEdition.id}"
                                                class="card-link">${bookEdition.title}</a>
                                         </div>
                                     </div>

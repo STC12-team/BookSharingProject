@@ -3,7 +3,7 @@
 <%@attribute name="bookEdition" required="true" rtexprvalue="true"
              type="ru.innopolis.stc12.booksharing.model.pojo.BookEdition" %>
 <%@attribute name="countBookCopy" required="true" rtexprvalue="true" type="java.lang.Integer" %>
-<%@attribute name="countBookCopyIsStatusFree" required="true" rtexprvalue="true" type="java.lang.Integer" %>
+<%@attribute name="countBookCopyInStatusFree" required="true" rtexprvalue="true" type="java.lang.Integer" %>
 <%@attribute name="userCountInQueue" required="true" rtexprvalue="true" type="java.lang.Integer" %>
 
 <%--Book edition info--%>
@@ -29,7 +29,7 @@
                 <p class="card-text">Количество копий - ${countBookCopy}</p>
             </div>
             <div class="col-sm-4">
-                <p class="card-text">Количество свободных книг - ${countBookCopyIsStatusFree}</p>
+                <p class="card-text">Количество свободных книг - ${countBookCopyInStatusFree}</p>
             </div>
             <div class="col-sm-4">
                 <p class="card-text">Количество человек в очереди - ${userCountInQueue}</p>
