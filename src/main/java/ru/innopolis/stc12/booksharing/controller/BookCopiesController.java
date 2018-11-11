@@ -13,7 +13,6 @@ import ru.innopolis.stc12.booksharing.model.pojo.User;
 import ru.innopolis.stc12.booksharing.service.BookCopiesService;
 import ru.innopolis.stc12.booksharing.service.BookEditionsService;
 import ru.innopolis.stc12.booksharing.service.UserService;
-import ru.innopolis.stc12.booksharing.utils.RegexMatcher;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -112,20 +111,17 @@ public class BookCopiesController {
     }
 
     private List<BookEdition> searchBookByTypeValue(String typeValue) {
-        List<BookEdition> bookEditionList = new ArrayList<>();
         if (typeValue == null) {
-            return bookEditionList;
+            return new ArrayList<>();
         }
-        if (RegexMatcher.getStringByRegexp(REGEXP_ISBN, typeValue).equals("")) {
-            bookEditionList = bookEditionsService.getByName(typeValue);
+        List<BookEdition> bookEditionList = bookEditionsService.getByName(typeValue);
+        //TODO добавить реализацию поиска книги по автору в сервис и DAO
+/*
+        BookEdition bookEdition = bookEditionsService.getByIsbn(typeValue);
+        if (bookEdition != null) {
+            bookEditionList.add(bookEdition);
         }
-        //TODO добавить реализацию поиска книги по автору в сервис
-        else {
-            BookEdition bookEdition = bookEditionsService.getByIsbn(typeValue);
-            if (bookEdition != null) {
-                bookEditionList.add(bookEdition);
-            }
-        }
+*/
         return bookEditionList;
     }
 }

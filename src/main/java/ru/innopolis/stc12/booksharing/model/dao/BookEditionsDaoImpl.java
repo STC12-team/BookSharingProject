@@ -78,7 +78,7 @@ public class BookEditionsDaoImpl implements BookEditionsDao {
         try {
             return jdbcTemplate.query(SQL_SELECT_BY_PUBLISHER, new Object[]{publisher}, new BookEditionMapper());
         } catch (DataAccessException daException) {
-            logger.debug("BookEdition not found by author: " + publisher);
+            logger.debug("BookEdition not found by publisher: " + publisher);
             return new ArrayList<>();
         }
     }
