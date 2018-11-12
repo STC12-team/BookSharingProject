@@ -21,7 +21,6 @@
                     username-parameter="j_username"
                     password-parameter="j_password"
                     login-page="/login"
-
                     authentication-failure-url="/login?error=login"/>
         <logout logout-url="/static/j_spring_security_logout"/>
     </http>
