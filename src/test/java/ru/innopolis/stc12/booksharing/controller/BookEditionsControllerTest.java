@@ -76,7 +76,7 @@ class BookEditionsControllerTest {
         assertEquals("bookEditionDescription", bookEditionsController.showBookEditionDescriptionPage(1, model));
         verify(model, times(1)).addAttribute("bookEdition", bookEdition);
         verify(model, times(1)).addAttribute("countBookCopy", 1);
-        verify(model, times(1)).addAttribute("countBookCopyIsStatusFree", 1);
+        verify(model, times(1)).addAttribute("countBookCopyInStatusFree", 1);
         verify(model, times(1)).addAttribute("userCountInQueue", 1);
     }
 }
