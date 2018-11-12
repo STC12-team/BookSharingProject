@@ -48,19 +48,15 @@ class ProfileControllerTest {
 
     @Test
     void getProfileEditPageWithNullDetails() {
-        profileController.setUserService(userService);
-        when(userService.getAuthenticatedUserDetails()).thenReturn(new UserDetails());
-        when(model.addAttribute(anyString())).thenReturn(model);
         assertEquals("userProfile", profileController.getProfilePage(model));
     }
 
     @Test
     void getProfileEditPageWithDetails() {
-        profileController.setUserService(userService);
         when(userService.getAuthenticatedUserDetails()).thenReturn(new UserDetails());
         when(model.addAttribute(anyString(), any())).thenReturn(model);
         profileController.setAuthenticatedUserDetails(new UserDetails());
         profileController.setUserPasswordConfirmed(true);
-        assertEquals("userProfile", profileController.getProfilePage(model));
+        assertEquals("userEdit", profileController.getProfileEditPage(model));
     }
 }

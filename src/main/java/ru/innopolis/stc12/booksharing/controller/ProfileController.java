@@ -18,6 +18,16 @@ import ru.innopolis.stc12.booksharing.service.UserService;
 public class ProfileController {
     private static final String ERROR_MESSAGE_ATTRIBUTE = "errorMessage";
     private static final String MODEL_UPDATED_ATTRIBUTE = "profileEditResultMessage";
+    private static final String USER_DETAILS_PAGE_ATTRIBUTE = "userDetails";
+    private static final String PROFILE_PAGE_ATTRIBUTE = "userProfile";
+    private static final String EDIT_DETAILS_PAGE_ATTRIBUTE = "userEdit";
+
+    private static final String MESSAGE_CANNOT_GET_USER = "Cannot get authenticated user";
+    private static final String MESSAGE_REQUEST_PASS_CONFIRMATION = "Confirm your password before editing profile";
+    private static final String MESSAGE_SUCCESSFULLY_UPDATE = "Record was updated";
+    private static final String MESSAGE_CANNOT_UPDATE = "Cannot update user details";
+    private static final String MESSAGE_WRONG_PASS = "Wrong password";
+
     private Logger logger = Logger.getLogger(ProfileController.class);
     private UserService userService;
     private UserDetails authenticatedUserDetails;
@@ -28,42 +38,34 @@ public class ProfileController {
         this.userService = userService;
     }
 
-    public void setAuthenticatedUserDetails(UserDetails userDetails) {
-        this.authenticatedUserDetails = userDetails;
-    }
-
-    public void setUserPasswordConfirmed(boolean value) {
-        this.userPasswordConfirmed = value;
-    }
-
     @GetMapping(value = "/userProfile")
     @ExceptionHandler(ControllerException.class)
     public String getProfilePage(Model model) {
-        setAuthenticatedUserDetails(userService.getAuthenticatedUserDetails());
+        authenticatedUserDetails = userService.getAuthenticatedUserDetails();
         if (authenticatedUserDetails == null) {
-            model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Cannot get authenticated user");
-            logger.error("Cannot get authenticated user");
+            model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, MESSAGE_CANNOT_GET_USER);
+            logger.error(MESSAGE_CANNOT_GET_USER);
         } else {
-            model.addAttribute("userDetails", authenticatedUserDetails);
+            model.addAttribute(USER_DETAILS_PAGE_ATTRIBUTE, authenticatedUserDetails);
         }
-        return "userProfile";
+        return PROFILE_PAGE_ATTRIBUTE;
     }
 
     @GetMapping(value = "/userEdit")
     @ExceptionHandler(ControllerException.class)
     public String getProfileEditPage(Model model) {
-        setAuthenticatedUserDetails(userService.getAuthenticatedUserDetails());
+        authenticatedUserDetails = userService.getAuthenticatedUserDetails();
         if (authenticatedUserDetails == null) {
-            model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Cannot get authenticated user");
-            logger.error("Cannot get authenticated user");
+            model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, MESSAGE_CANNOT_GET_USER);
+            logger.error(MESSAGE_CANNOT_GET_USER);
         } else {
-            model.addAttribute("userDetails", authenticatedUserDetails);
+            model.addAttribute(USER_DETAILS_PAGE_ATTRIBUTE, authenticatedUserDetails);
             if (!userPasswordConfirmed) {
-                model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Confirm your password before editing profile");
-                return "userProfile";
+                model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, MESSAGE_REQUEST_PASS_CONFIRMATION);
+                return PROFILE_PAGE_ATTRIBUTE;
             }
         }
-        return "userEdit";
+        return EDIT_DETAILS_PAGE_ATTRIBUTE;
     }
 
     @PostMapping(value = "/userEdit")
@@ -72,17 +74,17 @@ public class ProfileController {
                                      @RequestParam(value = "lastName", required = false) String lastName,
                                      @RequestParam(value = "surname", required = false) String surname,
                                      Model model, SessionStatus status) {
-        model.addAttribute("userDetails", authenticatedUserDetails);
+        model.addAttribute(USER_DETAILS_PAGE_ATTRIBUTE, authenticatedUserDetails);
         boolean updated = userService.updateUserDetails(firstName, lastName, surname);
         if (updated) {
-            model.addAttribute(MODEL_UPDATED_ATTRIBUTE, "Record was updated");
-            setUserPasswordConfirmed(false); // set value back to false after editing for reconfirmation on next visit
+            model.addAttribute(MODEL_UPDATED_ATTRIBUTE, MESSAGE_SUCCESSFULLY_UPDATE);
+            userPasswordConfirmed = false; // set value back to false after editing for reconfirmation on next visit
             status.setComplete(); // clean up session attributes
-            return new RedirectView("userProfile");
+            return new RedirectView(PROFILE_PAGE_ATTRIBUTE);
         }
 
-        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Cannot update user details");
-        return new RedirectView("userProfile");
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, MESSAGE_CANNOT_UPDATE);
+        return new RedirectView(PROFILE_PAGE_ATTRIBUTE);
     }
 
     @PostMapping(value = "/userConfirmation")
@@ -92,11 +94,11 @@ public class ProfileController {
         if (password != null && !password.isEmpty()) {
             boolean passwordMatch = userService.confirmPassword(password);
             if (passwordMatch) {
-                setUserPasswordConfirmed(true);
-                return new RedirectView("userEdit");
+                userPasswordConfirmed = true;
+                return new RedirectView(EDIT_DETAILS_PAGE_ATTRIBUTE);
             }
         }
-        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Wrong password");
-        return new RedirectView("userProfile");
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, MESSAGE_WRONG_PASS);
+        return new RedirectView(PROFILE_PAGE_ATTRIBUTE);
     }
 }
