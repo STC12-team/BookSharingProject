@@ -14,8 +14,7 @@ import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 class UserServiceTest {
 
@@ -62,7 +61,7 @@ class UserServiceTest {
     void addUser() {
         User user = new User();
         user.setId(1);
-        when(userDao.addUser("TestLogin","Hash")).thenReturn(user);
+        when(userDao.addUser("TestLogin", "Hash")).thenReturn(user);
         when(bCryptPasswordEncoder.encode("TestPassword")).thenReturn("Hash");
         Assertions.assertEquals(user, userService.addUser("TestLogin", "TestPassword"));
     }
