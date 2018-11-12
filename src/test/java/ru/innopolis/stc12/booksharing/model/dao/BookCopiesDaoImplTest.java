@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -83,5 +82,17 @@ class BookCopiesDaoImplTest {
         when(bookCopy.getUser().getId()).thenReturn((long) 1);
         when(bookCopy.getStatus()).thenReturn(BookCopiesStatus.FREE);
         assertEquals(false, bookCopiesDao.addBookCopy(bookCopy));
+    }
+
+    @Test
+    void getBookCopyCountByBookEditionIdInStatusFree() {
+        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), eq(Integer.class))).thenReturn(1);
+        assertEquals(1, bookCopiesDao.getBookCopyCountByBookEditionIdInStatusFree(1));
+    }
+
+    @Test
+    void getBookCopyCountByBookEditionId() {
+        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), eq(Integer.class))).thenReturn(1);
+        assertEquals(1, bookCopiesDao.getBookCopyCountByBookEditionId(1));
     }
 }

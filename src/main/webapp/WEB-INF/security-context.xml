@@ -12,7 +12,7 @@
 
     <http auto-config="true">
         <csrf disabled="true"/>
-        <intercept-url pattern="/catalog**" access="permitAll()"/>
+        <intercept-url pattern="/library**" access="permitAll()"/>
         <intercept-url pattern="/user**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"/>
         <intercept-url pattern="/taken**" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"/>
         <intercept-url pattern="/addBookEdition**" access="hasRole('ROLE_ADMIN')"/>

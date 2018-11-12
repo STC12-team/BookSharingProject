@@ -8,4 +8,6 @@ public interface BookQueueDao {
     List<BookQueue> getBookQueueByBookEditionId(Integer id);
 
     boolean updateBookQueue(BookQueue bookQueue);
+
+    int getUserCountByBookEditionId(int id);
 }

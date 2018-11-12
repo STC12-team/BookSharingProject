@@ -2,10 +2,9 @@ package ru.innopolis.stc12.booksharing.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
-import ru.innopolis.stc12.booksharing.model.dao.UserDao;
 import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
@@ -16,11 +15,12 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class ProfileControllerTest {
-    private ProfileController profileController;
-    private UserService userService;
 
     @Mock
-    private UserDao userDao;
+    private UserService userService;
+
+    @InjectMocks
+    private ProfileController profileController;
 
     @Mock
     private Model model;
@@ -28,8 +28,6 @@ class ProfileControllerTest {
     @BeforeEach
     void setUp() {
         initMocks(this);
-        this.profileController = new ProfileController();
-        this.userService = new UserService(userDao);
     }
 
     @Test
@@ -39,7 +37,6 @@ class ProfileControllerTest {
 
     @Test
     void getProfilePage() {
-        profileController.setUserService(userService);
         when(userService.getAuthenticatedUserDetails()).thenReturn(new UserDetails());
         when(model.addAttribute(anyString())).thenReturn(model);
         assertEquals("userProfile", profileController.getProfilePage(model));

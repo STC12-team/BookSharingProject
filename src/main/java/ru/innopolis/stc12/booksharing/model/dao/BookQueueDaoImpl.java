@@ -14,6 +14,8 @@ public class BookQueueDaoImpl implements BookQueueDao {
             "select * from book_queue as bq left join book_editions as be on bq.book_edition_id = be.id left join publishers as p on be.publisher_id = p.id left join users as u on bq.user_id = u.id left join roles as r on u.role_id = r.id where bq.book_edition_id=?";
     private static final String SQL_UPDATE =
             "update book_queue set book_edition_id=?, user_id=?, added_at=?, status=book_queue_status(?) where id=?";
+    private static final String SQL_SELECT_COUNT_USER_BY_BOOK_EDITION_ID =
+            "select count(id) from book_queue where book_edition_id=?";
 
     private JdbcTemplate jdbcTemplate;
 
@@ -36,5 +38,10 @@ public class BookQueueDaoImpl implements BookQueueDao {
                 bookQueue.getStatus().name(),
                 bookQueue.getId());
         return rows > 0;
+    }
+
+    @Override
+    public int getUserCountByBookEditionId(int id) {
+        return jdbcTemplate.queryForObject(SQL_SELECT_COUNT_USER_BY_BOOK_EDITION_ID, new Object[]{id}, Integer.class);
     }
 }
