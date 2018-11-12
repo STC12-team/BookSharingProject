@@ -3,6 +3,7 @@ package ru.innopolis.stc12.booksharing.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import ru.innopolis.stc12.booksharing.model.dao.BookQueueDao;
 import ru.innopolis.stc12.booksharing.model.pojo.BookQueue;
 
@@ -23,7 +24,7 @@ class BookQueueServiceTest {
 
     @BeforeEach
     void setUp() {
-        initMocks(this);
+        MockitoAnnotations.initMocks(this);
         bookQueueService = new BookQueueService();
         bookQueueService.setBookQueueDao(bookQueueDao);
     }

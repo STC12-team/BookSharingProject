@@ -39,6 +39,7 @@ public class UserDaoImpl implements UserDao {
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+
         this.jdbcTemplate = jdbcTemplate;
     }
 

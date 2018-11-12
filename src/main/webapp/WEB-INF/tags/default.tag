@@ -15,7 +15,7 @@
 
 <div class="jumbotron text-center" style="margin-bottom:0">
     <h1>Book sharing</h1>
-    <p>Получил удовольствие/полезность от книги - поделись с другими!</p>
+    <p>Добро пожаловать в p2p букшеринг. Решение для прозрачного децентрализованного обмена книг от человека к человеку.</p>
 </div>
 <div id="body">
     <div class="container">
