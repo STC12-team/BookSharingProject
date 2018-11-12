@@ -3,7 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <t:default title="Библиотека">
+
     <jsp:body>
+        <t:search/>
         <div class="container-fluid">
             <div class="row">
                     <%--Категории--%>

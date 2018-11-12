@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -25,12 +26,16 @@ class BookEditionsServiceTest {
     @BeforeEach
     void setUp() {
         initMocks(this);
+
+        bookEditionsService = new BookEditionsService();
+        bookEditionsService.setBookEditionsDao(bookEditionsDao);
     }
 
     @Test
     void getAllBookEditions() {
         List<BookEdition> list = new ArrayList<>();
         when(bookEditionsDao.getAllBookEditions()).thenReturn(list);
+        bookEditionsService.setBookEditionsDao(bookEditionsDao);
         assertEquals(list, bookEditionsService.getAllBookEditions());
     }
 
@@ -39,7 +44,15 @@ class BookEditionsServiceTest {
         BookEdition bookEdition = new BookEdition();
         ArgumentCaptor<BookEdition> valueCapture = ArgumentCaptor.forClass(BookEdition.class);
         when(bookEditionsDao.addBookEdition(valueCapture.capture())).thenReturn(true);
+        bookEditionsService.setBookEditionsDao(bookEditionsDao);
         bookEditionsService.addBookEdition(bookEdition);
         assertEquals(bookEdition, valueCapture.getValue());
+    }
+
+    @Test
+    void getBookEditionsBySearchValue() {
+        List<BookEdition> expected = new ArrayList<>();
+        when(bookEditionsDao.getBookEditionsBySearchValue(anyString())).thenReturn(new ArrayList<>());
+        assertEquals(expected, bookEditionsService.getBookEditionsBySearchValue("My search"));
     }
 }
