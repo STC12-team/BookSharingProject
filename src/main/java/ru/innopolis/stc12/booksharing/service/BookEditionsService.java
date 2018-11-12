@@ -44,4 +44,8 @@ public class BookEditionsService {
         }
         return resultList;
     }
+
+    public BookEdition getById(int id) {
+        return bookEditionsDao.getBookEditionById(id);
+    }
 }

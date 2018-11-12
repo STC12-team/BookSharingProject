@@ -61,11 +61,11 @@ class BookCopiesControllerTest {
 
     @Test
     void searchBookWhenSearchValueIsNotNull() {
-        when(bookEditionsService.getByName(anyString())).thenReturn(bookEditionList);
+        when(bookEditionsService.getBookEditionsBySearchValue(anyString())).thenReturn(bookEditionList);
         when(bookEditionList.isEmpty()).thenReturn(false);
         assertEquals("addBookByUser", bookCopiesController.searchBook(anyString(), model));
         verify(bookEditionList, times(1)).isEmpty();
-        verify(bookEditionsService, times(1)).getByName(anyString());
+        verify(bookEditionsService, times(1)).getBookEditionsBySearchValue(anyString());
         verify(model, times(1)).addAttribute(anyString(), any());
         when(bookEditionsService.getByIsbn(anyString())).thenReturn(bookEdition);
         assertEquals("addBookByUser", bookCopiesController.searchBook("ISBN 978-3-642-11746-6", model));

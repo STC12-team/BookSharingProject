@@ -52,7 +52,7 @@ public class BookCopiesController {
     public String searchBook(
             @RequestParam(value = "searchValue") String searchValue,
             Model model) {
-        List<BookEdition> bookEditionList = searchBookByTypeValue(searchValue);
+        List<BookEdition> bookEditionList = bookEditionsService.getBookEditionsBySearchValue(searchValue);
         if (!bookEditionList.isEmpty()) {
             model.addAttribute("bookEditionList", bookEditionList);
         } else {
