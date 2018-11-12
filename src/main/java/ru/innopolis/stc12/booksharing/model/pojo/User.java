@@ -76,7 +76,7 @@ public class User {
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", roleId=" + roleId +
+                ", roleId=" + roleId + '\'' +
                 ", role='" + role + '\'' +
                 ", enabled='" + enabled + '\'' +
                 '}';

@@ -15,10 +15,11 @@ class UserTest {
     @Test
     void onStartFieldsAreEmpty() {
         Assertions.assertEquals(0, user.getId());
-        Assertions.assertNull(null, user.getLogin());
-        Assertions.assertNull(null, user.getPassword());
-        Assertions.assertNull(null, user.getRole());
+        Assertions.assertNull(user.getLogin());
+        Assertions.assertNull(user.getPassword());
+        Assertions.assertNull(user.getRole());
         Assertions.assertEquals(0, user.getRoleId());
+        Assertions.assertEquals(0, user.getEnabled());
     }
 
     @Test
@@ -28,36 +29,18 @@ class UserTest {
         user.setPassword("secret");
         user.setRoleId(1);
         user.setRole("admin");
+        user.setEnabled(1);
 
         Assertions.assertEquals(1, user.getId());
         Assertions.assertEquals("Test", user.getLogin());
         Assertions.assertEquals("secret", user.getPassword());
         Assertions.assertEquals("admin", user.getRole());
         Assertions.assertEquals(1, user.getRoleId());
+        Assertions.assertEquals(1, user.getEnabled());
     }
 
     @Test
-    void valuesCanBeSetWithRoleAsInt() {
-        User user = new User(1, "Test", "secret", 1, "", 1);
-
-        Assertions.assertEquals(1, user.getId());
-        Assertions.assertEquals("Test", user.getLogin());
-        Assertions.assertEquals("secret", user.getPassword());
-        Assertions.assertEquals(1, user.getRoleId());
-    }
-
-    @Test
-    void valuesCanBeSetWithRoleAsString() {
-        User user = new User(1, "Test", "secret", 1, "ROLE_ADMIN", 1);
-
-        Assertions.assertEquals(1, user.getId());
-        Assertions.assertEquals("Test", user.getLogin());
-        Assertions.assertEquals("secret", user.getPassword());
-        Assertions.assertEquals("ROLE_ADMIN", user.getRole());
-    }
-
-    @Test
-    void valuesCanBeSetWithAllParameters() {
+    void valuesCanBeSetFromCreate() {
         User user = new User(1, "Test", "secret", 1, "ROLE_ADMIN", 1);
 
         Assertions.assertEquals(1, user.getId());
@@ -65,6 +48,7 @@ class UserTest {
         Assertions.assertEquals("secret", user.getPassword());
         Assertions.assertEquals(1, user.getRoleId());
         Assertions.assertEquals("ROLE_ADMIN", user.getRole());
+        Assertions.assertEquals(1, user.getEnabled());
     }
 
     @Test
@@ -76,8 +60,8 @@ class UserTest {
 
     @Test
     void hashCodeOfDifferentUsersAreNotEquals() {
-        User user1 = new User(1, "", "", 0, "ROLE_ADMIN", 1);
-        User user2 = new User(1, "", "", 1, "ROLE_USER", 1);
+        User user1 = new User(1, "", "", 0, "", 1);
+        User user2 = new User(2, "", "", 0, "", 1);
         Assertions.assertNotEquals(user1.hashCode(), user2.hashCode());
     }
 
@@ -101,7 +85,7 @@ class UserTest {
                 "id=" + "1" +
                 ", login='" + "login" + '\'' +
                 ", password='" + "password" + '\'' +
-                ", roleId=" + "1" +
+                ", roleId=" + "1" + '\'' +
                 ", role='" + "role" + '\'' +
                 ", enabled='" + "1" + '\'' +
                 '}';

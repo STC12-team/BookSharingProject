@@ -19,11 +19,6 @@ public class UserService {
     private UserDao userDao;
 
     public UserService() {
-
-    }
-
-    public UserService(UserDao userDao) {
-        this.userDao = userDao;
     }
 
     @Autowired
@@ -42,7 +37,7 @@ public class UserService {
 
     public User getUserByLogin(String login) {
         User user = null;
-        if (login != null) {
+        if (login != null && !login.isEmpty()) {
             user = this.userDao.getUserByLogin(login);
         }
         return user;
@@ -53,10 +48,6 @@ public class UserService {
         return userDao.addUser(login, cryptPassword);
     }
 
-    /**
-     *
-     * @return ru.innopolis.stc12.booksharing.model.pojo.UserDetails
-     */
     public UserDetails getAuthenticatedUserDetails() {
         return userDao.getUserDetails();
     }
