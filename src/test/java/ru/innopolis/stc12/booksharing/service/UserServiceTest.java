@@ -6,24 +6,27 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.innopolis.stc12.booksharing.model.dao.UserDao;
+import ru.innopolis.stc12.booksharing.model.dao.UserDaoImpl;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
 import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 class UserServiceTest {
+    @Mock
+    UserDao userDao;
 
     @Mock
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Mock
-    private UserDao userDao;
 
     @Mock
     private UserDetails userDetails;
@@ -65,5 +68,27 @@ class UserServiceTest {
         when(userDao.addUser("TestLogin","Hash")).thenReturn(user);
         when(bCryptPasswordEncoder.encode("TestPassword")).thenReturn("Hash");
         Assertions.assertEquals(user, userService.addUser("TestLogin", "TestPassword"));
+    }
+
+    @Test
+    void confirmCorrectPassword() {
+        UserDetails userDetails = new UserDetails(1, 1, "firstname", "lastname", "surname", "admin@example.com", "sa");
+        when(userDao.getUserDetails()).thenReturn(userDetails);
+        when(userDao.checkUserPasswordMatches(anyString(), anyString())).thenReturn(true);
+        assertTrue(userService.confirmPassword("sa"));
+    }
+
+    @Test
+    void confirmWrongPassword() {
+        UserDetails userDetails = new UserDetails(1, 1, "firstname", "lastname", "surname", "admin@example.com", "secret");
+        when(userDao.getUserDetails()).thenReturn(userDetails);
+        when(userDao.checkUserPasswordMatches(anyString(), anyString())).thenReturn(false);
+        assertFalse(userService.confirmPassword("sa"));
+    }
+
+    @Test
+    void updateUserDetails() {
+        userService.updateUserDetails("", "", "");
+        verify(userDao, times(0)).updateUserDetails(userDetails);
     }
 }
