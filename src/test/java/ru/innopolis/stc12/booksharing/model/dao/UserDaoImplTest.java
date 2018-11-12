@@ -11,8 +11,9 @@ import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -31,7 +32,6 @@ class UserDaoImplTest {
         initMocks(this);
 
         userDao = new UserDaoImpl();
-        jdbcTemplate = mock(JdbcTemplate.class);
         userDao.setJdbcTemplate(jdbcTemplate);
     }
 
@@ -61,5 +61,23 @@ class UserDaoImplTest {
         UserDetails userDetails = new UserDetails();
         when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(userDetails);
         assertEquals(null, userDao.getUserDetails());
+    }
+
+    @Test
+    void checkUserPasswordMatches() {
+        assertTrue(userDao.checkUserPasswordMatches(
+                "$2a$06$KZiZRTRUvXjPJ0vWFZj7beAKsGy0AGGCKZtzGUnKkcl46bHX5dgMG", "sa"));
+    }
+
+    @Test
+    void updateUserDetails() {
+        UserDetails userDetails = new UserDetails(1, 1, "firstname", "lastname", "surname", "admin@example.com", "secret");
+        when(jdbcTemplate.update(
+                "",
+                userDetails.getFirstName(),
+                userDetails.getLastName(),
+                userDetails.getSurname(),
+                userDetails.getUserId())).thenReturn(1);
+        assertFalse(userDao.updateUserDetails(userDetails));
     }
 }

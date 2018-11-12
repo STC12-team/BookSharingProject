@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import ru.innopolis.stc12.booksharing.model.dao.mapper.UserDetailsMapper;
 import ru.innopolis.stc12.booksharing.model.dao.mapper.UserMapper;
@@ -24,7 +25,7 @@ public class UserDaoImpl implements UserDao {
     private static final int ROLE_USER_ID = 2;
     private static final int USER_ENABLED = 1;
     private static final String SQL_SELECT_BY_ID =
-            "select u.id as u_id, u.login as u_login, u.password as u_password, u.enabled as u_enabled, r.id as r_id, r.name as r_name from users as u inner join roles r on u.role_id = r.id where u.id=?";
+            "select u.id, u.login, u.password, u.enabled, u.role_id, r.name as role_name from users as u inner join roles r on u.role_id = r.id where u.id=?";
     private static final String SQL_SELECT_ALL =
             "select u.id as u_id, u.login as u_login, u.password as u_password, u.enabled as u_enabled, r.id as r_id, r.name as r_name from users as u inner join roles r on u.role_id = r.id ";
     private static final String SQL_SELECT_BY_LOGIN =
@@ -32,7 +33,9 @@ public class UserDaoImpl implements UserDao {
     private static final String SQL_INSERT =
             "insert into users (login, password, role_id, enabled) values (?,?,?,?)";
     private static final String SQL_SELECT_USER_DETAILS =
-            "select d.id, d.user_id, d.firstname, d.surname, d.lastname, u.email from users as u inner join user_details as d on u.id = d.user_id where d.user_id = ?";
+            "select d.id, d.user_id, d.firstname, d.surname, d.lastname, u.email, u.password from users as u inner join user_details as d on u.id = d.user_id where d.user_id = ?";
+    private static final String SQL_UPDATE_USER_DETAILS =
+            "update user_details set firstname=?, lastname=?, surname=? where user_id=?";
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -114,4 +117,19 @@ public class UserDaoImpl implements UserDao {
         return getUserByLogin(login);
     }
 
+    @Override
+    public boolean checkUserPasswordMatches(String currentPassword, String password) {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder.matches(password, currentPassword);
+    }
+
+    @Override
+    public boolean updateUserDetails(UserDetails userDetails) {
+        int rows = jdbcTemplate.update(SQL_UPDATE_USER_DETAILS,
+                userDetails.getFirstName(),
+                userDetails.getLastName(),
+                userDetails.getSurname(),
+                userDetails.getUserId());
+        return rows > 0;
+    }
 }

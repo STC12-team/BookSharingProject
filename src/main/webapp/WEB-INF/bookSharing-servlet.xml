@@ -15,6 +15,7 @@
     <mvc:annotation-driven/> <!-- this declaration allow usage of @GetMapping annotation in controller -->
 
     <mvc:resources mapping="/images/**" location="WEB-INF/images/"/>
+    <mvc:resources mapping="/resources/**" location="/resources/themeDefault/"/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix">

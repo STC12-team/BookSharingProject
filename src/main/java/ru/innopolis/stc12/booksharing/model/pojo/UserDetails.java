@@ -9,17 +9,19 @@ public class UserDetails {
     private String lastName;
     private String surname;
     private String email; // TODO remove field from here after User pojo refactoring
+    private String password;
 
     public UserDetails() {
     }
 
-    public UserDetails(long id, long userId, String firstName, String lastName, String surname, String email) {
+    public UserDetails(long id, long userId, String firstName, String lastName, String surname, String email, String password) {
         this.id = id;
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.surname = surname;
         this.email = email;
+        this.password = password;
     }
 
     public long getId() {
@@ -70,6 +72,14 @@ public class UserDetails {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "UserDetails{" +
@@ -79,6 +89,7 @@ public class UserDetails {
                 ", lastName='" + lastName + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
                 '}';
     }
 
@@ -90,6 +101,7 @@ public class UserDetails {
         return id == that.id &&
                 userId == that.userId &&
                 Objects.equals(firstName, that.firstName) &&
+                Objects.equals(password, that.password) &&
                 Objects.equals(lastName, that.lastName) &&
                 Objects.equals(surname, that.surname) &&
                 Objects.equals(email, that.email);
@@ -97,6 +109,6 @@ public class UserDetails {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, firstName, lastName, surname, email);
+        return Objects.hash(id, userId, firstName, lastName, surname, email, password);
     }
 }
