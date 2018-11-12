@@ -6,7 +6,7 @@
 
     <changeSet id="2018-11-09-insert-default-admin-details" author="artemzi">
         <insert tableName="user_details">
-            <column name="user_id" value="1"/>
+            <column name="user_id" valueComputed="(SELECT id FROM users WHERE login='admin')"/>
             <column name="firstname" value="Mike"/>
             <column name="lastname" value="Иванов"/>
             <column name="surname" value="Doe"/>
