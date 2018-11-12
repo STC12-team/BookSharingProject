@@ -42,6 +42,10 @@ public class ProfileController {
         this.userPasswordConfirmed = value;
     }
 
+    public boolean isUserPasswordConfirmed() {
+        return userPasswordConfirmed;
+    }
+
     @GetMapping(value = "/userProfile")
     @ExceptionHandler(ControllerException.class)
     public String getProfilePage(Model model) {
@@ -74,7 +78,7 @@ public class ProfileController {
 
     @PostMapping(value = "/userEdit")
     @ExceptionHandler(ControllerException.class)
-    public RedirectView getProfileEditPage(@RequestParam(value = "firstName", required = false) String firstName,
+    public RedirectView postProfileEditPage(@RequestParam(value = "firstName", required = false) String firstName,
                                      @RequestParam(value = "lastName", required = false) String lastName,
                                      @RequestParam(value = "surname", required = false) String surname,
                                      Model model, SessionStatus status) {
@@ -93,7 +97,7 @@ public class ProfileController {
 
     @PostMapping(value = "/userConfirmation")
     @ExceptionHandler(ControllerException.class)
-    public RedirectView getProfileEditPage(@RequestParam(value = "password__confirmation") String password,
+    public RedirectView getConfirmationPage(@RequestParam(value = "password__confirmation") String password,
                                      Model model) {
         if (password != null && !password.isEmpty()) {
             boolean passwordMatch = userService.confirmPassword(password);
