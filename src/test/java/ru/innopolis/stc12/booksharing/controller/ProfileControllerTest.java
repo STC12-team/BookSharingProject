@@ -55,7 +55,6 @@ class ProfileControllerTest {
     void getProfileEditPageWithDetails() {
         when(userService.getAuthenticatedUserDetails()).thenReturn(new UserDetails());
         when(model.addAttribute(anyString(), any())).thenReturn(model);
-        profileController.setAuthenticatedUserDetails(new UserDetails());
         profileController.setUserPasswordConfirmed(true);
         assertEquals("userEdit", profileController.getProfileEditPage(model));
     }

@@ -38,6 +38,10 @@ public class ProfileController {
         this.userService = userService;
     }
 
+    public void setUserPasswordConfirmed(boolean value) {
+        this.userPasswordConfirmed = value;
+    }
+
     @GetMapping(value = "/userProfile")
     @ExceptionHandler(ControllerException.class)
     public String getProfilePage(Model model) {
@@ -78,7 +82,7 @@ public class ProfileController {
         boolean updated = userService.updateUserDetails(firstName, lastName, surname);
         if (updated) {
             model.addAttribute(MODEL_UPDATED_ATTRIBUTE, MESSAGE_SUCCESSFULLY_UPDATE);
-            userPasswordConfirmed = false; // set value back to false after editing for reconfirmation on next visit
+            setUserPasswordConfirmed(false); // set value back to false after editing for reconfirmation on next visit
             status.setComplete(); // clean up session attributes
             return new RedirectView(PROFILE_PAGE_ATTRIBUTE);
         }
@@ -94,7 +98,7 @@ public class ProfileController {
         if (password != null && !password.isEmpty()) {
             boolean passwordMatch = userService.confirmPassword(password);
             if (passwordMatch) {
-                userPasswordConfirmed = true;
+                setUserPasswordConfirmed(true);
                 return new RedirectView(EDIT_DETAILS_PAGE_ATTRIBUTE);
             }
         }
