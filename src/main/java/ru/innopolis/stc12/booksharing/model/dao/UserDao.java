@@ -20,4 +20,8 @@ public interface UserDao {
     UserDetails getUserDetails();
 
     User addUser(String login, String passwordHash);
+
+    boolean checkUserPasswordMatches(String currentPassword, String password);
+
+    boolean updateUserDetails(UserDetails userDetails);
 }

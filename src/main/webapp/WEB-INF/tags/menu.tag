@@ -5,7 +5,7 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
         <%--Название проекта--%>
-        <a class="navbar-brand" href="/library">BookSharing</a>
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/library">BookSharing</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -14,14 +14,22 @@
             <%--Главное меню--%>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="/about">О проекте<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/about">О проекте<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/library">Каталог книг<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/library">Каталог книг<span class="sr-only">(current)</span></a>
                 </li>
                 <sec:authorize access="hasRole('ROLE_USER')">
                     <li class="nav-item">
                         <a class="nav-link" href="#">Мои книги<span class="sr-only">(current)</span></a>
+                    </li>
+                </sec:authorize>
+                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/login?logout">Выйти</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/userProfile">Профиль</a>
                     </li>
                 </sec:authorize>
             </ul>
