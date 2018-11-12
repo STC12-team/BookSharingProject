@@ -1,6 +1,7 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <t:default title="Букшеринг">
     <jsp:body>
@@ -16,7 +17,10 @@
         </h1>
 
         <p class="lead">${aboutText}</p>
-
+        <a id="en" href="?lang=en">English</a> <%-- TODO remove links from there --%>
+        <a id="ru" href="?lang=ru">Russian</a>
+        <%--Можно выводить сообщение напрямую в шаблоне--%>
+        <%--<p><spring:message code="message.about"/></p>--%>
 
         <!-- Team Members Row -->
         <div class="row">
