@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -28,7 +28,7 @@ class BookEditionsServiceTest {
         initMocks(this);
 
         bookEditionsService = new BookEditionsService();
-        bookEditionsDao = mock(BookEditionsDao.class);
+        bookEditionsService.setBookEditionsDao(bookEditionsDao);
     }
 
     @Test
@@ -47,5 +47,12 @@ class BookEditionsServiceTest {
         bookEditionsService.setBookEditionsDao(bookEditionsDao);
         bookEditionsService.addBookEdition(bookEdition);
         assertEquals(bookEdition, valueCapture.getValue());
+    }
+
+    @Test
+    void getBookEditionsBySearchValue() {
+        List<BookEdition> expected = new ArrayList<>();
+        when(bookEditionsDao.getBookEditionsBySearchValue(anyString())).thenReturn(new ArrayList<>());
+        assertEquals(expected, bookEditionsService.getBookEditionsBySearchValue("My search"));
     }
 }

@@ -29,6 +29,9 @@ public class BookEditionsDaoImpl implements BookEditionsDao {
     private static final String SQL_SELECT_BY_PUBLISHER =
             "select b.id as b_id, b.isbn as b_isbn, b.title as b_title, b.description as b_description, b.year_of_publication as b_year, p.id as p_id, p.name as p_name from book_editions as b inner join publishers as p on b.publisher_id = p.id where p.name like ?";
 
+    private static final String SQL_SELECT_BY_SEARCH_VALUE =
+            "select b.id as b_id, b.isbn as b_isbn, b.title as b_title, b.description as b_description, b.year_of_publication as b_year, p.id as p_id, p.name as p_name from book_editions as b inner join publishers as p on b.publisher_id = p.id where b.title like ? OR b.isbn like ? OR p.name like ?";
+
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -37,7 +40,14 @@ public class BookEditionsDaoImpl implements BookEditionsDao {
 
     @Override
     public BookEdition getBookEditionById(int id) {
-        return jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, new Object[]{id}, new BookEditionMapper());
+        BookEdition bookEdition;
+        try {
+            bookEdition = jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, new Object[]{id}, new BookEditionMapper());
+        } catch (DataAccessException daException) {
+            logger.debug("BookEdition not found by id: " + id);
+            return null;
+        }
+        return bookEdition;
     }
 
     @Override
@@ -79,6 +89,16 @@ public class BookEditionsDaoImpl implements BookEditionsDao {
             return jdbcTemplate.query(SQL_SELECT_BY_PUBLISHER, new Object[]{publisher}, new BookEditionMapper());
         } catch (DataAccessException daException) {
             logger.debug("BookEdition not found by publisher: " + publisher);
+            return new ArrayList<>();
+        }
+    }
+
+    @Override
+    public List<BookEdition> getBookEditionsBySearchValue(String searchValue) {
+        try {
+            return jdbcTemplate.query(SQL_SELECT_BY_SEARCH_VALUE, new Object[]{'%' + searchValue + '%', '%' + searchValue + '%', '%' + searchValue + '%'}, new BookEditionMapper());
+        } catch (DataAccessException daException) {
+            logger.debug("BookEditions not found by searchValue: " + searchValue);
             return new ArrayList<>();
         }
     }

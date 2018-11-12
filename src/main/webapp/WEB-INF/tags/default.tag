@@ -20,7 +20,6 @@
 <div id="body">
     <div class="container">
         <t:menu/>
-        <t:search/>
         <div class="wrapper">
             <jsp:doBody/>
         </div>

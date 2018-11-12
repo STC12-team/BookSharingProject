@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
 import ru.innopolis.stc12.booksharing.service.BookEditionsService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -28,19 +27,13 @@ public class LibraryController {
      */
     @GetMapping("/library")
     public String getLibraryPage(
-            @RequestParam(value = "searchValue", required = false) String isbn,
+            @RequestParam(value = "searchValue", required = false) String searchValue,
             Model model) {
         //TODO предусмотреть вывод только части книг, разделить на страницы
-        List<BookEdition> bookEditionList = new ArrayList<>();
-        if (isbn == null) {
-            bookEditionList = bookEditionsService.getAllBookEditions();
-        } else {
-            BookEdition bookEdition = bookEditionsService.getByIsbn(isbn);
-            if (bookEdition != null) {
-                bookEditionList.add(bookEdition);
-            } else {
-                bookEditionList = null;
-            }
+        List<BookEdition> bookEditionList;
+        if (null == (searchValue)) bookEditionList = bookEditionsService.getAllBookEditions();
+        else {
+            bookEditionList = bookEditionsService.getBookEditionsBySearchValue(searchValue);
         }
         model.addAttribute("bookEditionList", bookEditionList);
         return "/library";
