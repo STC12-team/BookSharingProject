@@ -14,4 +14,8 @@ public interface BookCopiesDao {
     boolean addBookCopy(BookCopy bookCopy);
 
     boolean updateBookCopy(BookCopy bookCopy);
+
+    int getBookCopyCountByBookEditionId(int id);
+
+    int getBookCopyCountByBookEditionIdInStatusFree(int id);
 }

@@ -59,4 +59,10 @@ class BookQueueDaoImplTest {
         when(jdbcTemplate.update(anyString(), anyInt(), anyInt(), any(), anyString(), anyInt())).thenReturn(0);
         assertEquals(false, bookQueueDao.updateBookQueue(bookQueue));
     }
+
+    @Test
+    void getUserCountByBookEditionId() {
+        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), eq(Integer.class))).thenReturn(1);
+        assertEquals(1, bookQueueDao.getUserCountByBookEditionId(1));
+    }
 }

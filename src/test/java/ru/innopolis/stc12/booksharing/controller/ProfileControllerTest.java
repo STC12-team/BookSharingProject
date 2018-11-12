@@ -4,9 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
-import ru.innopolis.stc12.booksharing.model.dao.UserDao;
 import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
