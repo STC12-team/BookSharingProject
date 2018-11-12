@@ -23,4 +23,8 @@ public class BookQueueService {
     public boolean updateBookQueue(BookQueue bookQueue) {
         return bookQueueDao.updateBookQueue(bookQueue);
     }
+
+    public int getUserCountByBookEditionId(int id) {
+        return bookQueueDao.getUserCountByBookEditionId(id);
+    }
 }

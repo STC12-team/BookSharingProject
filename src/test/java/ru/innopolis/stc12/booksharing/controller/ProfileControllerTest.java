@@ -1,21 +1,17 @@
 package ru.innopolis.stc12.booksharing.controller;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.innopolis.stc12.booksharing.model.dao.UserDao;
 import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyObject;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;

@@ -31,4 +31,12 @@ public class BookCopiesService {
     public boolean updateBookCopy(BookCopy bookCopy) {
         return bookCopiesDao.updateBookCopy(bookCopy);
     }
+
+    public int getBookCopyCountByBookEditionId(int id) {
+        return bookCopiesDao.getBookCopyCountByBookEditionId(id);
+    }
+
+    public int getBookCopyCountByBookEditionIdInStatusFree(int id) {
+        return bookCopiesDao.getBookCopyCountByBookEditionIdInStatusFree(id);
+    }
 }
