@@ -18,13 +18,12 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 class AboutControllerTest {
     private AboutController aboutController;
-    private Locale locale;
+    @Mock
+    ApplicationContext context;
 
     @Mock
     private Model model;
-
-    @Mock
-    ApplicationContext context;
+    private Locale locale;
 
     @BeforeEach
     void setUp() {

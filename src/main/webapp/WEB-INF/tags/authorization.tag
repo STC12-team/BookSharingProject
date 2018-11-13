@@ -11,7 +11,8 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-right mt-2" style="width: 300px">
                 <li class="px-3 py-2">
-                    <form class="form" role="form" method="POST" action="/j_username_security_check">
+                    <form class="form" role="form" method="POST"
+                          action="${pageContext.request.contextPath}/j_username_security_check">
                         <div class="form-group">
                             <label for="j_username">Логин</label>
                             <input type="text" class="form-control" id="j_username" name="j_username"
@@ -30,12 +31,13 @@
                             <br>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Войти</button>
-                        <button type="submit" class="btn btn-outline-warning btn-sm w-100"
-                                style="margin-top: 20px">Забыл пароль
-                        </button>
-                        <button type="submit" class="btn btn-outline-warning btn-sm w-100"
-                                style="margin-top: 5px">Зарегистрироваться
-                        </button>
+                        <a href="#" class="btn btn-outline-warning btn-sm w-100" style="margin-top: 20px">
+                            Забыл пароль
+                        </a>
+                        <a href="${pageContext.request.contextPath}/register"
+                           class="btn btn-outline-warning btn-sm w-100" style="margin-top: 5px">
+                            Зарегистрироваться
+                        </a>
                     </form>
                 </li>
             </ul>
@@ -49,9 +51,9 @@
             <sec:authentication property="principal.username"/>
         </button>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Профиль</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/userProfile">Профиль</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="/static/j_spring_security_logout">Выйти</a>
+            <a class="dropdown-item" href="${pageContext.request.contextPath}/static/j_spring_security_logout">Выйти</a>
         </div>
     </div>
 </sec:authorize>

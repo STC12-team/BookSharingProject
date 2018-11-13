@@ -16,6 +16,6 @@ public class LoginController {
             //model.addAttribute("loginError", error);
             throw new ControllerException("Введены неверный пароль или логин!");
         }
-        return "library";
+        return "login";
     }
 }
