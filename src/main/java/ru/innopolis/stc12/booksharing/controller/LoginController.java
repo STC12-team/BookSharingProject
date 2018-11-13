@@ -13,7 +13,6 @@ public class LoginController {
     @ExceptionHandler(ControllerException.class)
     public String getLoginPage(@RequestParam(value = "error", required = false) String error, Model model) {
         if (error != null) {
-            //model.addAttribute("loginError", error);
             throw new ControllerException("Введены неверный пароль или логин!");
         }
         return "login";

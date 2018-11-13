@@ -24,7 +24,6 @@ public class BookCopiesController {
     private BookEditionsService bookEditionsService;
     private UserService userService;
     private BookCopiesService bookCopiesService;
-    //private static final String REGEXP_ISBN = "(ISBN[-]*(1[03])*[ ]*(: ){0,1})*(([0-9Xx][- ]*){13}|([0-9Xx][- ]*){10})";
 
     @Autowired
     public void setBookEditionsService(BookEditionsService bookEditionsService) {
