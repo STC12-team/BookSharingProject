@@ -5,7 +5,7 @@
     <jsp:body>
         <h2>Ошибка</h2>
         <div class="alert alert-danger" role="alert">
-                ${exception.exceptionMsg}
+                ${exception.getMessage()}
         </div>
     </jsp:body>
 </t:default>
