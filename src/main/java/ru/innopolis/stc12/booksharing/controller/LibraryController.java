@@ -38,4 +38,9 @@ public class LibraryController {
         model.addAttribute("bookEditionList", bookEditionList);
         return "/library";
     }
+
+    @GetMapping("/")
+    public String getWelcomePage() {
+        return "/library";
+    }
 }
