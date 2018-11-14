@@ -1,6 +1,6 @@
 <%@tag description="Search skeleton" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<form class="form my-4" action="${pageContext.request.contextPath}/library" method="get" id="searchBooksForm"
+<form class="form mb-4" action="${pageContext.request.contextPath}/library" method="get" id="searchBooksForm"
       role="form">
     <div class="row">
         <div class="col-sm-11">
