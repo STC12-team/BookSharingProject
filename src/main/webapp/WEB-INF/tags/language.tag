@@ -1,8 +1,8 @@
 <%@tag description="Authorization skeleton" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<ul class="nav navbar-nav">
-    <li class="dropdown">
+<ul class="nav navbar-nav ml-auto">
+    <li class="dropdown order-1">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
             <spring:message code="nav.lang"/>
         </a>

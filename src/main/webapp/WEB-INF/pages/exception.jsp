@@ -4,6 +4,8 @@
 <t:default title="Букшеринг">
     <jsp:body>
         <h2>Ошибка</h2>
-        <h3>${exceptionMsg}</h3>
+        <div class="alert alert-danger" role="alert">
+                ${exception.getMessage()}
+        </div>
     </jsp:body>
 </t:default>

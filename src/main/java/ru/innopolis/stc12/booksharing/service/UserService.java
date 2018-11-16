@@ -15,9 +15,6 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserDao userDao;
 
-    public UserService() {
-    }
-
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
