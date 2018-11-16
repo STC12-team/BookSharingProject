@@ -17,8 +17,6 @@
         </h1>
 
         <p class="lead">${aboutText}</p>
-        <a id="en" href="?lang=en">English</a> <%-- TODO remove links from there --%>
-        <a id="ru" href="?lang=ru">Russian</a>
         <%--Можно выводить сообщение напрямую в шаблоне--%>
         <%--<p><spring:message code="message.about"/></p>--%>
 

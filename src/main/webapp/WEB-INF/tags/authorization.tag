@@ -1,6 +1,6 @@
 <%@tag description="Authorization skeleton" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<ul class="nav navbar-nav ml-auto">
+<ul class="nav navbar-nav">
     <li class="dropdown order-1">
         <button type="button" class="btn btn-primary btn-sm dropdown-toggle"
                 data-toggle="dropdown"

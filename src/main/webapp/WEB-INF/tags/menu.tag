@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
         <%--Название проекта--%>
@@ -10,9 +11,9 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="collapse navbar-collapse" id="collapsibleNavbar">
             <%--Главное меню--%>
-            <ul class="navbar-nav">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/about">О проекте<span class="sr-only">(current)</span></a>
                 </li>
@@ -33,9 +34,11 @@
                     </li>
                 </sec:authorize>
             </ul>
+            <%--Переключение языка--%>
+            <t:language/>
             <%--Форма авторизации, регистрации...--%>
             <t:authorization/>
-        </div>
+        </ul>
     </div>
 </nav>
 <%--
