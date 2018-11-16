@@ -17,8 +17,6 @@
         </h1>
 
         <p class="lead">${aboutText}</p>
-        <%--Можно выводить сообщение напрямую в шаблоне--%>
-        <%--<p><spring:message code="message.about"/></p>--%>
 
         <!-- Team Members Row -->
         <div class="row">

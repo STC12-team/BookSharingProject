@@ -4,7 +4,7 @@
 <ul class="nav navbar-nav">
     <li class="dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-            <spring:message code="message.lang"/>
+            <spring:message code="nav.lang"/>
         </a>
         <ul class="dropdown-menu dropdown-menu-right mt-2">
             <li class="nav-link mr-sm-2">

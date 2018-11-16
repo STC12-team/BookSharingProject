@@ -6,7 +6,9 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <div class="container-fluid">
         <%--Название проекта--%>
-        <a class="navbar-brand" href="${pageContext.request.contextPath}/library">BookSharing</a>
+        <a class="navbar-brand" href="${pageContext.request.contextPath}/library">
+            <spring:message code="nav.brand"/>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -15,22 +17,32 @@
             <%--Главное меню--%>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/about">О проекте<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/about">
+                        <spring:message code="nav.about"/>
+                        <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="${pageContext.request.contextPath}/library">Каталог книг<span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="${pageContext.request.contextPath}/library">
+                        <spring:message code="nav.catalog"/>
+                        <span class="sr-only">(current)</span></a>
                 </li>
                 <sec:authorize access="hasRole('ROLE_USER')">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Мои книги<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="#">
+                            <spring:message code="nav.myBooks"/>
+                            <span class="sr-only">(current)</span></a>
                     </li>
                 </sec:authorize>
                 <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/login?logout">Выйти</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/login?logout">
+                            <spring:message code="nav.logout"/>
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/userProfile">Профиль</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/userProfile">
+                            <spring:message code="nav.profile"/>
+                        </a>
                     </li>
                 </sec:authorize>
             </ul>
