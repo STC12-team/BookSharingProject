@@ -1,7 +1,10 @@
 package ru.innopolis.stc12.booksharing.model.pojo;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "publishers")
 public class Publisher {
     private Integer id;
     private String name;
@@ -18,6 +21,9 @@ public class Publisher {
         this.name = name;
     }
 
+    @Id
+    @SequenceGenerator(name = "publisherIdGenerator", sequenceName = "publishers_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "publisherIdGenerator")
     public Integer getId() {
         return id;
     }

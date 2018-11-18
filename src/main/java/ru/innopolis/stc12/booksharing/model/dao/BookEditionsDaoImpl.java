@@ -1,6 +1,8 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,12 +15,9 @@ import java.util.List;
 
 @Repository
 public class BookEditionsDaoImpl implements BookEditionsDao {
+    private SessionFactory sessionFactory;
     private JdbcTemplate jdbcTemplate;
     private static Logger logger = Logger.getLogger(BookEditionsDaoImpl.class);
-    private static final String SQL_SELECT_BY_ID =
-            "select b.id as b_id, b.isbn as b_isbn, b.title as b_title, b.description as b_description, b.year_of_publication as b_year, p.id as p_id, p.name as p_name from book_editions as b inner join publishers as p on b.publisher_id = p.id where b.id=?";
-    private static final String SQL_SELECT_ALL =
-            "select b.id as b_id, b.isbn as b_isbn, b.title as b_title, b.description as b_description, b.year_of_publication as b_year, p.id as p_id, p.name as p_name from book_editions as b inner join publishers as p on b.publisher_id = p.id";
     private static final String SQL_SELECT_BY_ISBN =
             "select b.id as b_id, b.isbn as b_isbn, b.title as b_title, b.description as b_description, b.year_of_publication as b_year, p.id as p_id, p.name as p_name from book_editions as b inner join publishers as p on b.publisher_id = p.id where b.isbn like ?";
     private static final String SQL_INSERT =
@@ -32,6 +31,10 @@ public class BookEditionsDaoImpl implements BookEditionsDao {
     private static final String SQL_SELECT_BY_SEARCH_VALUE =
             "select b.id as b_id, b.isbn as b_isbn, b.title as b_title, b.description as b_description, b.year_of_publication as b_year, p.id as p_id, p.name as p_name from book_editions as b inner join publishers as p on b.publisher_id = p.id where b.title like ? OR b.isbn like ? OR p.name like ?";
 
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
@@ -40,19 +43,14 @@ public class BookEditionsDaoImpl implements BookEditionsDao {
 
     @Override
     public BookEdition getBookEditionById(int id) {
-        BookEdition bookEdition;
-        try {
-            bookEdition = jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, new Object[]{id}, new BookEditionMapper());
-        } catch (DataAccessException daException) {
-            logger.debug("BookEdition not found by id: " + id);
-            return null;
-        }
-        return bookEdition;
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(BookEdition.class, id);
     }
 
     @Override
     public List<BookEdition> getAllBookEditions() {
-        return jdbcTemplate.query(SQL_SELECT_ALL, new BookEditionMapper());
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM BookEdition", BookEdition.class).list();
     }
 
     @Override
