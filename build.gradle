@@ -42,6 +42,8 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-config', version: '4.2.9.RELEASE'
     compile group: 'jstl', name: 'jstl', version: '1.2'
     compile group: 'org.springframework', name: 'spring-jdbc', version: '4.3.20.RELEASE'
+    compile group: 'org.springframework', name: 'spring-orm', version: '4.3.12.RELEASE'
+    compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.12.Final'
     compile group: 'org.postgresql', name: 'postgresql', version: '42.2.2'
     compile 'com.github.jsimone:webapp-runner:8.5.11.3'
     compile 'com.google.guava:guava:26.0-jre'
