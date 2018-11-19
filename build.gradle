@@ -50,6 +50,7 @@ dependencies {
     liquibaseRuntime 'org.liquibase:liquibase-core:3.6.2'
     liquibaseRuntime 'org.liquibase:liquibase-groovy-dsl:2.0.1'
     liquibaseRuntime 'org.postgresql:postgresql:42.2.5'
+    compile group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '2.3.4' //PostgreSQLEnumType
 }
 
 test {
