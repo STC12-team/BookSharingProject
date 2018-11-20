@@ -31,8 +31,9 @@ public class LibraryController {
             Model model) {
         //TODO предусмотреть вывод только части книг, разделить на страницы
         List<BookEdition> bookEditionList;
-        if (null == (searchValue)) bookEditionList = bookEditionsService.getAllBookEditions();
-        else {
+        if (null == (searchValue)) {
+            bookEditionList = bookEditionsService.getBookEditionsByPublisher("sdf");
+        } else {
             bookEditionList = bookEditionsService.getBookEditionsBySearchValue(searchValue);
         }
         model.addAttribute("bookEditionList", bookEditionList);
