@@ -21,13 +21,12 @@ public class BookCopyEntity {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "book_copies_id_seq", sequenceName = "book_copies_id_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_copies_id_seq")
+    @SequenceGenerator(name = "bookCopiesIdSeq", sequenceName = "book_copies_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookCopiesIdSeq")
     public int getId() {
         return id;
     }
-
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 

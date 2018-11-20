@@ -3,6 +3,7 @@ package ru.innopolis.stc12.booksharing.model.pojo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.innopolis.stc12.booksharing.model.dao.entity.Role;
 
 class RoleTest {
     private Role role;
@@ -30,11 +31,6 @@ class RoleTest {
     @Test
     void constructorWithAllParamsExist() {
         Assertions.assertEquals(new Role(1, "mock role").getClass(), Role.class);
-    }
-
-    @Test
-    void constructorWithoutIdParamExist() {
-        Assertions.assertEquals(new Role("mock role").getClass(), Role.class);
     }
 
     @Test

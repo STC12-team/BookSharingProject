@@ -2,12 +2,16 @@ package ru.innopolis.stc12.booksharing.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import ru.innopolis.stc12.booksharing.model.dao.BookCopiesDao;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
 
 import java.util.List;
 
+@EnableTransactionManagement
 @Service
+@Transactional
 public class BookCopiesService {
     private BookCopiesDao bookCopiesDao;
 
