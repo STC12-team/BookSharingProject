@@ -30,7 +30,7 @@
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="ru.innopolis.stc12.booksharing.model.pojo"/>
+        <property name="packagesToScan" value="ru.innopolis.stc12.booksharing.model.dao.entity"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.hbm2ddl.auto">
