@@ -1,7 +1,7 @@
 <%@tag description="Book list skeleton" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@attribute name="bookEdition" required="true" rtexprvalue="true"
-             type="ru.innopolis.stc12.booksharing.model.pojo.BookEdition" %>
+             type="ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition" %>
 <%@attribute name="countBookCopy" required="true" rtexprvalue="true" type="java.lang.Integer" %>
 <%@attribute name="countBookCopyInStatusFree" required="true" rtexprvalue="true" type="java.lang.Integer" %>
 <%@attribute name="userCountInQueue" required="true" rtexprvalue="true" type="java.lang.Integer" %>

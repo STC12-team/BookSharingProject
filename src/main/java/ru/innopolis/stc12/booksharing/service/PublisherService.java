@@ -3,7 +3,7 @@ package ru.innopolis.stc12.booksharing.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.innopolis.stc12.booksharing.model.dao.PublisherDao;
-import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
+import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 
 import java.util.List;
 

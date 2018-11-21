@@ -1,7 +1,10 @@
-package ru.innopolis.stc12.booksharing.model.pojo;
+package ru.innopolis.stc12.booksharing.model.dao.entity;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "book_editions")
 public class BookEdition {
     private Integer id;
     private String title;
@@ -30,6 +33,10 @@ public class BookEdition {
         this.yearOfPublication = yearOfPublication;
     }
 
+    @Id
+    @Column(name = "id")
+    @SequenceGenerator(name = "bookEditionsIdGenerator", sequenceName = "book_editions_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookEditionsIdGenerator")
     public Integer getId() {
         return id;
     }
@@ -46,6 +53,7 @@ public class BookEdition {
         this.isbn = isbn;
     }
 
+    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public Publisher getPublisher() {
         return publisher;
     }
@@ -70,6 +78,7 @@ public class BookEdition {
         this.description = description;
     }
 
+    @Column(name = "year_of_publication")
     public Integer getYearOfPublication() {
         return yearOfPublication;
     }
