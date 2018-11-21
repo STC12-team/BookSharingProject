@@ -1,7 +1,7 @@
 package ru.innopolis.stc12.booksharing.model.dao.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
-import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
+import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

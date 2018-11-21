@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
 import ru.innopolis.stc12.booksharing.model.dao.BookEditionsDao;
-import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.utils.RegexMatcher;
 
 import java.util.ArrayList;

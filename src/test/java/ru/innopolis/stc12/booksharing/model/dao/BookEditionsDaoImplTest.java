@@ -7,8 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
-import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
+import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;

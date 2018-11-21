@@ -1,6 +1,6 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
-import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 
 import java.util.List;
 

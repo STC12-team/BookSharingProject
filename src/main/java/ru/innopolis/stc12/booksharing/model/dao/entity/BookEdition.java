@@ -1,4 +1,4 @@
-package ru.innopolis.stc12.booksharing.model.pojo;
+package ru.innopolis.stc12.booksharing.model.dao.entity;
 
 import javax.persistence.*;
 import java.util.Objects;

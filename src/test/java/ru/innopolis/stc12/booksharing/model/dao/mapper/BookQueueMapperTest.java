@@ -3,7 +3,11 @@ package ru.innopolis.stc12.booksharing.model.dao.mapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import ru.innopolis.stc12.booksharing.model.pojo.*;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
+import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
+import ru.innopolis.stc12.booksharing.model.pojo.BookQueue;
+import ru.innopolis.stc12.booksharing.model.pojo.BookQueueStatus;
+import ru.innopolis.stc12.booksharing.model.pojo.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

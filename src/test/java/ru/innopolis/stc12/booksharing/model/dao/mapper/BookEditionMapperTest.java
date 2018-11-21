@@ -2,8 +2,8 @@ package ru.innopolis.stc12.booksharing.model.dao.mapper;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
-import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
+import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
