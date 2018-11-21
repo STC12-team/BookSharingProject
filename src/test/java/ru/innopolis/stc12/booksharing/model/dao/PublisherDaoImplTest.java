@@ -1,70 +1,88 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class PublisherDaoImplTest {
 
-    @Mock
+    @InjectMocks
     PublisherDaoImpl publisherDao;
 
     @Mock
-    JdbcTemplate jdbcTemplate;
+    SessionFactory sessionFactory;
+
+    @Mock
+    Session session;
+
+    @Mock
+    CriteriaBuilder criteriaBuilder;
+
+    @Mock
+    CriteriaQuery<Publisher> criteriaQuery;
+
+    @Mock
+    Root<Publisher> root;
+
+    @Mock
+    Query<Publisher> query;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
-
-        publisherDao = new PublisherDaoImpl();
-        jdbcTemplate = mock(JdbcTemplate.class);
-        publisherDao.setJdbcTemplate(jdbcTemplate);
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.getCriteriaBuilder()).thenReturn(criteriaBuilder);
+        when(criteriaBuilder.createQuery(Publisher.class)).thenReturn(criteriaQuery);
+        when(criteriaQuery.from(Publisher.class)).thenReturn(root);
+        when(session.createQuery(criteriaQuery)).thenReturn(query);
+        when(criteriaQuery.select(root)).thenReturn(criteriaQuery);
     }
 
 
     @Test
     void getPublisherById() {
         Publisher publisher = new Publisher();
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(publisher);
-        assertEquals(publisher, publisherDao.getPublisherById(5));
+        List<Publisher> list = new ArrayList<>();
+        list.add(publisher);
+        when(query.getResultList()).thenReturn(list);
+        assertEquals(publisher, publisherDao.getPublisherById(6));
     }
 
     @Test
     void getAllPublishers() {
         List<Publisher> list = new ArrayList<>();
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class),
-                any(RowMapper.class))).thenReturn(list);
+        when(query.getResultList()).thenReturn(list);
         assertEquals(list, publisherDao.getAllPublishers());
     }
 
     @Test
     void getPublisherByName() {
-        String name = "Test name";
-        Publisher publisher = new Publisher(name);
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(publisher);
-        assertEquals(publisher, publisherDao.getPublisherByName(name));
+        Publisher publisher = new Publisher();
+        List<Publisher> list = new ArrayList<>();
+        list.add(publisher);
+        when(query.getResultList()).thenReturn(list);
+        assertEquals(publisher, publisherDao.getPublisherByName("name"));
     }
 
     @Test
     void addPublisher() {
         Publisher publisher = new Publisher(1, "Test name");
-        ArgumentCaptor<String> nameCapture = ArgumentCaptor.forClass(String.class);
-        when(jdbcTemplate.update(anyString(), nameCapture.capture())).thenReturn(1);
-        publisherDao.addPublisher(publisher);
-        assertEquals(nameCapture.getValue(), publisher.getName());
+        assertTrue(publisherDao.addPublisher(publisher));
     }
 }

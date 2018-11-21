@@ -1,53 +1,83 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.innopolis.stc12.booksharing.model.dao.mapper.PublisherMapper;
 import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
 public class PublisherDaoImpl implements PublisherDao {
-    private static final String SQL_SELECT_BY_ID =
-            "select id, name from publishers where id = ?";
-    private static final String SQL_SELECT_BY_NAME =
-            "select id, name from publishers where name like ?";
-    private static final String SQL_SELECT_ALL =
-            "select id, name from publishers";
-    private static final String SQL_INSERT =
-            "insert into publishers (name) values (?)";
-    private JdbcTemplate jdbcTemplate;
+    private SessionFactory sessionFactory;
 
     @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public Publisher getPublisherById(int id) {
-        return jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, new Object[]{id}, new PublisherMapper());
+        QueryObject queryObject = new QueryObject();
+        Predicate predicate = queryObject.criteriaBuilder.equal(queryObject.root.get("id"), id);
+        List<Publisher> list = queryObject.executeQuery(predicate);
+        if (list.isEmpty()) {
+            return null;
+        }
+        return list.get(0);
     }
 
     @Override
     public List<Publisher> getAllPublishers() {
-        return jdbcTemplate.query(SQL_SELECT_ALL, new PublisherMapper());
+        QueryObject queryObject = new QueryObject();
+        return queryObject.executeQuery();
     }
 
     @Override
     public Publisher getPublisherByName(String name) {
-        try {
-            return jdbcTemplate.queryForObject(SQL_SELECT_BY_NAME, new Object[]{'%' + name + '%'}, new PublisherMapper());
-        } catch (EmptyResultDataAccessException exception) {
+        QueryObject queryObject = new QueryObject();
+        Predicate predicate = queryObject.criteriaBuilder.equal(queryObject.root.get("name"), name);
+        List<Publisher> list = queryObject.executeQuery(predicate);
+        if (list.isEmpty()) {
             return null;
         }
+        return list.get(0);
     }
 
     @Override
     public boolean addPublisher(Publisher publisher) {
-        int rows = jdbcTemplate.update(SQL_INSERT, publisher.getName());
-        return rows > 0;
+        Session session = sessionFactory.getCurrentSession();
+        session.save(publisher);
+        return true;
+    }
+
+    private class QueryObject {
+        Session session;
+        CriteriaBuilder criteriaBuilder;
+        CriteriaQuery<Publisher> criteriaQuery;
+        Root<Publisher> root;
+
+        QueryObject() {
+            session = sessionFactory.getCurrentSession();
+            criteriaBuilder = session.getCriteriaBuilder();
+            criteriaQuery = criteriaBuilder.createQuery(Publisher.class);
+            root = criteriaQuery.from(Publisher.class);
+        }
+
+        List<Publisher> executeQuery(Predicate... args) {
+            if (args.length == 0) {
+                criteriaQuery.select(root);
+            } else {
+                criteriaQuery.select(root).where(args);
+            }
+            Query<Publisher> query = session.createQuery(criteriaQuery);
+            return query.getResultList();
+        }
     }
 }

@@ -1,116 +1,114 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.dao.DataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import ru.innopolis.stc12.booksharing.model.pojo.BookEdition;
 import ru.innopolis.stc12.booksharing.model.pojo.Publisher;
 
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class BookEditionsDaoImplTest {
 
-    @Mock
+    @InjectMocks
     BookEditionsDaoImpl bookEditionsDao;
 
     @Mock
-    JdbcTemplate jdbcTemplate;
+    SessionFactory sessionFactory;
+
+    @Mock
+    Session session;
+
+    @Mock
+    CriteriaBuilder criteriaBuilder;
+
+    @Mock
+    CriteriaQuery<BookEdition> criteriaQuery;
+
+    @Mock
+    Root<BookEdition> root;
+
+    @Mock
+    Query<BookEdition> query;
+
+    @Mock
+    Join<BookEdition, Publisher> join;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
-        bookEditionsDao = new BookEditionsDaoImpl();
-        bookEditionsDao.setJdbcTemplate(jdbcTemplate);
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.getCriteriaBuilder()).thenReturn(criteriaBuilder);
+        when(criteriaBuilder.createQuery(BookEdition.class)).thenReturn(criteriaQuery);
+        when(criteriaQuery.from(BookEdition.class)).thenReturn(root);
+        when(session.createQuery(criteriaQuery)).thenReturn(query);
+        when(criteriaQuery.select(root)).thenReturn(criteriaQuery);
     }
 
 
     @Test
     void getBookEditionById() {
         BookEdition bookEdition = new BookEdition();
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(bookEdition);
-        assertEquals(bookEdition, bookEditionsDao.getBookEditionById(5));
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenThrow(new DataAccessException("this was the reason") {
-        });
-        assertEquals(null, bookEditionsDao.getBookEditionById(6));
-
+        List<BookEdition> list = new ArrayList<>();
+        list.add(bookEdition);
+        when(query.getResultList()).thenReturn(list);
+        assertEquals(bookEdition, bookEditionsDao.getBookEditionById(6));
     }
 
     @Test
     void getAllBookEditions() {
         List<BookEdition> list = new ArrayList<>();
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class),
-                any(RowMapper.class))).thenReturn(list);
+        when(query.getResultList()).thenReturn(list);
         assertEquals(list, bookEditionsDao.getAllBookEditions());
     }
 
     @Test
     void getBookEditionByIsbn() {
         BookEdition bookEdition = new BookEdition();
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(bookEdition);
+        List<BookEdition> list = new ArrayList<>();
+        list.add(bookEdition);
+        when(query.getResultList()).thenReturn(list);
         assertEquals(bookEdition, bookEditionsDao.getBookEditionByIsbn("isbn"));
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenThrow(new DataAccessException("this was the reason") {
-        });
-        assertEquals(null, bookEditionsDao.getBookEditionByIsbn("some searchString"));
     }
 
 
     @Test
     void getBookEditionsByPublisher() {
-        List<BookEdition> bookEditions = new ArrayList<>();
-        when(jdbcTemplate.query(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(bookEditions);
-        assertEquals(bookEditions, bookEditionsDao.getBookEditionsByPublisher("some publisher"));
-        when(jdbcTemplate.query(anyString(), any(Object[].class), any(RowMapper.class))).thenThrow(new DataAccessException("this was the reason") {
-        });
-        assertEquals(bookEditions, bookEditionsDao.getBookEditionsByPublisher("some searchString"));
-
+        List<BookEdition> list = new ArrayList<>();
+        when(query.getResultList()).thenReturn(list);
+        when(root.join("publisher", JoinType.LEFT)).thenAnswer(invocationOnMock -> join);
+        assertEquals(list, bookEditionsDao.getBookEditionsByPublisher("publisher"));
     }
 
     @Test
     void addBookEdition() {
-        BookEdition bookEdition = new BookEdition(1,
-                "Title",
-                "Description",
-                "ISBN",
-                new Publisher(1, "name"),
-                2018);
-        ArgumentCaptor<String> valueCapture1 = ArgumentCaptor.forClass(String.class);
-        ArgumentCaptor<Integer> valueCapture2 = ArgumentCaptor.forClass(Integer.class);
-        ArgumentCaptor<String> valueCapture3 = ArgumentCaptor.forClass(String.class);
-        ArgumentCaptor<String> valueCapture4 = ArgumentCaptor.forClass(String.class);
-        ArgumentCaptor<Integer> valueCapture5 = ArgumentCaptor.forClass(Integer.class);
-        when(jdbcTemplate.update(anyString(),
-                valueCapture1.capture(),
-                valueCapture2.capture(),
-                valueCapture3.capture(),
-                valueCapture4.capture(),
-                valueCapture5.capture())).thenReturn(5);
-        bookEditionsDao.addBookEdition(bookEdition);
-        assertEquals(valueCapture1.getValue(), bookEdition.getIsbn());
-        assertEquals(valueCapture2.getValue(), bookEdition.getPublisher().getId());
-        assertEquals(valueCapture3.getValue(), bookEdition.getTitle());
-        assertEquals(valueCapture4.getValue(), bookEdition.getDescription());
-        assertEquals(valueCapture5.getValue(), bookEdition.getYearOfPublication());
+        BookEdition bookEdition = new BookEdition();
+        assertTrue(bookEditionsDao.addBookEdition(bookEdition));
     }
 
     @Test
     void getBookEditionsBySearchValue() {
-        List<BookEdition> bookEditions = new ArrayList<>();
-        when(jdbcTemplate.query(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(bookEditions);
-        assertEquals(bookEditions, bookEditionsDao.getBookEditionsBySearchValue("some searchString"));
-        when(jdbcTemplate.query(anyString(), any(Object[].class), any(RowMapper.class))).thenThrow(new DataAccessException("this was the reason") {
-        });
-        assertEquals(bookEditions, bookEditionsDao.getBookEditionsBySearchValue("some searchString"));
+        List<BookEdition> list = new ArrayList<>();
+        when(query.getResultList()).thenReturn(list);
+        when(root.join("publisher", JoinType.LEFT)).thenAnswer(invocationOnMock -> join);
+        assertEquals(list, bookEditionsDao.getBookEditionsBySearchValue("search"));
+    }
 
+    @Test
+    void getBookEditionByTitle() {
+        List<BookEdition> list = new ArrayList<>();
+        when(query.getResultList()).thenReturn(list);
+        assertEquals(list, bookEditionsDao.getBookEditionByTitle("title"));
     }
 }

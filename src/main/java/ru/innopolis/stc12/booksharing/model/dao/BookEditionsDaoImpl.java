@@ -1,6 +1,5 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
-import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -15,7 +14,6 @@ import java.util.List;
 @Repository
 public class BookEditionsDaoImpl implements BookEditionsDao {
     private SessionFactory sessionFactory;
-    private static Logger logger = Logger.getLogger(BookEditionsDaoImpl.class);
 
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {

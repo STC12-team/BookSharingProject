@@ -56,4 +56,12 @@ public class BookEditionsService {
     public List<BookEdition> getBookEditionsByPublisher(String publisher) {
         return bookEditionsDao.getBookEditionsByPublisher(publisher);
     }
+
+    public BookEdition getBookEditionByIsbn(String isbn) {
+        return bookEditionsDao.getBookEditionByIsbn(isbn);
+    }
+
+    public List<BookEdition> getBookEditionByTitle(String title) {
+        return bookEditionsDao.getBookEditionByTitle(title);
+    }
 }
