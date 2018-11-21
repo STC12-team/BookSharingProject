@@ -1,8 +1,14 @@
-package ru.innopolis.stc12.booksharing.model.pojo;
+package ru.innopolis.stc12.booksharing.model.dao.entity;
 
+import javax.persistence.*;
 import java.util.Objects;
 
+@Entity
+@Table(name = "roles")
 public class Role {
+    public Role() {
+    }
+
     private int id;
     private String name;
 
@@ -11,17 +17,13 @@ public class Role {
         this.name = name;
     }
 
-    public Role(String name) {
-        this.name = name;
-    }
-
-    public Role() {
-    }
-
+    @Id
+    @Column(name = "id")
+    @SequenceGenerator(name = "rolesIdSeq", sequenceName = "roles_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rolesIdSeq")
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -29,7 +31,6 @@ public class Role {
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
