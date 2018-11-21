@@ -15,7 +15,7 @@ sonarqube {
         property "sonar.sourceEncoding", "UTF-8"
         property "sonar.projectName", "bookSharingProject"
         property "sonar.projectKey", "bookSharing"
-        property "sonar.coverage.exclusions", "**/src/main/java/ru/innopolis/stc12/booksharing/model/pojo/*"
+        property "sonar.coverage.exclusions", "**/src/main/java/ru/innopolis/stc12/booksharing/model/pojo/*,**/src/main/java/ru/innopolis/stc12/booksharing/model/dao/entity/*"
         property "sonar.organization", "stc12team"
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.language", "java"
@@ -50,6 +50,7 @@ dependencies {
     liquibaseRuntime 'org.liquibase:liquibase-core:3.6.2'
     liquibaseRuntime 'org.liquibase:liquibase-groovy-dsl:2.0.1'
     liquibaseRuntime 'org.postgresql:postgresql:42.2.5'
+    compile group: 'com.vladmihalcea', name: 'hibernate-types-52', version: '2.3.4' //PostgreSQLEnumType
 }
 
 test {

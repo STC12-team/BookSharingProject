@@ -1,15 +1,22 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopyEntity;
 import ru.innopolis.stc12.booksharing.model.dao.mapper.BookCopyMapper;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
 
 import java.util.List;
 
+
+@EnableTransactionManagement
 @Repository
 public class BookCopiesDaoImpl implements BookCopiesDao {
     private JdbcTemplate jdbcTemplate;
@@ -34,8 +41,19 @@ public class BookCopiesDaoImpl implements BookCopiesDao {
     }
 
 
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public void setSessionFactory(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     @Override
+    @Transactional
     public BookCopy getBookCopiesById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        BookCopyEntity bookCopyEntity = session.get(BookCopyEntity.class, id);
+        //TODO вернуть BookCopyEntity, а jdbcTemplate удалить
         return jdbcTemplate.queryForObject(SQL_SELECT_BY_ID, new Object[]{id}, new BookCopyMapper());
     }
 
