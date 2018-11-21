@@ -81,6 +81,7 @@ public class BookEditionsDaoImpl implements BookEditionsDao {
         return queryObject.executeQuery(predicateOr);
     }
 
+    //TODO перенести в базовый класс
     private class QueryObject {
         Session session;
         CriteriaBuilder criteriaBuilder;
