@@ -5,6 +5,8 @@ import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopyEntity;
@@ -22,6 +24,8 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class BookCopiesDaoImplTest {
+
+    @InjectMocks
     private BookCopiesDaoImpl bookCopiesDao;
     @Mock
     private JdbcTemplate jdbcTemplate;
@@ -38,10 +42,7 @@ class BookCopiesDaoImplTest {
 
     @BeforeEach
     void setUp() {
-        initMocks(this);
-        bookCopiesDao = new BookCopiesDaoImpl();
-        bookCopiesDao.setJdbcTemplate(jdbcTemplate);
-        bookCopiesDao.setSessionFactory(sessionFactory);
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test

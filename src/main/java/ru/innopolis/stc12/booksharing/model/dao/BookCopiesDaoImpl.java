@@ -7,16 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Transactional;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopyEntity;
 import ru.innopolis.stc12.booksharing.model.dao.mapper.BookCopyMapper;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
 
 import java.util.List;
 
-
-@EnableTransactionManagement
 @Repository
 public class BookCopiesDaoImpl implements BookCopiesDao {
     private JdbcTemplate jdbcTemplate;
@@ -49,7 +45,6 @@ public class BookCopiesDaoImpl implements BookCopiesDao {
     }
 
     @Override
-    @Transactional
     public BookCopy getBookCopiesById(int id) {
         Session session = sessionFactory.getCurrentSession();
         BookCopyEntity bookCopyEntity = session.get(BookCopyEntity.class, id);
