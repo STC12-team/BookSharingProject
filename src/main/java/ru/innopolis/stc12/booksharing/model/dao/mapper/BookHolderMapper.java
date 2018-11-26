@@ -1,10 +1,10 @@
 package ru.innopolis.stc12.booksharing.model.dao.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
-import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
 import ru.innopolis.stc12.booksharing.model.pojo.BookHolder;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
 

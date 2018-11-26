@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.mapper.UserDetailsMapper;
 import ru.innopolis.stc12.booksharing.model.dao.mapper.UserMapper;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
@@ -53,6 +54,11 @@ public class UserDaoImpl implements UserDao {
             return null;
         }
         return user;
+    }
+
+    @Override
+    public List<BookCopy> getAllBookCopy() {
+        return null;
     }
 
     @Override

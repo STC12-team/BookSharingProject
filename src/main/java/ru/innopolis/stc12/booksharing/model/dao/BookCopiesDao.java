@@ -1,19 +1,16 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
-import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 
+import java.io.Serializable;
 import java.util.List;
 
 public interface BookCopiesDao {
-    BookCopy getBookCopiesById(int id);
+    BookCopy getBookCopyById(int id);
 
-    List<BookCopy> getAllBookCopies();
+    Serializable addBookCopy(BookCopy bookCopy);
 
-    BookCopy getBookCopiesByIsbn(String isbn);
-
-    boolean addBookCopy(BookCopy bookCopy);
-
-    boolean updateBookCopy(BookCopy bookCopy);
+    void updateBookCopy(BookCopy bookCopy);
 
     int getBookCopyCountByBookEditionId(int id);
 

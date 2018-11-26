@@ -1,11 +1,13 @@
 package ru.innopolis.stc12.booksharing.model.dao.entity;
 
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+
 import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
 @Table(name = "publishers")
-public class Publisher {
+public class Publisher extends HibernateDaoSupport {
     private Integer id;
     private String name;
 

@@ -6,23 +6,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopyEntity;
+import org.springframework.orm.hibernate4.HibernateTemplate;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
-import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
-import static org.mockito.MockitoAnnotations.initMocks;
 
 class BookCopiesDaoImplTest {
 
@@ -31,15 +28,17 @@ class BookCopiesDaoImplTest {
     @Mock
     private JdbcTemplate jdbcTemplate;
     @Mock
-    private SessionFactory sessionFactory;
+    private HibernateTemplate hibernateTemplate;
+    //@Mock
+    //private SessionFactory sessionFactory;
     @Mock
     private BookCopy bookCopy;
     @Mock
     private BookEdition bookEdition;
     @Mock
     private User user;
-    @Mock
-    private Session session;
+    //@Mock
+    //private Session session;
 
     @BeforeEach
     void setUp() {
@@ -49,52 +48,22 @@ class BookCopiesDaoImplTest {
     @Test
     void getBookCopiesById() {
         BookCopy bookCopy = new BookCopy();
-        BookCopyEntity bookCopyEntity = new BookCopyEntity();
-        when(session.get(BookCopyEntity.class, 1)).thenReturn(bookCopyEntity);
-        when(sessionFactory.getCurrentSession()).thenReturn(session);
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(bookCopy);
-        assertEquals(bookCopy, bookCopiesDao.getBookCopiesById(0));
-    }
-
-    @Test
-    void getAllBookCopies() {
-        List<BookCopy> list = new ArrayList<>();
-        list.add(new BookCopy());
-        when(jdbcTemplate.query(anyString(), any(RowMapper.class))).thenReturn(list);
-        assertEquals(list, bookCopiesDao.getAllBookCopies());
-    }
-
-    @Test
-    void getBookCopiesByIsbn() {
-        BookCopy bookCopy = new BookCopy();
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(bookCopy);
-        assertEquals(bookCopy, bookCopiesDao.getBookCopiesByIsbn("isbn"));
-    }
-
-    @Test
-    void addBookCopiesWhenTrue() {
-        when(jdbcTemplate.update(anyString(), any(Object.class))).thenReturn(1);
-        when(bookCopy.getBookEdition()).thenReturn(bookEdition);
-        when(bookCopy.getUser()).thenReturn(user);
-        when(bookEdition.getId()).thenReturn(1);
-        when(user.getId()).thenReturn((long) 1);
-        when(bookCopy.getBookEdition().getId()).thenReturn(1);
-        when(bookCopy.getUser().getId()).thenReturn((long) 1);
-        when(bookCopy.getStatus()).thenReturn(BookCopiesStatus.FREE);
-        assertEquals(true, bookCopiesDao.addBookCopy(bookCopy));
+        when(hibernateTemplate.get(BookCopy.class, 1)).thenReturn(bookCopy);
+        assertEquals(bookCopy, bookCopiesDao.getBookCopyById(1));
     }
 
     @Test
     void addBookCopiesWhenFalse() {
         when(jdbcTemplate.update(anyString(), any(Object.class))).thenReturn(0);
         when(bookCopy.getBookEdition()).thenReturn(bookEdition);
-        when(bookCopy.getUser()).thenReturn(user);
+        when(bookCopy.getOwner()).thenReturn(user);
         when(bookEdition.getId()).thenReturn(1);
         when(user.getId()).thenReturn((long) 1);
         when(bookCopy.getBookEdition().getId()).thenReturn(1);
-        when(bookCopy.getUser().getId()).thenReturn((long) 1);
+        when(bookCopy.getOwner().getId()).thenReturn((long) 1);
         when(bookCopy.getStatus()).thenReturn(BookCopiesStatus.FREE);
-        assertEquals(false, bookCopiesDao.addBookCopy(bookCopy));
+        Serializable sss = bookCopiesDao.addBookCopy(bookCopy);
+        assertNotNull(sss);
     }
 
     @Test

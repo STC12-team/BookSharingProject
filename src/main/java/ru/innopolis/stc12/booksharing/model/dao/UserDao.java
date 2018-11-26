@@ -1,5 +1,6 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
 import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 
@@ -7,6 +8,8 @@ import java.util.List;
 
 public interface UserDao {
     User getUserById(int id);
+
+    List<BookCopy> getAllBookCopy();
 
     List<User> getAllUsers();
 
