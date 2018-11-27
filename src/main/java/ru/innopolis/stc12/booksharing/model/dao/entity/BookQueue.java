@@ -51,6 +51,8 @@ public class BookQueue {
     }
 
     @Column(name = "user_id")
+    @ManyToOne
+    @JoinColumn(name = "id")
     public User getUser() {
         return user;
     }
