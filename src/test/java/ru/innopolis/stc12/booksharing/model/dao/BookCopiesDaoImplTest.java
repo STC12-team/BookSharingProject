@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
+import ru.innopolis.stc12.booksharing.model.dao.implementation.AbstractDaoImp;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
 import ru.innopolis.stc12.booksharing.model.pojo.User;
 
@@ -19,6 +20,8 @@ import java.io.Serializable;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class BookCopiesDaoImplTest {
@@ -28,17 +31,15 @@ class BookCopiesDaoImplTest {
     @Mock
     private JdbcTemplate jdbcTemplate;
     @Mock
-    private HibernateTemplate hibernateTemplate;
-    //@Mock
-    //private SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
     @Mock
     private BookCopy bookCopy;
     @Mock
     private BookEdition bookEdition;
     @Mock
     private User user;
-    //@Mock
-    //private Session session;
+    @Mock
+    private Session session;
 
     @BeforeEach
     void setUp() {
@@ -46,10 +47,10 @@ class BookCopiesDaoImplTest {
     }
 
     @Test
-    void getBookCopiesById() {
+    void findOne() {
         BookCopy bookCopy = new BookCopy();
-        when(hibernateTemplate.get(BookCopy.class, 1)).thenReturn(bookCopy);
-        assertEquals(bookCopy, bookCopiesDao.getBookCopyById(1));
+        when(session.get(BookCopy.class, 1)).thenReturn(bookCopy);
+        assertEquals(bookCopy, bookCopiesDao.findOne(1));
     }
 
     @Test
@@ -62,8 +63,8 @@ class BookCopiesDaoImplTest {
         when(bookCopy.getBookEdition().getId()).thenReturn(1);
         when(bookCopy.getOwner().getId()).thenReturn((long) 1);
         when(bookCopy.getStatus()).thenReturn(BookCopiesStatus.FREE);
-        Serializable sss = bookCopiesDao.addBookCopy(bookCopy);
-        assertNotNull(sss);
+        bookCopiesDao.save(bookCopy);
+        verify(bookCopy, times()).
     }
 
     @Test

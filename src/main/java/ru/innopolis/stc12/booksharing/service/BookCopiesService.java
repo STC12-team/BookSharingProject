@@ -28,20 +28,20 @@ public class BookCopiesService {
         this.userDao = userDao;
     }
 
-    public Serializable addBook(BookCopy book) {
-        return bookCopiesDao.addBookCopy(book);
+    public void addBook(BookCopy book) {
+        bookCopiesDao.save(book);
     }
 
     public List<BookCopy> getBookCopyByUser() {
        return userDao.getAllBookCopy();
     }
 
-    public BookCopy getBookCopyById(Integer id) {
-        return bookCopiesDao.getBookCopyById(id);
+    public Serializable getBookCopyById(Integer id) {
+        return bookCopiesDao.findOne(id);
     }
 
-    public void updateBookCopy(BookCopy bookCopy) {
-        bookCopiesDao.updateBookCopy(bookCopy);
+    public Serializable updateBookCopy(BookCopy bookCopy) {
+        return bookCopiesDao.update(bookCopy);
     }
 
     public int getBookCopyCountByBookEditionId(int id) {
