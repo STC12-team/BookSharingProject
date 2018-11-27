@@ -1,7 +1,9 @@
 package ru.innopolis.stc12.booksharing.model.dao.entity;
 
+import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import ru.innopolis.stc12.booksharing.model.pojo.BookQueueStatus;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -9,6 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "book_queue")
+@TypeDef(name = "book_queue_status_enum", typeClass = PostgreSQLEnumType.class)
 public class BookQueue {
     private Integer id;
     private BookEdition bookEdition;
@@ -29,8 +32,6 @@ public class BookQueue {
 
     @Id
     @Column(name = "id")
-    @SequenceGenerator(name = "bookQueueIdSeq", sequenceName = "bookQueue_id_seq")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookQueueIdSeq")
     public Integer getId() {
         return id;
     }
@@ -39,9 +40,9 @@ public class BookQueue {
         this.id = id;
     }
 
-    @Column(name = "book_edition_id")
-    @ManyToOne
-    @JoinColumn(name="id")
+    @ManyToOne(optional=false)
+    @ElementCollection(targetClass=BookEdition.class)
+    @JoinColumn(name="book_edition_id", referencedColumnName = "id")
     public BookEdition getBookEdition() {
         return bookEdition;
     }
@@ -50,9 +51,9 @@ public class BookQueue {
         this.bookEdition = bookEdition;
     }
 
-    @Column(name = "user_id")
     @ManyToOne
-    @JoinColumn(name = "id")
+    @ElementCollection(targetClass=User.class)
+    @JoinColumn(name="user_id", referencedColumnName = "id")
     public User getUser() {
         return user;
     }
@@ -70,7 +71,9 @@ public class BookQueue {
         this.addedAt = addedAt;
     }
 
-    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", columnDefinition = "public.book_queue_status")
+    @Type(type = "book_queue_status_enum")
     public BookQueueStatus getStatus() {
         return status;
     }
