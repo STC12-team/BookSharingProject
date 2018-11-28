@@ -23,7 +23,7 @@ public class CatalogController {
 
     @GetMapping(value = "/catalog")
     public String showCatalogPage(Model model) {
-        List<BookCopy> bookCopies = bookCopiesService.getBookCopyByUser();
+        List<BookCopy> bookCopies = bookCopiesService.getBookCopyByUser(0);
         if (!bookCopies.isEmpty()) {
             model.addAttribute("bookCopies", bookCopies);
         } else {

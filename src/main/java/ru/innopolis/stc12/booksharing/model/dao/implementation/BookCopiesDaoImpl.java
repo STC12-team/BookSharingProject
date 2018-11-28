@@ -1,12 +1,9 @@
-package ru.innopolis.stc12.booksharing.model.dao;
+package ru.innopolis.stc12.booksharing.model.dao.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
-import ru.innopolis.stc12.booksharing.model.dao.implementation.AbstractDaoImp;
-
-import java.io.Serializable;
+import ru.innopolis.stc12.booksharing.model.dao.BookCopiesDao;
 
 @Repository
 public class BookCopiesDaoImpl extends AbstractDaoImp implements BookCopiesDao {

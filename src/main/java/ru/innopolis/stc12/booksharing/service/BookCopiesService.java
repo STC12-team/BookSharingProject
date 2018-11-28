@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.innopolis.stc12.booksharing.model.dao.BookCopiesDao;
 import ru.innopolis.stc12.booksharing.model.dao.UserDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
+import ru.innopolis.stc12.booksharing.model.pojo.User;
 
 import java.io.Serializable;
 import java.util.List;
@@ -15,11 +16,11 @@ import java.util.List;
 @Service
 @Transactional
 public class BookCopiesService {
-    private BookCopiesDao bookCopiesDao;
+    private BookCopiesDao<BookCopy> bookCopiesDao;
     private UserDao userDao;
 
     @Autowired
-    public void setBookCopiesDao(BookCopiesDao bookCopiesDao) {
+    public void setBookCopiesDao(BookCopiesDao<BookCopy> bookCopiesDao) {
         this.bookCopiesDao = bookCopiesDao;
     }
 
@@ -32,15 +33,16 @@ public class BookCopiesService {
         bookCopiesDao.save(book);
     }
 
-    public List<BookCopy> getBookCopyByUser() {
-       return userDao.getAllBookCopy();
+    public List<BookCopy> getBookCopyByUser(int userId) {
+        User user = userDao.getUserById(userId);
+        return user.getBookCopies();
     }
 
-    public Serializable getBookCopyById(Integer id) {
+    public BookCopy getBookCopyById(Integer id) {
         return bookCopiesDao.findOne(id);
     }
 
-    public Serializable updateBookCopy(BookCopy bookCopy) {
+    public BookCopy updateBookCopy(BookCopy bookCopy) {
         return bookCopiesDao.update(bookCopy);
     }
 

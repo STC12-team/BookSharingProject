@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface AbstractDao<T extends Serializable> {
-    T findOne(final long id);
+    T findOne(long id);
 
     List<T> findAll();
 
@@ -17,6 +17,4 @@ public interface AbstractDao<T extends Serializable> {
     void delete(T entity);
 
     void deleteById(long id);
-
-    Session getCurrentSession();
 }

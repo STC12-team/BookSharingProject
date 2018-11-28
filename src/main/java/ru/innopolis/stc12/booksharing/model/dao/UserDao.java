@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserDao {
     User getUserById(int id);
 
-    List<BookCopy> getAllBookCopy();
+    List<BookCopy> getBookCopyByUser(int userId);
 
     List<User> getAllUsers();
 

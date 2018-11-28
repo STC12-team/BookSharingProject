@@ -4,19 +4,25 @@ package ru.innopolis.stc12.booksharing.model.dao.implementation;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import ru.innopolis.stc12.booksharing.model.dao.AbstractDao;
 
 import java.io.Serializable;
 import java.util.List;
 
-public abstract class AbstractDaoImp<T extends Serializable> {
+@Repository
+public abstract class AbstractDaoImp<T extends Serializable> implements AbstractDao<T>  {
 
     private Class<T> clazz;
 
     @Autowired
     private SessionFactory sessionFactory;
 
-    protected void setClazz(final Class<T> clazzToSet) {
+    protected final Session getCurrentSession() {
+        return sessionFactory.getCurrentSession();
+    }
+
+    protected final void setClazz(final Class<T> clazzToSet) {
         clazz = clazzToSet;
     }
 
@@ -43,9 +49,5 @@ public abstract class AbstractDaoImp<T extends Serializable> {
     public void deleteById(final long id) {
         final T entity = findOne(id);
         delete(entity);
-    }
-
-    public Session getCurrentSession() {
-        return sessionFactory.getCurrentSession();
     }
 }

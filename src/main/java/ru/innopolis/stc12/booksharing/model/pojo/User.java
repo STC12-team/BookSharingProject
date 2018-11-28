@@ -1,5 +1,10 @@
 package ru.innopolis.stc12.booksharing.model.pojo;
 
+import com.sun.javafx.scene.control.skin.VirtualFlow;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class User {
@@ -68,6 +73,10 @@ public class User {
 
     public void setEnabled(int enabled) {
         this.enabled = enabled;
+    }
+
+    public List<BookCopy> getBookCopies() {
+        return new ArrayList<BookCopy>();
     }
 
     @Override

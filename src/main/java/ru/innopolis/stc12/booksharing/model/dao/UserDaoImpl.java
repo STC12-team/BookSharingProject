@@ -45,6 +45,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public List<BookCopy> getBookCopyByUser(int userId) {
+        return null;
+    }
+
+    @Override
     public User getUserById(int id) {
         User user;
         try {
@@ -56,10 +61,6 @@ public class UserDaoImpl implements UserDao {
         return user;
     }
 
-    @Override
-    public List<BookCopy> getAllBookCopy() {
-        return null;
-    }
 
     @Override
     public List<User> getAllUsers() {

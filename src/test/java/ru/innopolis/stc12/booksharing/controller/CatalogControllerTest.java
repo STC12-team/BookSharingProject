@@ -40,7 +40,7 @@ public class CatalogControllerTest {
     void getCatalogPageWithLoginSuccess() {
         List<BookCopy> list = new ArrayList<>();
         catalogController.setBookCopiesService(bookCopiesService);
-        when(bookCopiesService.getBookCopyByUser()).thenReturn(list);
+        when(bookCopiesService.getBookCopyByUser(1)).thenReturn(list);
         assertEquals("catalog", catalogController.showCatalogPage(model));
     }
 
