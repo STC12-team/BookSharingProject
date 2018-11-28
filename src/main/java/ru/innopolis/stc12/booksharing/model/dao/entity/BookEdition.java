@@ -54,6 +54,7 @@ public class BookEdition {
     }
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "publisher_id")
     public Publisher getPublisher() {
         return publisher;
     }
@@ -62,6 +63,7 @@ public class BookEdition {
         this.publisher = publisher;
     }
 
+    @Column(name = "title")
     public String getTitle() {
         return title;
     }
@@ -70,6 +72,7 @@ public class BookEdition {
         this.title = title;
     }
 
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
