@@ -8,14 +8,14 @@ import java.util.Objects;
 @Table(name = "book_holders")
 public class BookHolder {
     private Integer id;
-    private BookCopyEntity bookCopy;
+    private BookCopy bookCopy;
     //TODO переделать на User entity
     private Integer user;
     private Timestamp getAt;
     private Timestamp gaveAt;
     private Integer nextHolderId;
 
-    public BookHolder(Integer id, BookCopyEntity bookCopy, Integer user, Timestamp getAt, Timestamp gaveAt, Integer nextHolderId) {
+    public BookHolder(Integer id, BookCopy bookCopy, Integer user, Timestamp getAt, Timestamp gaveAt, Integer nextHolderId) {
         this.id = id;
         this.bookCopy = bookCopy;
         this.user = user;
@@ -24,7 +24,7 @@ public class BookHolder {
         this.nextHolderId = nextHolderId;
     }
 
-    public BookHolder(BookCopyEntity bookCopy, Integer user, Timestamp getAt, Timestamp gaveAt, Integer nextHolderId) {
+    public BookHolder(BookCopy bookCopy, Integer user, Timestamp getAt, Timestamp gaveAt, Integer nextHolderId) {
         this.bookCopy = bookCopy;
         this.user = user;
         this.getAt = getAt;
@@ -49,11 +49,11 @@ public class BookHolder {
 
     @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "book_copy_id")
-    public BookCopyEntity getBookCopy() {
+    public BookCopy getBookCopy() {
         return bookCopy;
     }
 
-    public void setBookCopy(BookCopyEntity bookCopy) {
+    public void setBookCopy(BookCopy bookCopy) {
         this.bookCopy = bookCopy;
     }
 
