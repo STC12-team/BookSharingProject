@@ -1,12 +1,13 @@
 package ru.innopolis.stc12.booksharing.model.dao.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "book_holders")
-public class BookHolder {
+public class BookHolder implements Serializable {
     private Integer id;
     private BookCopy bookCopy;
     //TODO переделать на User entity

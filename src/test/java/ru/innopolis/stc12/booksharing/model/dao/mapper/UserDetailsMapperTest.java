@@ -2,7 +2,6 @@ package ru.innopolis.stc12.booksharing.model.dao.mapper;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
 import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 
 import java.sql.ResultSet;

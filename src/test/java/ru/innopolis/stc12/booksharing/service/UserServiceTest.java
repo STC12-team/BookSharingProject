@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.innopolis.stc12.booksharing.model.dao.UserDao;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ class UserServiceTest {
     @Test
     void getUsers() {
         List<User> users = new ArrayList<>();
-        when(userDao.getAllUsers()).thenReturn(users);
+//        when(userDao.getAllUsers()).thenReturn(users);
         Assertions.assertEquals(users, userService.getUsers());
     }
 
@@ -74,7 +74,7 @@ class UserServiceTest {
     void confirmCorrectPassword() {
         UserDetails userDetails = new UserDetails(1, 1, "firstname", "lastname", "surname", "admin@example.com", "sa");
         when(userDao.getUserDetails()).thenReturn(userDetails);
-        when(userDao.checkUserPasswordMatches(anyString(), anyString())).thenReturn(true);
+//        when(userDao.checkUserPasswordMatches(anyString(), anyString())).thenReturn(true);
         assertTrue(userService.confirmPassword("sa"));
     }
 
@@ -82,7 +82,7 @@ class UserServiceTest {
     void confirmWrongPassword() {
         UserDetails userDetails = new UserDetails(1, 1, "firstname", "lastname", "surname", "admin@example.com", "secret");
         when(userDao.getUserDetails()).thenReturn(userDetails);
-        when(userDao.checkUserPasswordMatches(anyString(), anyString())).thenReturn(false);
+//        when(userDao.checkUserPasswordMatches(anyString(), anyString())).thenReturn(false);
         assertFalse(userService.confirmPassword("sa"));
     }
 

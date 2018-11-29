@@ -7,9 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.innopolis.stc12.booksharing.model.dao.BookCopiesDao;
 import ru.innopolis.stc12.booksharing.model.dao.UserDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
-
-import java.io.Serializable;
+import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import java.util.List;
 
 @EnableTransactionManagement
@@ -17,16 +15,18 @@ import java.util.List;
 @Transactional
 public class BookCopiesService {
     private BookCopiesDao<BookCopy> bookCopiesDao;
-    private UserDao userDao;
+    private UserDao<User> userDao;
 
     @Autowired
     public void setBookCopiesDao(BookCopiesDao<BookCopy> bookCopiesDao) {
         this.bookCopiesDao = bookCopiesDao;
+        this.bookCopiesDao.setClazz(BookCopy.class);
     }
 
     @Autowired
-    public void setUserDao(UserDao userDao) {
+    public void setUserDao(UserDao<User> userDao) {
         this.userDao = userDao;
+        this.userDao.setClazz(User.class);
     }
 
     public void addBook(BookCopy book) {
@@ -34,7 +34,7 @@ public class BookCopiesService {
     }
 
     public List<BookCopy> getBookCopyByUser(int userId) {
-        User user = userDao.getUserById(userId);
+        User user = userDao.findOne(userId);
         return user.getBookCopies();
     }
 

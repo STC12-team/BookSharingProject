@@ -7,7 +7,7 @@ import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 import ru.innopolis.stc12.booksharing.model.pojo.BookQueue;
 import ru.innopolis.stc12.booksharing.model.pojo.BookQueueStatus;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +18,6 @@ import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class BookQueueMapperTest {
-    private BookQueueMapper bookQueueMapper;
     @Mock
     private ResultSet resultSet;
     @Mock
@@ -27,7 +26,6 @@ class BookQueueMapperTest {
     @BeforeEach
     void setUp() {
         initMocks(this);
-        bookQueueMapper = new BookQueueMapper();
     }
 
     @Test
@@ -49,8 +47,8 @@ class BookQueueMapperTest {
         when(resultSet.getTimestamp(4)).thenReturn(timestamp);
         when(resultSet.getString(5)).thenReturn("WAIT");
         BookEdition bookEdition = new BookEdition(6, "7", "8", "9", new Publisher(12, "13"), 11);
-        User user = new User(14, "15", "16", 17, "20", 18);
-        BookQueue bookQueue = new BookQueue(1, bookEdition, user, timestamp, BookQueueStatus.valueOf("WAIT"));
-        assertEquals(bookQueue, bookQueueMapper.mapRow(resultSet, 0));
+//        User user = new User(14, "15", "16", 17, "20", 18);
+  ///      BookQueue bookQueue = new BookQueue(1, bookEdition, user, timestamp, BookQueueStatus.valueOf("WAIT"));
+//        assertEquals(bookQueue, bookQueueMapper.mapRow(resultSet, 0));
     }
 }

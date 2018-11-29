@@ -5,13 +5,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.innopolis.stc12.booksharing.model.dao.UserDao;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 
 import java.util.List;
 
 @Service
 public class UserService {
+
+    public boolean checkUserPasswordMatches(String currentPassword, String password) {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder.matches(password, currentPassword);
+    }
+
+
+
+
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserDao userDao;
 
@@ -26,7 +35,7 @@ public class UserService {
     }
 
     public List<User> getUsers() {
-        return this.userDao.getAllUsers();
+        return this.userDao.findAll();
     }
 
     public User getUserByLogin(String login) {
@@ -54,7 +63,7 @@ public class UserService {
      */
     public boolean confirmPassword(String password) {
         String currentPassword =  getAuthenticatedUserDetails().getPassword();
-        return userDao.checkUserPasswordMatches(currentPassword, password);
+        return checkUserPasswordMatches(currentPassword, password);
     }
 
     public boolean updateUserDetails(String firstName, String lastName, String surname) {

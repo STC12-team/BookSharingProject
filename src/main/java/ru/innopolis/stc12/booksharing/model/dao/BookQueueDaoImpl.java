@@ -3,7 +3,6 @@ package ru.innopolis.stc12.booksharing.model.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import ru.innopolis.stc12.booksharing.model.dao.mapper.BookQueueMapper;
 import ru.innopolis.stc12.booksharing.model.pojo.BookQueue;
 
 import java.util.List;
@@ -26,7 +25,8 @@ public class BookQueueDaoImpl implements BookQueueDao {
 
     @Override
     public List<BookQueue> getBookQueueByBookEditionId(Integer id) {
-        return jdbcTemplate.query(SQL_SELECT_BY_BOOK_EDITION_ID, new Object[]{id}, new BookQueueMapper());
+        return null;
+                //jdbcTemplate.query(SQL_SELECT_BY_BOOK_EDITION_ID, new Object[]{id}, new BookQueueMapper());
     }
 
     @Override

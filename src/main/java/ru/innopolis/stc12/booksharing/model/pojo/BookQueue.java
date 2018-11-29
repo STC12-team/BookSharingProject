@@ -1,6 +1,7 @@
 package ru.innopolis.stc12.booksharing.model.pojo;
 
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
+import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 
 import java.sql.Timestamp;
 import java.util.Objects;

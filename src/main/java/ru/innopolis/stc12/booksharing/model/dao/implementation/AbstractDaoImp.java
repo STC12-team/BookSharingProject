@@ -22,7 +22,7 @@ public abstract class AbstractDaoImp<T extends Serializable> implements Abstract
         return sessionFactory.getCurrentSession();
     }
 
-    protected final void setClazz(final Class<T> clazzToSet) {
+    public final void setClazz(final Class<T> clazzToSet) {
         clazz = clazzToSet;
     }
 

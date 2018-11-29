@@ -4,7 +4,6 @@ import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.Type;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,12 +16,12 @@ public class BookCopy implements Serializable {
     public BookCopy() {
     }
 
-    public BookCopy(Integer id, BookEdition bookEdition, User owner, BookCopiesStatus status) {
+    /*public BookCopy(int id, BookEdition bookEdition, User owner, BookCopiesStatus status) {
         this.id = id;
         this.bookEdition = bookEdition;
         this.owner = owner;
         this.status = status;
-    }
+    }*/
 
     public BookCopy(BookEdition bookEdition, User owner, BookCopiesStatus status) {
         this.bookEdition = bookEdition;

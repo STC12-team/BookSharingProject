@@ -1,32 +1,38 @@
-package ru.innopolis.stc12.booksharing.model.pojo;
+package ru.innopolis.stc12.booksharing.model.dao.entity;
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
-import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
+import org.hibernate.annotations.TypeDef;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class User {
-    private long id;
-    private String login;
-    private String password;
-    private int roleId;
-    private String role;
-    private int enabled;
-
+@Entity
+@Table(name = "users")
+public class User implements Serializable {
     public User() {
     }
 
-    public User(long id, String login, String password, int roleId, String role, int enabled) {
+    public User(long id, String login, String password, Role role, int enabled) {
         this.id = id;
         this.login = login;
         this.password = password;
-        this.roleId = roleId;
         this.role = role;
         this.enabled = enabled;
     }
 
+    private long id;
+    private String login;
+    private String password;
+    private Role role;
+    private int enabled;
+    private String email;
+
+    @Id
+    @Column(name = "id")
+    @SequenceGenerator(name = "usersIdSeq", sequenceName = "users_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usersIdSeq")
     public long getId() {
         return id;
     }
@@ -35,6 +41,7 @@ public class User {
         this.id = id;
     }
 
+    @Column(name = "login")
     public String getLogin() {
         return login;
     }
@@ -43,6 +50,7 @@ public class User {
         this.login = login;
     }
 
+    @Column(name = "password")
     public String getPassword() {
         return password;
     }
@@ -51,28 +59,31 @@ public class User {
         this.password = password;
     }
 
-    public int getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
-    }
-
-    public String getRole() {
+    @JoinColumn(name = "role_id", nullable = false)
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
+    @Column(name = "enabled")
     public int getEnabled() {
         return enabled;
     }
 
     public void setEnabled(int enabled) {
         this.enabled = enabled;
+    }
+
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<BookCopy> getBookCopies() {
@@ -85,8 +96,7 @@ public class User {
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", roleId=" + roleId + '\'' +
-                ", role='" + role + '\'' +
+                ", roleId=" + role.getId() + '\'' +
                 ", enabled='" + enabled + '\'' +
                 '}';
     }
@@ -97,7 +107,6 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return id == user.id &&
-                roleId == user.roleId &&
                 Objects.equals(login, user.login) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(role, user.role) &&
@@ -106,6 +115,6 @@ public class User {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, roleId, role, enabled);
+        return Objects.hash(id, login, password, role, enabled);
     }
 }

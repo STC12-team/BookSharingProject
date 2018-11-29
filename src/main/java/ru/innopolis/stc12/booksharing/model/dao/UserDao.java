@@ -1,30 +1,21 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface UserDao {
-    User getUserById(int id);
+public interface UserDao<T extends Serializable> extends AbstractDao<T> {
 
     List<BookCopy> getBookCopyByUser(int userId);
 
-    List<User> getAllUsers();
-
     User getUserByLogin(String login);
 
-    /**
-     * Get user details for current authenticated user
-     *
-     * @return UserDetails
-     */
     UserDetails getUserDetails();
 
-    User addUser(String login, String passwordHash);
-
-    boolean checkUserPasswordMatches(String currentPassword, String password);
-
     boolean updateUserDetails(UserDetails userDetails);
+
+    User addUser(String login, String passwordHash);
 }

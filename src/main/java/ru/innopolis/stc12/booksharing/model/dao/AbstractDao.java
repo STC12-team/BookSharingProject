@@ -1,7 +1,5 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
-import org.hibernate.Session;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,4 +15,6 @@ public interface AbstractDao<T extends Serializable> {
     void delete(T entity);
 
     void deleteById(long id);
+
+    void setClazz(Class<T> clazzToSet);
 }
