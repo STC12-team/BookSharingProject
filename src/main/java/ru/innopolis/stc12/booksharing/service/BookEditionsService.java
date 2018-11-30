@@ -9,7 +9,9 @@ import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.utils.RegexMatcher;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -63,5 +65,13 @@ public class BookEditionsService {
 
     public List<BookEdition> getBookEditionByTitle(String title) {
         return bookEditionsDao.getBookEditionByTitle(title);
+    }
+
+    /*
+    TODO Replace mock with real object logic
+     */
+    public Map<String, Integer> getMockedAttributes() {
+        return new HashMap<String, Integer>() {{
+            put("all", 10); put("free", 4); put("queue", 6);}}; // sonar recommendations ignored for temporary solution.
     }
 }
