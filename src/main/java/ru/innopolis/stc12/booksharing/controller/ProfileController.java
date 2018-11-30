@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
-import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
+import ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
 @Controller
@@ -49,7 +49,7 @@ public class ProfileController {
     @GetMapping(value = "/userProfile")
     @ExceptionHandler(ControllerException.class)
     public String getProfilePage(Model model) {
-        authenticatedUserDetails = userService.getAuthenticatedUserDetails();
+        authenticatedUserDetails = userService.getAuthenticatedUserDetails().getUserDetails();
         if (authenticatedUserDetails == null) {
             model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, MESSAGE_CANNOT_GET_USER);
             logger.error(MESSAGE_CANNOT_GET_USER);
@@ -62,7 +62,7 @@ public class ProfileController {
     @GetMapping(value = "/userEdit")
     @ExceptionHandler(ControllerException.class)
     public String getProfileEditPage(Model model) {
-        authenticatedUserDetails = userService.getAuthenticatedUserDetails();
+        authenticatedUserDetails = userService.getAuthenticatedUserDetails().getUserDetails();
         if (authenticatedUserDetails == null) {
             model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, MESSAGE_CANNOT_GET_USER);
             logger.error(MESSAGE_CANNOT_GET_USER);

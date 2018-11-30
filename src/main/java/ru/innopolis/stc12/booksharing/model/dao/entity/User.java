@@ -12,8 +12,7 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(long id, String login, String password, Role role, int enabled) {
-        this.id = id;
+    public User(String login, String password, Role role, int enabled) {
         this.login = login;
         this.password = password;
         this.role = role;
@@ -26,6 +25,7 @@ public class User implements Serializable {
     private Role role;
     private int enabled;
     private String email;
+    private UserDetails userDetails;
 
     @Id
     @Column(name = "id", nullable=false)
@@ -86,6 +86,14 @@ public class User implements Serializable {
 
     public List<BookCopy> getBookCopies() {
         return new ArrayList<BookCopy>();
+    }
+
+    @JoinColumn(name = "id", referencedColumnName = "user_id")
+    public UserDetails getUserDetails() {
+        return this.userDetails;
+    }
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
     }
 
     @Override

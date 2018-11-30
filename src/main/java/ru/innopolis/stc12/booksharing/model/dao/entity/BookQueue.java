@@ -6,13 +6,14 @@ import org.hibernate.annotations.TypeDef;
 import ru.innopolis.stc12.booksharing.model.pojo.BookQueueStatus;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "book_queue")
 @TypeDef(name = "book_queue_status_enum", typeClass = PostgreSQLEnumType.class)
-public class BookQueue {
+public class BookQueue implements Serializable {
     private Integer id;
     private BookEdition bookEdition;
     private User user;

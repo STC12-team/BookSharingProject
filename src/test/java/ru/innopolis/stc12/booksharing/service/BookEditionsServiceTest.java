@@ -34,7 +34,7 @@ class BookEditionsServiceTest {
     @Test
     void getAllBookEditions() {
         List<BookEdition> list = new ArrayList<>();
-        when(bookEditionsDao.getAllBookEditions()).thenReturn(list);
+//        when(bookEditionsDao.getAllBookEditions()).thenReturn(list);
         bookEditionsService.setBookEditionsDao(bookEditionsDao);
         assertEquals(list, bookEditionsService.getAllBookEditions());
     }
@@ -43,7 +43,7 @@ class BookEditionsServiceTest {
     void addBookEdition() {
         BookEdition bookEdition = new BookEdition();
         ArgumentCaptor<BookEdition> valueCapture = ArgumentCaptor.forClass(BookEdition.class);
-        when(bookEditionsDao.addBookEdition(valueCapture.capture())).thenReturn(true);
+//        when(bookEditionsDao.addBookEdition(valueCapture.capture())).thenReturn(true);
         bookEditionsService.setBookEditionsDao(bookEditionsDao);
         bookEditionsService.addBookEdition(bookEdition);
         assertEquals(bookEdition, valueCapture.getValue());

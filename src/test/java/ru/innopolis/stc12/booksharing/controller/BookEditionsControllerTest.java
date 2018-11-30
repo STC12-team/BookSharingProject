@@ -58,7 +58,7 @@ class BookEditionsControllerTest {
 
     @Test
     void addBookEdition() {
-        when(bookEditionsService.addBookEdition(any())).thenReturn(true);
+//        when(bookEditionsService.addBookEdition(any())).thenReturn(true);
         assertEquals(
                 "addBookEdition",
                 bookEditionsController.addBookEdition(
@@ -72,7 +72,7 @@ class BookEditionsControllerTest {
         when(bookEditionsService.getById(anyInt())).thenReturn(bookEdition);
         when(bookCopiesService.getBookCopyCountByBookEditionId(anyInt())).thenReturn(1);
         when(bookCopiesService.getBookCopyCountByBookEditionIdInStatusFree(anyInt())).thenReturn(1);
-        when(bookQueueService.getUserCountByBookEditionId(anyInt())).thenReturn(1);
+//        when(bookQueueService.getUserCountByBookEditionId(anyInt())).thenReturn(1);
         assertEquals("bookEditionDescription", bookEditionsController.showBookEditionDescriptionPage(1, model));
         verify(model, times(1)).addAttribute("bookEdition", bookEdition);
         verify(model, times(1)).addAttribute("countBookCopy", 1);

@@ -1,10 +1,11 @@
-package ru.innopolis.stc12.booksharing.model.dao;
+package ru.innopolis.stc12.booksharing.model.dao.implementation;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import ru.innopolis.stc12.booksharing.model.dao.BookEditionsDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 
@@ -12,7 +13,7 @@ import javax.persistence.criteria.*;
 import java.util.List;
 
 @Repository
-public class BookEditionsDaoImpl implements BookEditionsDao {
+public class BookEditionsDaoImpl extends AbstractDaoImp implements BookEditionsDao {
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -29,23 +30,6 @@ public class BookEditionsDaoImpl implements BookEditionsDao {
     }
 
     @Override
-    public BookEdition getBookEditionById(int id) {
-        QueryObject queryObject = new QueryObject();
-        Predicate predicate = queryObject.criteriaBuilder.equal(queryObject.root.get("id"), id);
-        List<BookEdition> list = queryObject.executeQuery(predicate);
-        if (list.isEmpty()) {
-            return null;
-        }
-        return list.get(0);
-    }
-
-    @Override
-    public List<BookEdition> getAllBookEditions() {
-        QueryObject queryObject = new QueryObject();
-        return queryObject.executeQuery();
-    }
-
-    @Override
     public BookEdition getBookEditionByIsbn(String isbn) {
         QueryObject queryObject = new QueryObject();
         Predicate predicate = queryObject.criteriaBuilder.equal(queryObject.root.get("isbn"), isbn);
@@ -54,13 +38,6 @@ public class BookEditionsDaoImpl implements BookEditionsDao {
             return null;
         }
         return list.get(0);
-    }
-
-    @Override
-    public boolean addBookEdition(BookEdition bookEdition) {
-        Session session = sessionFactory.getCurrentSession();
-        session.save(bookEdition);
-        return true;
     }
 
     @Override

@@ -31,7 +31,7 @@ class PublisherServiceTest {
     void getAllPublishers() {
         List<Publisher> list = new ArrayList<>();
         list.add(new Publisher("Test publisher"));
-        when(publisherDao.getAllPublishers()).thenReturn(list);
+//        when(publisherDao.getAllPublishers()).thenReturn(list);
         assertEquals(list, publisherService.getAllPublishers());
     }
 
@@ -39,7 +39,7 @@ class PublisherServiceTest {
     void addPublisher() {
         Publisher publisher = new Publisher("Test name");
         ArgumentCaptor<Publisher> valueCapture = ArgumentCaptor.forClass(Publisher.class);
-        when(publisherDao.addPublisher(valueCapture.capture())).thenReturn(true);
+//        when(publisherDao.addPublisher(valueCapture.capture())).thenReturn(true);
         publisherService.addPublisher(publisher);
         assertEquals(publisher, valueCapture.getValue());
     }

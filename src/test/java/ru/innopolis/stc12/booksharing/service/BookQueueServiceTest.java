@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ru.innopolis.stc12.booksharing.model.dao.BookQueueDao;
-import ru.innopolis.stc12.booksharing.model.pojo.BookQueue;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookQueue;
 
 import java.util.List;
 
@@ -30,13 +30,13 @@ class BookQueueServiceTest {
 
     @Test
     void getBookQueueByBookEditionId() {
-        when(bookQueueDao.getBookQueueByBookEditionId(anyInt())).thenReturn(bookQueueList);
+//        when(bookQueueDao.getBookQueueByBookEditionId(anyInt())).thenReturn(bookQueueList);
         assertEquals(bookQueueList, bookQueueService.getBookQueueByBookEditionId(anyInt()));
     }
 
     @Test
     void updateBookQueue() {
-        when(bookQueueDao.updateBookQueue(any())).thenReturn(true);
+//        when(bookQueueDao.updateBookQueue(any())).thenReturn(true);
         assertEquals(true, bookQueueService.updateBookQueue(any()));
     }
 }

@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.view.RedirectView;
-import ru.innopolis.stc12.booksharing.model.pojo.UserDetails;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,7 +41,7 @@ class ProfileControllerTest {
 
     @Test
     void getProfilePage() {
-        when(userService.getAuthenticatedUserDetails()).thenReturn(new UserDetails());
+//        when(userService.getAuthenticatedUserDetails()).thenReturn(new UserDetails());
         when(model.addAttribute(anyString())).thenReturn(model);
         assertEquals("userProfile", profileController.getProfilePage(model));
     }
@@ -54,7 +53,7 @@ class ProfileControllerTest {
 
     @Test
     void getProfileEditPageWithDetails() {
-        when(userService.getAuthenticatedUserDetails()).thenReturn(new UserDetails());
+//        when(userService.getAuthenticatedUserDetails()).thenReturn(new UserDetails());
         when(model.addAttribute(anyString(), any())).thenReturn(model);
         profileController.setUserPasswordConfirmed(true);
         assertEquals("userEdit", profileController.getProfileEditPage(model));

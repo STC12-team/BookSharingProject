@@ -1,11 +1,12 @@
 package ru.innopolis.stc12.booksharing.model.dao.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "user_details")
-public class UserDetails {
+public class UserDetails implements Serializable {
     private Integer id;
     private Integer userId;
     private String firstName;

@@ -2,16 +2,12 @@ package ru.innopolis.stc12.booksharing.model.dao;
 
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface BookEditionsDao {
-    BookEdition getBookEditionById(int id);
-
-    List<BookEdition> getAllBookEditions();
+public interface BookEditionsDao<T extends Serializable> extends AbstractDao<T> {
 
     BookEdition getBookEditionByIsbn(String isbn);
-
-    boolean addBookEdition(BookEdition bookEdition);
 
     List<BookEdition> getBookEditionByTitle(String name);
 

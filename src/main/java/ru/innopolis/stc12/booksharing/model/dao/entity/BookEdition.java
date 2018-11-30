@@ -1,17 +1,22 @@
 package ru.innopolis.stc12.booksharing.model.dao.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "book_editions")
-public class BookEdition {
+public class BookEdition implements Serializable {
     private Integer id;
     private String title;
     private String description;
     private String isbn;
     private Publisher publisher;
     private Integer yearOfPublication;
+    private List<BookCopy> bookCopies = new ArrayList<>();
+    private List<BookQueue> bookQueues = new ArrayList<>();
 
     public BookEdition() {
     }
@@ -61,6 +66,23 @@ public class BookEdition {
 
     public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book_editions")
+    public List<BookCopy> getBookCopies() {
+        return this.bookCopies;
+    }
+
+    public void setBookCopies(List<BookCopy> bookCopies) {
+        this.bookCopies = bookCopies;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book_editions")
+    public List<BookQueue> getBookQueue() {
+        return this.bookQueues;
+    }
+    public void setBookQueue(List<BookQueue> bookQueue) {
+        this.bookQueues = bookQueue;
     }
 
     @Column(name = "title")

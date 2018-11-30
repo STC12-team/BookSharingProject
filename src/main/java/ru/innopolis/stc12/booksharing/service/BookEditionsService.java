@@ -15,7 +15,7 @@ import java.util.List;
 @Transactional
 @EnableTransactionManagement
 public class BookEditionsService {
-    private BookEditionsDao bookEditionsDao;
+    private BookEditionsDao<BookEdition> bookEditionsDao;
     private static final String REGEXP_SENTENCE_BY_ONE_WORD = "\\S+";
 
     @Autowired
@@ -32,11 +32,11 @@ public class BookEditionsService {
     }
 
     public List<BookEdition> getAllBookEditions() {
-        return bookEditionsDao.getAllBookEditions();
+        return bookEditionsDao.findAll();
     }
 
-    public boolean addBookEdition(BookEdition bookEdition) {
-        return bookEditionsDao.addBookEdition(bookEdition);
+    public void addBookEdition(BookEdition bookEdition) {
+        bookEditionsDao.save(bookEdition);
     }
 
     public List<BookEdition> getBookEditionsBySearchValue(String searchValue) {
@@ -50,7 +50,7 @@ public class BookEditionsService {
     }
 
     public BookEdition getById(int id) {
-        return bookEditionsDao.getBookEditionById(id);
+        return bookEditionsDao.findOne(id);
     }
 
     public List<BookEdition> getBookEditionsByPublisher(String publisher) {

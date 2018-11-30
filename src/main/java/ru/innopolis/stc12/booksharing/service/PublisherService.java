@@ -21,11 +21,11 @@ public class PublisherService {
     }
 
     public List<Publisher> getAllPublishers() {
-        return publisherDao.getAllPublishers();
+        return publisherDao.findAll();
     }
 
-    public boolean addPublisher(Publisher publisher) {
-        return publisherDao.addPublisher(publisher);
+    public void addPublisher(Publisher publisher) {
+        publisherDao.save(publisher);
     }
 
     public Publisher getByNameOrCreate(String name) {

@@ -2,29 +2,41 @@ package ru.innopolis.stc12.booksharing.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.innopolis.stc12.booksharing.model.dao.BookEditionsDao;
 import ru.innopolis.stc12.booksharing.model.dao.BookQueueDao;
-import ru.innopolis.stc12.booksharing.model.pojo.BookQueue;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookQueue;
 
 import java.util.List;
 
 @Service
 public class BookQueueService {
-    private BookQueueDao bookQueueDao;
+    private BookQueueDao<BookQueue> bookQueueDao;
+    private BookEditionsDao<BookEdition> bookEditionsDao;
 
     @Autowired
-    public void setBookQueueDao(BookQueueDao bookQueueDao) {
+    public void setBookEditionsDao(BookEditionsDao<BookEdition> bookEditionsDao) {
+        this.bookEditionsDao = bookEditionsDao;
+        this.bookEditionsDao.setClazz(BookEdition.class);
+    }
+
+    @Autowired
+    public void setBookQueueDao(BookQueueDao<BookQueue> bookQueueDao) {
         this.bookQueueDao = bookQueueDao;
+        this.bookQueueDao.setClazz(BookQueue.class);
     }
 
     public List<BookQueue> getBookQueueByBookEditionId(Integer id) {
-        return bookQueueDao.getBookQueueByBookEditionId(id);
+        BookEdition bookEdition = bookEditionsDao.findOne(id);
+        return bookEdition.getBookQueue();
     }
 
-    public boolean updateBookQueue(BookQueue bookQueue) {
-        return bookQueueDao.updateBookQueue(bookQueue);
+    public BookQueue updateBookQueue(BookQueue bookQueue) {
+        return bookQueueDao.update(bookQueue);
     }
 
-    public int getUserCountByBookEditionId(int id) {
-        return bookQueueDao.getUserCountByBookEditionId(id);
+    public int getBookQueueCountByBookEditionId(int id) {
+        List<BookQueue> bookQueueList = getBookQueueByBookEditionId(id);
+        return bookQueueList.size();
     }
 }

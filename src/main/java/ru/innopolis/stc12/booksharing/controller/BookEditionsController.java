@@ -69,9 +69,11 @@ public class BookEditionsController {
     @GetMapping(value = "/bookEditionDesc/{id}")
     public String showBookEditionDescriptionPage(@PathVariable Integer id, Model model) {
         BookEdition bookEdition = bookEditionsService.getById(id);
+
         int countBookCopy = bookCopiesService.getBookCopyCountByBookEditionId(id);
         int countBookCopyInStatusFree = bookCopiesService.getBookCopyCountByBookEditionIdInStatusFree(id);
-        int countUserInQueue = bookQueueService.getUserCountByBookEditionId(id);
+        int countUserInQueue = bookQueueService.getBookQueueCountByBookEditionId(id);
+
         model.addAttribute("bookEdition", bookEdition);
         model.addAttribute("countBookCopy", countBookCopy);
         model.addAttribute("countBookCopyInStatusFree", countBookCopyInStatusFree);

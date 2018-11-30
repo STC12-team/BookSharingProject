@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.innopolis.stc12.booksharing.exceptions.UnexpectedEmptyListException;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookHolder;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookQueue;
 import ru.innopolis.stc12.booksharing.model.pojo.*;
 import ru.innopolis.stc12.booksharing.service.BookCopiesService;
 import ru.innopolis.stc12.booksharing.service.BookHoldersService;
