@@ -1,7 +1,5 @@
 package ru.innopolis.stc12.booksharing.model.dao.entity;
 
-import org.hibernate.annotations.TypeDef;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,7 +28,7 @@ public class User implements Serializable {
     private String email;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable=false)
     @SequenceGenerator(name = "usersIdSeq", sequenceName = "users_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usersIdSeq")
     public long getId() {
