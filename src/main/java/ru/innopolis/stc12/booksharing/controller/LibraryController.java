@@ -11,6 +11,7 @@ import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.service.BookEditionsService;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class LibraryController {
@@ -40,6 +41,11 @@ public class LibraryController {
             bookEditionList = bookEditionsService.getBookEditionsBySearchValue(searchValue);
         }
         model.addAttribute("bookEditionList", bookEditionList);
+
+        Map<String, Integer> mockedBookEditions = bookEditionsService.getMockedAttributes();
+        model.addAttribute("bookEditionsAll", mockedBookEditions.get("all"));
+        model.addAttribute("bookEditionsFree", mockedBookEditions.get("free"));
+        model.addAttribute("bookEditionsQueue", mockedBookEditions.get("queue"));
         return "/library";
     }
 

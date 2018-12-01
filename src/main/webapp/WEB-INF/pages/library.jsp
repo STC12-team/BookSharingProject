@@ -70,6 +70,13 @@
                                             <a href="/bookEditionDesc/${bookEdition.id}"
                                                class="card-link">${bookEdition.title}</a>
                                         </div>
+                                        <div class="card-body">
+                                            <p>
+                                                <span class="badge badge-info">всего: <c:out value="${bookEditionsAll * bookEdition.id}"/></span>
+                                                <span class="badge badge-info">свободно: <c:out value="${bookEditionsFree * bookEdition.id}"/></span>
+                                                <span class="badge badge-info">очередь: <c:out value="${bookEditionsQueue * bookEdition.id}"/></span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </c:forEach>
                             </div>
