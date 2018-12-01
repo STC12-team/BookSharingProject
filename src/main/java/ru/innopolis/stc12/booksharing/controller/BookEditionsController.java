@@ -61,10 +61,11 @@ public class BookEditionsController {
             @RequestParam(value = "bookEditionDescription") String description,
             @RequestParam(value = "bookEditionPublisher") String publisherName,
             @RequestParam(value = "bookEditionIsbn") String isbn,
-            Model model
-    ) {
+            @RequestParam(value = "bookEditionYear") int yearOfPublication,
+            Model model)
+    {
         Publisher publisher = publisherService.getByNameOrCreate(publisherName);
-        BookEdition bookEdition = new BookEdition(title, description, isbn, publisher, 2018);
+        BookEdition bookEdition = new BookEdition(title, description, isbn, publisher, yearOfPublication);
         bookEditionsService.addBookEdition(bookEdition);
         return "addBookEdition";
     }

@@ -2,16 +2,19 @@ package ru.innopolis.stc12.booksharing.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.ui.Model;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
+import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 import ru.innopolis.stc12.booksharing.service.BookCopiesService;
 import ru.innopolis.stc12.booksharing.service.BookEditionsService;
 import ru.innopolis.stc12.booksharing.service.BookQueueService;
 import ru.innopolis.stc12.booksharing.service.PublisherService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -29,6 +32,8 @@ class BookEditionsControllerTest {
     @Mock
     private BookEdition bookEdition;
     @Mock
+    private Publisher publisher;
+    @Mock
     private BookCopiesService bookCopiesService;
     @Mock
     private BookQueueService bookQueueService;
@@ -36,11 +41,6 @@ class BookEditionsControllerTest {
     @BeforeEach
     void setUp() {
         initMocks(this);
-        bookEditionsController = new BookEditionsController();
-        bookEditionsController.setBookEditionsService(bookEditionsService);
-        bookEditionsController.setPublisherService(publisherService);
-        bookEditionsController.setBookCopiesService(bookCopiesService);
-        bookEditionsController.setBookQueueService(bookQueueService);
     }
 
     @Test
@@ -48,7 +48,6 @@ class BookEditionsControllerTest {
         when(model.addAttribute(any(), any())).thenReturn(model);
         assertEquals("bookEditions", bookEditionsController.getBookEditionsPage(model));
     }
-
 
     @Test
     void showAddBookEdition() {
@@ -58,13 +57,30 @@ class BookEditionsControllerTest {
 
     @Test
     void addBookEdition() {
-//        when(bookEditionsService.addBookEdition(any())).thenReturn(true);
-        assertEquals(
-                "addBookEdition",
-                bookEditionsController.addBookEdition(
-                        "title", "desc", "Amazon", "isbn", model
-                )
-        );
+        when(publisherService.getByNameOrCreate("Amazon")).thenReturn(publisher);
+
+        assertEquals("addBookEdition", bookEditionsController.addBookEdition(
+                "title",
+                "desc",
+                "Amazon",
+                "isbn",
+                2018,
+                model));
+
+        class BookEditionArgumentMatcher implements ArgumentMatcher {
+            public boolean matches(Object o) {
+                if (o instanceof BookEdition) {
+                    BookEdition bookEdition = (BookEdition) o;
+                    if (!bookEdition.getTitle().equals("title")) return false;
+                    if (!bookEdition.getDescription().equals("desc")) return false;
+                    if (!bookEdition.getPublisher().equals(publisher)) return false;
+                    if (!bookEdition.getIsbn().equals("isbn")) return false;
+                    if (!bookEdition.getYearOfPublication().equals(2018)) return false;
+                }
+                return true;
+            }
+        }
+        verify(bookEditionsService).addBookEdition((BookEdition) argThat(new BookEditionArgumentMatcher()));
     }
 
     @Test
@@ -72,7 +88,7 @@ class BookEditionsControllerTest {
         when(bookEditionsService.getById(anyInt())).thenReturn(bookEdition);
         when(bookCopiesService.getBookCopyCountByBookEditionId(anyInt())).thenReturn(1);
         when(bookCopiesService.getBookCopyCountByBookEditionIdInStatusFree(anyInt())).thenReturn(1);
-//        when(bookQueueService.getUserCountByBookEditionId(anyInt())).thenReturn(1);
+        when(bookQueueService.getBookQueueCountByBookEditionId(anyInt())).thenReturn(1);
         assertEquals("bookEditionDescription", bookEditionsController.showBookEditionDescriptionPage(1, model));
         verify(model, times(1)).addAttribute("bookEdition", bookEdition);
         verify(model, times(1)).addAttribute("countBookCopy", 1);

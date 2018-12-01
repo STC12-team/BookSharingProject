@@ -8,6 +8,8 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Role;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
@@ -16,7 +18,9 @@ import ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails;
 import java.util.List;
 import java.util.Objects;
 
+@EnableTransactionManagement
 @Service
+@Transactional
 public class UserService {
     private Logger logger = Logger.getLogger(UserService.class);
     private static final int ROLE_USER_ID = 2;

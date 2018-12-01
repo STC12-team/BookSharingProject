@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
+@Entity(name = "User")
 @Table(name = "users")
 public class User implements Serializable {
     public User() {
