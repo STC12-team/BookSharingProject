@@ -52,11 +52,11 @@ class BookCopiesDaoImplTest {
     void addBookCopiesWhenFalse() {
         when(jdbcTemplate.update(anyString(), any(Object.class))).thenReturn(0);
         when(bookCopy.getBookEdition()).thenReturn(bookEdition);
-        when(bookCopy.getOwner()).thenReturn(user);
+//        when(bookCopy.getOwner()).thenReturn(user);
         when(bookEdition.getId()).thenReturn(1);
         when(user.getId()).thenReturn((int) 1);
         when(bookCopy.getBookEdition().getId()).thenReturn(1);
-        when(bookCopy.getOwner().getId()).thenReturn((int) 1);
+//        when(bookCopy.getOwner().getId()).thenReturn((int) 1);
         when(bookCopy.getStatus()).thenReturn(BookCopiesStatus.FREE);
 //todo        bookCopiesDao.save(bookCopy);
 //todo        verify(bookCopy, times()).
