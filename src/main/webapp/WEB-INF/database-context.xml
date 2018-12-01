@@ -51,10 +51,4 @@
     </bean>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <!--TODO remove this after complete migration to Hibernate -->
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg name="dataSource" ref="dataSource"/>
-    </bean>
-
 </beans>

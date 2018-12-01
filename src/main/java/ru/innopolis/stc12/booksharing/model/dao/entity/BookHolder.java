@@ -46,6 +46,7 @@ public class BookHolder implements Serializable {
         this.bookCopy = bookCopy;
     }
 
+    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     public User getUser() {
         return user;

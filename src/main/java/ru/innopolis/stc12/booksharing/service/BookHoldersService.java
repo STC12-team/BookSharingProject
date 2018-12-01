@@ -16,7 +16,7 @@ import java.util.List;
 @Transactional
 public class BookHoldersService {
     private BookHoldersDao<BookHolder> bookHoldersDao;
-    private UserDao<User> user;
+    private UserDao<User> userDao;
 
     @Autowired
     public void setBookHoldersDao(BookHoldersDao<BookHolder> bookHoldersDao) {
@@ -24,10 +24,14 @@ public class BookHoldersService {
         this.bookHoldersDao.setClazz(BookHolder.class);
     }
 
+    @Autowired
+    public void setUserDao(UserDao<User> userDao) {
+        this.userDao = userDao;
+        this.userDao.setClazz(User.class);
+    }
+
     public List<BookHolder> getBookHoldersByUserLogin(String login) {
-        User user = null;
-
-
-        return null;
+        User user = userDao.getUserByLogin(login);
+        return user.getBookHolders();
     }
 }

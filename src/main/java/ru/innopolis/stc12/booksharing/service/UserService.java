@@ -22,11 +22,6 @@ public class UserService {
     private static final int ROLE_USER_ID = 2;
     private static final int USER_ENABLED = 1;
 
-    public boolean checkUserPasswordMatches(String currentPassword, String password) {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder.matches(password, currentPassword);
-    }
-
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserDao<User> userDao;
     private UserDao<Role> roleDao;
@@ -55,6 +50,11 @@ public class UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    public boolean checkUserPasswordMatches(String currentPassword, String password) {
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder.matches(password, currentPassword);
+    }
+
     public List<User> getUsers() {
         return this.userDao.findAll();
     }
@@ -71,12 +71,6 @@ public class UserService {
         return userDao.getUserByLogin(getAuthenticatedUserLogin());
     }
 
-    /**
-     * Used for user password confirmation
-     *
-     * @param password
-     * @return boolean password confirmed
-     */
     public boolean confirmPassword(String password) {
         String currentPassword = getAuthenticatedUserDetails().getPassword();
         return checkUserPasswordMatches(currentPassword, password);

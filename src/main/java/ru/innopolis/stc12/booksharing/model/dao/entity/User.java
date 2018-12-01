@@ -29,6 +29,7 @@ public class User implements Serializable {
 
     private UserDetails userDetails;
     private List<BookCopy> bookCopies = new ArrayList<>();
+    private List<BookHolder> bookHolders = new ArrayList<>();
 
     @Id
     @Column(name = "id", nullable=false)
@@ -95,6 +96,14 @@ public class User implements Serializable {
     }
     public void setBookCopies(List<BookCopy> bookCopies) {
         this.bookCopies = bookCopies;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    public List<BookHolder> getBookHolders() {
+        return this.bookHolders;
+    }
+    public void setBookHolders(List<BookHolder> bookHolders) {
+        this.bookHolders = bookHolders;
     }
 
     @Override

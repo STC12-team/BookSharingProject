@@ -9,7 +9,6 @@ import ru.innopolis.stc12.booksharing.model.dao.BookEditionsDao;
 import ru.innopolis.stc12.booksharing.model.dao.UserDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
-import ru.innopolis.stc12.booksharing.model.dao.entity.BookQueue;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
 
@@ -48,6 +47,10 @@ public class BookCopiesService {
 
     public List<BookCopy> getBookCopiesByUser(int userId) {
         User user = userDao.findOne(userId);
+        return getBookCopiesByUser(user);
+    }
+
+    public List<BookCopy> getBookCopiesByUser(User user) {
         return user.getBookCopies();
     }
 

@@ -21,6 +21,7 @@ public class BookEditionsService {
     @Autowired
     public void setBookEditionsDao(BookEditionsDao bookEditionsDao) {
         this.bookEditionsDao = bookEditionsDao;
+        this.bookEditionsDao.setClazz(BookEdition.class);
     }
 
     public BookEdition getByIsbn(String isbn) {

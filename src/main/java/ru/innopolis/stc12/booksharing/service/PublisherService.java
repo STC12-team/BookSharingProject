@@ -9,11 +9,12 @@ import java.util.List;
 
 @Service
 public class PublisherService {
-    private PublisherDao publisherDao;
+    private PublisherDao<Publisher> publisherDao;
 
     @Autowired
-    public void setPublisherDao(PublisherDao publisherDao) {
+    public void setPublisherDao(PublisherDao<Publisher> publisherDao) {
         this.publisherDao = publisherDao;
+        this.publisherDao.setClazz(Publisher.class);
     }
 
     public Publisher getByName(String name) {
