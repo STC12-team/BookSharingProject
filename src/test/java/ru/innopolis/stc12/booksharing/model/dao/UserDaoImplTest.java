@@ -23,35 +23,31 @@ class UserDaoImplTest {
     @Mock
     UserDaoImpl userDao;
 
-    @Mock
-    JdbcTemplate jdbcTemplate;
-
     @BeforeEach
     void setUp() {
         initMocks(this);
 
         userDao = new UserDaoImpl();
-        userDao.setJdbcTemplate(jdbcTemplate);
     }
 
     @Test
     void getUserByLogin() {
         User user = new User();
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(user);
+      //  when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(user);
         assertEquals(user, userDao.getUserByLogin("admin"));
     }
 
     @Test
     void getUserById() {
         User user = new User();
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(user);
+ //       when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(user);
 //        assertEquals(user, userDao.getUserById(1));
     }
 
     @Test
     void getAllUsers() {
         List<User> users = new ArrayList<>();
-        when(jdbcTemplate.query(anyString(), any(RowMapper.class))).thenReturn(users);
+   //     when(jdbcTemplate.query(anyString(), any(RowMapper.class))).thenReturn(users);
 //        assertEquals(users, userDao.getAllUsers());
     }
 

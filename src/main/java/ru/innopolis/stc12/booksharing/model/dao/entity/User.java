@@ -12,30 +12,32 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String login, String password, Role role, int enabled) {
+    public User(String login, String password, Role role, int enabled, String email) {
         this.login = login;
         this.password = password;
         this.role = role;
         this.enabled = enabled;
+        this.email = email;
     }
 
-    private long id;
+    private int id;
     private String login;
     private String password;
     private Role role;
     private int enabled;
     private String email;
+
     private UserDetails userDetails;
+    private List<BookCopy> bookCopies = new ArrayList<>();
 
     @Id
     @Column(name = "id", nullable=false)
     @SequenceGenerator(name = "usersIdSeq", sequenceName = "users_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usersIdSeq")
-    public long getId() {
+    public int getId() {
         return id;
     }
-
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -43,7 +45,6 @@ public class User implements Serializable {
     public String getLogin() {
         return login;
     }
-
     public void setLogin(String login) {
         this.login = login;
     }
@@ -52,7 +53,6 @@ public class User implements Serializable {
     public String getPassword() {
         return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -61,7 +61,6 @@ public class User implements Serializable {
     public Role getRole() {
         return role;
     }
-
     public void setRole(Role role) {
         this.role = role;
     }
@@ -70,7 +69,6 @@ public class User implements Serializable {
     public int getEnabled() {
         return enabled;
     }
-
     public void setEnabled(int enabled) {
         this.enabled = enabled;
     }
@@ -79,13 +77,8 @@ public class User implements Serializable {
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<BookCopy> getBookCopies() {
-        return new ArrayList<BookCopy>();
     }
 
     @JoinColumn(name = "id", referencedColumnName = "user_id")
@@ -96,14 +89,23 @@ public class User implements Serializable {
         this.userDetails = userDetails;
     }
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    public List<BookCopy> getBookCopies() {
+        return this.bookCopies;
+    }
+    public void setBookCopies(List<BookCopy> bookCopies) {
+        this.bookCopies = bookCopies;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", roleId=" + role.getId() + '\'' +
-                ", enabled='" + enabled + '\'' +
+                ", role=" + role +
+                ", enabled=" + enabled +
+                ", email='" + email + '\'' +
                 '}';
     }
 
@@ -113,14 +115,15 @@ public class User implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return id == user.id &&
+                enabled == user.enabled &&
                 Objects.equals(login, user.login) &&
                 Objects.equals(password, user.password) &&
                 Objects.equals(role, user.role) &&
-                Objects.equals(enabled, user.enabled);
+                Objects.equals(email, user.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password, role, enabled);
+        return Objects.hash(id, login, password, role, enabled, email);
     }
 }

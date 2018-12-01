@@ -83,7 +83,7 @@ class PublisherDaoImplTest {
 
     @Test
     void addPublisher() {
-        Publisher publisher = new Publisher(1, "Test name");
-//        assertTrue(publisherDao.addPublisher(publisher));
+        Publisher publisher = new Publisher("Test name");
+        //assertTrue(publisherDao.save(publisher));
     }
 }

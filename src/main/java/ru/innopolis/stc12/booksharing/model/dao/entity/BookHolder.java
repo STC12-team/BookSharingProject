@@ -8,29 +8,19 @@ import java.util.Objects;
 @Entity
 @Table(name = "book_holders")
 public class BookHolder implements Serializable {
-    private Integer id;
+    private int id;
     private BookCopy bookCopy;
-    //TODO переделать на User entity
-    private Integer user;
+    private User user;
     private Timestamp getAt;
     private Timestamp gaveAt;
-    private Integer nextHolderId;
+    private User nextHolder;
 
-    public BookHolder(Integer id, BookCopy bookCopy, Integer user, Timestamp getAt, Timestamp gaveAt, Integer nextHolderId) {
-        this.id = id;
+    public BookHolder(BookCopy bookCopy, User user, Timestamp getAt, Timestamp gaveAt, User nextHolder) {
         this.bookCopy = bookCopy;
         this.user = user;
         this.getAt = getAt;
         this.gaveAt = gaveAt;
-        this.nextHolderId = nextHolderId;
-    }
-
-    public BookHolder(BookCopy bookCopy, Integer user, Timestamp getAt, Timestamp gaveAt, Integer nextHolderId) {
-        this.bookCopy = bookCopy;
-        this.user = user;
-        this.getAt = getAt;
-        this.gaveAt = gaveAt;
-        this.nextHolderId = nextHolderId;
+        this.nextHolder = nextHolder;
     }
 
     public BookHolder() {
@@ -40,11 +30,10 @@ public class BookHolder implements Serializable {
     @Column(name = "id")
     @SequenceGenerator(name = "bookHolderIdGenerator", sequenceName = "book_holders_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookHolderIdGenerator")
-    public Integer getId() {
+    public int getId() {
         return id;
     }
-
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -53,17 +42,15 @@ public class BookHolder implements Serializable {
     public BookCopy getBookCopy() {
         return bookCopy;
     }
-
     public void setBookCopy(BookCopy bookCopy) {
         this.bookCopy = bookCopy;
     }
 
-    @Column(name = "user_id")
-    public Integer getUser() {
+    @JoinColumn(name = "user_id")
+    public User getUser() {
         return user;
     }
-
-    public void setUser(Integer user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -71,7 +58,6 @@ public class BookHolder implements Serializable {
     public Timestamp getGetAt() {
         return getAt;
     }
-
     public void setGetAt(Timestamp getAt) {
         this.getAt = getAt;
     }
@@ -80,18 +66,16 @@ public class BookHolder implements Serializable {
     public Timestamp getGaveAt() {
         return gaveAt;
     }
-
     public void setGaveAt(Timestamp gaveAt) {
         this.gaveAt = gaveAt;
     }
 
-    @Column(name = "next_holder_id")
-    public Integer getNextHolderId() {
-        return nextHolderId;
+    @JoinColumn(name = "next_holder_id")
+    public User getNextHolder() {
+        return nextHolder;
     }
-
-    public void setNextHolderId(Integer nextHolderId) {
-        this.nextHolderId = nextHolderId;
+    public void setNextHolder(User nextHolder) {
+        this.nextHolder = nextHolder;
     }
 
     @Override
@@ -102,7 +86,7 @@ public class BookHolder implements Serializable {
                 ", user=" + user +
                 ", getAt=" + getAt +
                 ", gaveAt=" + gaveAt +
-                ", nextHolderId=" + nextHolderId +
+                ", nextHolder=" + nextHolder +
                 '}';
     }
 
@@ -111,16 +95,16 @@ public class BookHolder implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BookHolder that = (BookHolder) o;
-        return Objects.equals(id, that.id) &&
+        return id == that.id &&
                 Objects.equals(bookCopy, that.bookCopy) &&
                 Objects.equals(user, that.user) &&
                 Objects.equals(getAt, that.getAt) &&
                 Objects.equals(gaveAt, that.gaveAt) &&
-                Objects.equals(nextHolderId, that.nextHolderId);
+                Objects.equals(nextHolder, that.nextHolder);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, bookCopy, user, getAt, gaveAt, nextHolderId);
+        return Objects.hash(id, bookCopy, user, getAt, gaveAt, nextHolder);
     }
 }

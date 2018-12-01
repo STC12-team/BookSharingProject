@@ -50,6 +50,7 @@ class RegisterControllerTest {
     void postRegisterPage() {
         when(model.addAttribute(anyString())).thenReturn(model);
         when(userService.getUserByLogin("newLogin")).thenReturn(user);
-        assertSame(new ModelAndView("register").getView(), registerController.postRegisterPage("newLogin", "newPassword", model).getView());
+        assertSame(new ModelAndView("register").getView(),
+                registerController.postRegisterPage("newLogin", "newPassword", "newEmail", model).getView());
     }
 }

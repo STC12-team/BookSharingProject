@@ -54,7 +54,7 @@ class BookQueueDaoImplTest {
         when(bookQueue.getUser()).thenReturn(user);
         when(bookQueue.getStatus()).thenReturn(BookQueueStatus.WAIT);
         when(bookEdition.getId()).thenReturn(1);
-        when(user.getId()).thenReturn((long) 1);
+        when(user.getId()).thenReturn((int) 1);
         when(bookQueue.getAddedAt()).thenReturn(timestamp);
         when(bookQueue.getId()).thenReturn(1);
         when(jdbcTemplate.update(anyString(), anyInt(), anyInt(), any(), anyString(), anyInt())).thenReturn(0);

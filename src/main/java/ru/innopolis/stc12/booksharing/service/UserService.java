@@ -30,6 +30,7 @@ public class UserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserDao<User> userDao;
     private UserDao<Role> roleDao;
+    private UserDao<UserDetails> userDetailsDao;
 
     @Autowired
     public void setUserDao(UserDao<User> userDao) {
@@ -41,6 +42,12 @@ public class UserService {
     public void setRoleDao(UserDao<Role> roleDao) {
         this.roleDao = roleDao;
         this.roleDao.setClazz(Role.class);
+    }
+
+    @Autowired
+    public void setUserDetailsDao(UserDao<UserDetails> userDetailsDao) {
+        this.userDetailsDao = userDetailsDao;
+        this.userDetailsDao.setClazz(UserDetails.class);
     }
 
     @Autowired
@@ -75,21 +82,21 @@ public class UserService {
         return checkUserPasswordMatches(currentPassword, password);
     }
 
-    public User addNewUser(String login, String password) {
+    public User addNewUser(String login, String password, String email) {
         logger.debug("Insert User login = " + login);
 
         Role role = roleDao.findOne(ROLE_USER_ID);
         String cryptPassword = bCryptPasswordEncoder.encode(password);
-        User user = new User(login, cryptPassword, role, USER_ENABLED);
+        User user = new User(login, cryptPassword, role, USER_ENABLED, email);
 
         userDao.save(user);
         return getUserByLogin(login);
     }
 
-    public boolean updateUserDetails(String firstName, String lastName, String surname) {
+    public UserDetails updateUserDetails(String firstName, String lastName, String surname) {
         UserDetails currentUserDetails = getAuthenticatedUserDetails().getUserDetails();
         if (currentUserDetails == null) {
-            return false;
+            return null;
         }
         // TODO: after email confirmation & edit with password edit will be available refactor this
         if (!firstName.equals("")) {
@@ -104,7 +111,7 @@ public class UserService {
             currentUserDetails.setSurname(surname);
         }
 
-        return userDao.updateUserDetails(currentUserDetails);
+        return userDetailsDao.update(currentUserDetails);
     }
 
     private static String getAuthenticatedUserLogin(){

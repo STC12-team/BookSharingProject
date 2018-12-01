@@ -11,7 +11,10 @@ import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookQueue;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
+import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
+
 import java.util.List;
+import java.util.stream.Collectors;
 
 @EnableTransactionManagement
 @Service
@@ -43,9 +46,14 @@ public class BookCopiesService {
         bookCopiesDao.save(book);
     }
 
-    public List<BookCopy> getBookCopyByUser(int userId) {
+    public List<BookCopy> getBookCopiesByUser(int userId) {
         User user = userDao.findOne(userId);
         return user.getBookCopies();
+    }
+
+    public List<BookCopy> getBookCopiesByEdition(int editionId) {
+        BookEdition bookEdition = bookEditionsDao.findOne(editionId);
+        return bookEdition.getBookCopies();
     }
 
     public BookCopy getBookCopyById(Integer id) {
@@ -57,13 +65,15 @@ public class BookCopiesService {
     }
 
     public int getBookCopyCountByBookEditionId(int id) {
-        BookEdition bookEdition = bookEditionsDao.findOne(id);
-        List<BookCopy> bookCopyList = bookEdition.getBookCopies();
-
-        return bookCopyList.size();
+        return getBookCopiesByEdition(id).size();
     }
 
     public int getBookCopyCountByBookEditionIdInStatusFree(int id) {
-        return bookCopiesDao.getBookCopyCountByBookEditionIdInStatusFree(id);
+        List<BookCopy> bookCopies = getBookCopiesByEdition(id);
+
+        return bookCopies.stream()
+                .filter(item -> item.getStatus() == BookCopiesStatus.FREE)
+                .collect(Collectors.toList())
+                .size();
     }
 }

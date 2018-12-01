@@ -31,6 +31,7 @@ public class RegisterController {
     @ExceptionHandler(ControllerException.class)
     public ModelAndView postRegisterPage(@RequestParam(value = "newLogin") String login,
                                          @RequestParam(value = "newPassword") String password,
+                                         @RequestParam(value = "newEmail") String email,
                                          Model model) {
 
         if (userService.getUserByLogin(login) != null) {
@@ -38,7 +39,7 @@ public class RegisterController {
             return new ModelAndView("register");
         }
 
-        User user = userService.addNewUser(login, password);
+        User user = userService.addNewUser(login, password, email);
         model.addAttribute("user", user);
 
         return new ModelAndView("library");

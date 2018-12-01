@@ -7,8 +7,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_details")
 public class UserDetails implements Serializable {
-    private Integer id;
-    private Integer userId;
+    private int id;
+    private User user;
     private String firstName;
     private String lastName;
     private String surname;
@@ -16,9 +16,8 @@ public class UserDetails implements Serializable {
     public UserDetails() {
     }
 
-    public UserDetails(Integer id, Integer userId, String firstName, String lastName, String surname) {
-        this.id = id;
-        this.userId = userId;
+    public UserDetails(User user, String firstName, String lastName, String surname) {
+        this.user = user;
         this.firstName = firstName;
         this.lastName = lastName;
         this.surname = surname;
@@ -26,28 +25,27 @@ public class UserDetails implements Serializable {
 
     @Id
     @Column(name = "id")
-    public Integer getId() {
+    @SequenceGenerator(name = "userDetailsSeq", sequenceName = "user_details_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userDetailsSeq")
+    public int getId() {
         return id;
     }
-
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    @Column(name = "user_id")
-    public Integer getUserId() {
-        return userId;
+    @JoinColumn(name = "user_id", nullable = false)
+    public User getUser() {
+        return user;
     }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Column(name = "firstname")
     public String getFirstName() {
         return firstName;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -56,7 +54,6 @@ public class UserDetails implements Serializable {
     public String getLastName() {
         return lastName;
     }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -65,7 +62,6 @@ public class UserDetails implements Serializable {
     public String getSurname() {
         return surname;
     }
-
     public void setSurname(String surname) {
         this.surname = surname;
     }
@@ -74,7 +70,7 @@ public class UserDetails implements Serializable {
     public String toString() {
         return "UserDetails{" +
                 "id=" + id +
-                ", userId=" + userId +
+                ", user=" + user +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", surname='" + surname + '\'' +
@@ -87,7 +83,7 @@ public class UserDetails implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         UserDetails that = (UserDetails) o;
         return id == that.id &&
-                userId == that.userId &&
+                Objects.equals(user, that.user) &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
                 Objects.equals(surname, that.surname);
@@ -95,6 +91,6 @@ public class UserDetails implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, userId, firstName, lastName, surname);
+        return Objects.hash(id, user, firstName, lastName, surname);
     }
 }

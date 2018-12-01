@@ -13,11 +13,6 @@ public class Role implements Serializable {
     private int id;
     private String name;
 
-    public Role(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
     @Id
     @Column(name = "id")
     @SequenceGenerator(name = "rolesIdSeq", sequenceName = "roles_id_seq")
@@ -29,6 +24,7 @@ public class Role implements Serializable {
         this.id = id;
     }
 
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -42,19 +38,5 @@ public class Role implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return Objects.equals(id, role.id) &&
-                Objects.equals(name, role.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
     }
 }

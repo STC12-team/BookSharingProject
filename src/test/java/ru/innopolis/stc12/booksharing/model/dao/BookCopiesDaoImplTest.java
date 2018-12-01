@@ -55,18 +55,12 @@ class BookCopiesDaoImplTest {
         when(bookCopy.getBookEdition()).thenReturn(bookEdition);
         when(bookCopy.getOwner()).thenReturn(user);
         when(bookEdition.getId()).thenReturn(1);
-        when(user.getId()).thenReturn((long) 1);
+        when(user.getId()).thenReturn((int) 1);
         when(bookCopy.getBookEdition().getId()).thenReturn(1);
-        when(bookCopy.getOwner().getId()).thenReturn((long) 1);
+        when(bookCopy.getOwner().getId()).thenReturn((int) 1);
         when(bookCopy.getStatus()).thenReturn(BookCopiesStatus.FREE);
 //todo        bookCopiesDao.save(bookCopy);
 //todo        verify(bookCopy, times()).
-    }
-
-    @Test
-    void getBookCopyCountByBookEditionIdInStatusFree() {
-        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), eq(Integer.class))).thenReturn(1);
-        assertEquals(1, bookCopiesDao.getBookCopyCountByBookEditionIdInStatusFree(1));
     }
 
     @Test

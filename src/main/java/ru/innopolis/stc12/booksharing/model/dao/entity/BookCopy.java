@@ -7,6 +7,7 @@ import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "book_copies")
@@ -15,13 +16,6 @@ public class BookCopy implements Serializable {
 
     public BookCopy() {
     }
-
-    /*public BookCopy(int id, BookEdition bookEdition, User owner, BookCopiesStatus status) {
-        this.id = id;
-        this.bookEdition = bookEdition;
-        this.owner = owner;
-        this.status = status;
-    }*/
 
     public BookCopy(BookEdition bookEdition, User owner, BookCopiesStatus status) {
         this.bookEdition = bookEdition;
@@ -71,13 +65,12 @@ public class BookCopy implements Serializable {
         this.status = status;
     }
 
-    /*
     @Override
     public String toString() {
         return "BookCopy{" +
                 "id=" + id +
                 ", bookEdition=" + bookEdition +
-                ", user=" + user +
+                ", owner=" + owner +
                 ", status=" + status +
                 '}';
     }
@@ -85,17 +78,16 @@ public class BookCopy implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BookCopy1 bookCopy = (BookCopy1) o;
-        return Objects.equals(id, bookCopy.id) &&
-                Objects.equals(bookEdition, bookCopy.bookEdition) &&
-                Objects.equals(user, bookCopy.user) &&
-                status == bookCopy.status;
+        if (!(o instanceof BookCopy)) return false;
+        BookCopy bookCopy = (BookCopy) o;
+        return getId() == bookCopy.getId() &&
+                Objects.equals(getBookEdition(), bookCopy.getBookEdition()) &&
+                Objects.equals(getOwner(), bookCopy.getOwner()) &&
+                getStatus() == bookCopy.getStatus();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, bookEdition, user, status);
-    }*/
-
+        return Objects.hash(getId(), getBookEdition(), getOwner(), getStatus());
+    }
 }

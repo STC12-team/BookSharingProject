@@ -14,7 +14,7 @@ import java.util.Objects;
 @Table(name = "book_queue")
 @TypeDef(name = "book_queue_status_enum", typeClass = PostgreSQLEnumType.class)
 public class BookQueue implements Serializable {
-    private Integer id;
+    private int id;
     private BookEdition bookEdition;
     private User user;
     private Timestamp addedAt;
@@ -23,8 +23,7 @@ public class BookQueue implements Serializable {
     public BookQueue() {
     }
 
-    public BookQueue(Integer id, BookEdition bookEdition, User user, Timestamp addedAt, BookQueueStatus status) {
-        this.id = id;
+    public BookQueue(BookEdition bookEdition, User user, Timestamp addedAt, BookQueueStatus status) {
         this.bookEdition = bookEdition;
         this.user = user;
         this.addedAt = addedAt;
@@ -33,11 +32,12 @@ public class BookQueue implements Serializable {
 
     @Id
     @Column(name = "id")
-    public Integer getId() {
+    @SequenceGenerator(name = "bookQueueSeq", sequenceName = "book_queue_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookQueueSeq")
+    public int getId() {
         return id;
     }
-
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -47,7 +47,6 @@ public class BookQueue implements Serializable {
     public BookEdition getBookEdition() {
         return bookEdition;
     }
-
     public void setBookEdition(BookEdition bookEdition) {
         this.bookEdition = bookEdition;
     }
@@ -58,7 +57,6 @@ public class BookQueue implements Serializable {
     public User getUser() {
         return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }
@@ -67,7 +65,6 @@ public class BookQueue implements Serializable {
     public Timestamp getAddedAt() {
         return addedAt;
     }
-
     public void setAddedAt(Timestamp addedAt) {
         this.addedAt = addedAt;
     }
@@ -78,7 +75,6 @@ public class BookQueue implements Serializable {
     public BookQueueStatus getStatus() {
         return status;
     }
-
     public void setStatus(BookQueueStatus status) {
         this.status = status;
     }
@@ -99,7 +95,7 @@ public class BookQueue implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BookQueue bookQueue = (BookQueue) o;
-        return Objects.equals(id, bookQueue.id) &&
+        return id == bookQueue.id &&
                 Objects.equals(bookEdition, bookQueue.bookEdition) &&
                 Objects.equals(user, bookQueue.user) &&
                 Objects.equals(addedAt, bookQueue.addedAt) &&

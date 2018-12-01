@@ -83,8 +83,8 @@ public class ProfileController {
                                      @RequestParam(value = "surname", required = false) String surname,
                                      Model model, SessionStatus status) {
         model.addAttribute(USER_DETAILS_PAGE_ATTRIBUTE, authenticatedUserDetails);
-        boolean updated = userService.updateUserDetails(firstName, lastName, surname);
-        if (updated) {
+        UserDetails userDetails = userService.updateUserDetails(firstName, lastName, surname);
+        if (userDetails != null) {
             model.addAttribute(MODEL_UPDATED_ATTRIBUTE, MESSAGE_SUCCESSFULLY_UPDATE);
             setUserPasswordConfirmed(false); // set value back to false after editing for reconfirmation on next visit
             status.setComplete(); // clean up session attributes
