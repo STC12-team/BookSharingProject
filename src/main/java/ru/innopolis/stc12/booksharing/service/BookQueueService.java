@@ -1,9 +1,10 @@
 package ru.innopolis.stc12.booksharing.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.innopolis.stc12.booksharing.model.dao.BookEditionsDao;
-import ru.innopolis.stc12.booksharing.model.dao.BookQueueDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookQueueDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookQueue;
 
@@ -11,6 +12,8 @@ import java.util.List;
 
 @Service
 public class BookQueueService {
+    private Logger logger = Logger.getLogger(BookQueueService.class);
+
     private BookQueueDao<BookQueue> bookQueueDao;
     private BookEditionsDao<BookEdition> bookEditionsDao;
 

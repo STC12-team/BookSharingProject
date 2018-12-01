@@ -50,7 +50,7 @@ public class BookEdition implements Serializable {
         this.isbn = isbn;
     }
 
-    @ManyToOne(optional = false, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "publisher_id")
     public Publisher getPublisher() {
         return publisher;
@@ -84,7 +84,8 @@ public class BookEdition implements Serializable {
     }
 
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book_editions")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_edition_id")
     public List<BookCopy> getBookCopies() {
         return this.bookCopies;
     }
@@ -92,7 +93,8 @@ public class BookEdition implements Serializable {
         this.bookCopies = bookCopies;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book_editions")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_edition_id")
     public List<BookQueue> getBookQueue() {
         return this.bookQueues;
     }

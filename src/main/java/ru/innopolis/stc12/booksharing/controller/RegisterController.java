@@ -1,5 +1,6 @@
 package ru.innopolis.stc12.booksharing.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,7 @@ import ru.innopolis.stc12.booksharing.service.UserService;
 
 @Controller
 public class RegisterController {
+    private Logger logger = Logger.getLogger(RegisterController.class);
     private UserService userService;
 
     @Autowired

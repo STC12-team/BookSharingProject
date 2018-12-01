@@ -9,7 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
-import ru.innopolis.stc12.booksharing.model.dao.implementation.BookEditionsDaoImpl;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;

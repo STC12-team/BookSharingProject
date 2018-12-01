@@ -1,5 +1,6 @@
 package ru.innopolis.stc12.booksharing.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +15,8 @@ import ru.innopolis.stc12.booksharing.service.PublisherService;
 
 @Controller
 public class BookEditionsController {
+    private Logger logger = Logger.getLogger(BookEditionsController.class);
+
     private BookEditionsService bookEditionsService;
     private PublisherService publisherService;
     private BookCopiesService bookCopiesService;

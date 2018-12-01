@@ -13,9 +13,9 @@ public class BookHolder implements Serializable {
     private User user;
     private Timestamp getAt;
     private Timestamp gaveAt;
-    private User nextHolder;
+    private Integer nextHolder;
 
-    public BookHolder(BookCopy bookCopy, User user, Timestamp getAt, Timestamp gaveAt, User nextHolder) {
+    public BookHolder(BookCopy bookCopy, User user, Timestamp getAt, Timestamp gaveAt, Integer nextHolder) {
         this.bookCopy = bookCopy;
         this.user = user;
         this.getAt = getAt;
@@ -71,11 +71,11 @@ public class BookHolder implements Serializable {
         this.gaveAt = gaveAt;
     }
 
-    @JoinColumn(name = "next_holder_id")
-    public User getNextHolder() {
+    @Column(name = "next_holder_id")
+    public Integer getNextHolder() {
         return nextHolder;
     }
-    public void setNextHolder(User nextHolder) {
+    public void setNextHolder(Integer nextHolder) {
         this.nextHolder = nextHolder;
     }
 

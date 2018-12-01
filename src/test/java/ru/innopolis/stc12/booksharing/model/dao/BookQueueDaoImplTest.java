@@ -4,10 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookQueue;
-import ru.innopolis.stc12.booksharing.model.dao.implementation.BookQueueDaoImpl;
 import ru.innopolis.stc12.booksharing.model.pojo.BookQueueStatus;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 

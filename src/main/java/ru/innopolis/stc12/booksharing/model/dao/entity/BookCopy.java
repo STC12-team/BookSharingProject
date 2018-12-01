@@ -40,20 +40,20 @@ public class BookCopy implements Serializable {
     }
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_edition_id", nullable = false)
+    @JoinColumn(name = "book_edition_id", referencedColumnName = "id")
     public BookEdition getBookEdition() { return bookEdition; }
     public void setBookEdition(BookEdition bookEdition) {
         this.bookEdition = bookEdition;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", nullable = false)
-    public User getOwner() {
-        return owner;
-    }
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
+ //   @ManyToOne(fetch = FetchType.LAZY)
+   // @JoinColumn(name = "owner_id", referencedColumnName = "id")
+////    public User getOwner() {
+ //       return owner;
+   // }
+ //   public void setOwner(User owner) {
+   //     this.owner = owner;
+  //  }
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "public.book_copies_status")
@@ -82,12 +82,14 @@ public class BookCopy implements Serializable {
         BookCopy bookCopy = (BookCopy) o;
         return getId() == bookCopy.getId() &&
                 Objects.equals(getBookEdition(), bookCopy.getBookEdition()) &&
-                Objects.equals(getOwner(), bookCopy.getOwner()) &&
+                //Objects.equals(getOwner(), bookCopy.getOwner()) &&
                 getStatus() == bookCopy.getStatus();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getBookEdition(), getOwner(), getStatus());
+        return Objects.hash(getId(), getBookEdition(),
+                //getOwner(),
+                getStatus());
     }
 }

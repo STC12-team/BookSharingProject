@@ -1,5 +1,6 @@
 package ru.innopolis.stc12.booksharing.controller;
 
+import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,8 @@ import java.util.List;
 
 @Controller
 public class LibraryController {
+    private Logger logger = Logger.getLogger(LibraryController.class);
+
     private BookEditionsService bookEditionsService;
 
     @Autowired

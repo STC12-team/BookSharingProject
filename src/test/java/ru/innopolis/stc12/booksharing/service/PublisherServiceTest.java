@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import ru.innopolis.stc12.booksharing.model.dao.PublisherDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.PublisherDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 
 import java.util.ArrayList;

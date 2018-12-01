@@ -1,11 +1,11 @@
-package ru.innopolis.stc12.booksharing.model.dao.implementation;
+package ru.innopolis.stc12.booksharing.model.dao;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.innopolis.stc12.booksharing.model.dao.AbstractDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.AbstractDao;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -16,19 +16,19 @@ import java.util.List;
 
 @Repository
 public abstract class AbstractDaoImp<T extends Serializable> implements AbstractDao<T>  {
-    CriteriaBuilder getCriteriaBuilder(){
+    public CriteriaBuilder getCriteriaBuilder(){
         return getCurrentSession().getCriteriaBuilder();
     }
 
-    CriteriaQuery<T> getCriteriaQuery() {
+    private CriteriaQuery<T> getCriteriaQuery() {
         return getCriteriaBuilder().createQuery(clazz);
     }
 
-    Root<T> getRoot() {
+    public Root<T> getRoot() {
         return getCriteriaQuery().from(clazz);
     }
 
-    List<T> getListByPredicates(Predicate... args) {
+    public List<T> getListByPredicates(Predicate... args) {
         if (args.length == 0) {
             return findAll();
         }

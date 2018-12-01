@@ -8,7 +8,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import ru.innopolis.stc12.booksharing.model.dao.UserDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Role;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails;

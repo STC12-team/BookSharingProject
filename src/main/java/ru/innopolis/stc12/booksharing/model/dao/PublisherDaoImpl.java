@@ -1,8 +1,8 @@
-package ru.innopolis.stc12.booksharing.model.dao.implementation;
+package ru.innopolis.stc12.booksharing.model.dao;
 
 import org.springframework.stereotype.Repository;
-import ru.innopolis.stc12.booksharing.model.dao.PublisherDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.PublisherDao;
 
 import javax.persistence.criteria.Predicate;
 import java.util.List;

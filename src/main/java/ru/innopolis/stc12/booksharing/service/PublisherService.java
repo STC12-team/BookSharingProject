@@ -1,14 +1,17 @@
 package ru.innopolis.stc12.booksharing.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.innopolis.stc12.booksharing.model.dao.PublisherDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.PublisherDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 
 import java.util.List;
 
 @Service
 public class PublisherService {
+    private Logger logger = Logger.getLogger(PublisherService.class);
+
     private PublisherDao<Publisher> publisherDao;
 
     @Autowired

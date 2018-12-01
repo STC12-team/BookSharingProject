@@ -34,6 +34,7 @@ public class UserDetails implements Serializable {
         this.id = id;
     }
 
+    @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     public User getUser() {
         return user;

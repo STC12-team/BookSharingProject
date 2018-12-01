@@ -1,10 +1,11 @@
 package ru.innopolis.stc12.booksharing.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.innopolis.stc12.booksharing.model.dao.BookEditionsDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.utils.RegexMatcher;
 
@@ -15,6 +16,7 @@ import java.util.List;
 @Transactional
 @EnableTransactionManagement
 public class BookEditionsService {
+    private Logger logger = Logger.getLogger(BookEditionsService.class);
     private BookEditionsDao<BookEdition> bookEditionsDao;
     private static final String REGEXP_SENTENCE_BY_ONE_WORD = "\\S+";
 

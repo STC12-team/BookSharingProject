@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
-import ru.innopolis.stc12.booksharing.model.dao.implementation.PublisherDaoImpl;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

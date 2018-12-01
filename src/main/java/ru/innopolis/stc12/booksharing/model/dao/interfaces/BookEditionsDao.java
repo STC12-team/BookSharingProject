@@ -1,4 +1,4 @@
-package ru.innopolis.stc12.booksharing.model.dao;
+package ru.innopolis.stc12.booksharing.model.dao.interfaces;
 
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 

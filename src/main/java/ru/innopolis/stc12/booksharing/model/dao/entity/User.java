@@ -58,6 +58,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    @OneToOne
     @JoinColumn(name = "role_id", nullable = false)
     public Role getRole() {
         return role;
@@ -82,6 +83,7 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    @OneToOne
     @JoinColumn(name = "id", referencedColumnName = "user_id")
     public UserDetails getUserDetails() {
         return this.userDetails;
@@ -90,20 +92,22 @@ public class User implements Serializable {
         this.userDetails = userDetails;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
-    public List<BookCopy> getBookCopies() {
-        return this.bookCopies;
-    }
-    public void setBookCopies(List<BookCopy> bookCopies) {
-        this.bookCopies = bookCopies;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "users")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     public List<BookHolder> getBookHolders() {
         return this.bookHolders;
     }
     public void setBookHolders(List<BookHolder> bookHolders) {
         this.bookHolders = bookHolders;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
+    public List<BookCopy> getBookCopies() {
+        return this.bookCopies;
+    }
+    public void setBookCopies(List<BookCopy> bookCopies) {
+        this.bookCopies = bookCopies;
     }
 
     @Override

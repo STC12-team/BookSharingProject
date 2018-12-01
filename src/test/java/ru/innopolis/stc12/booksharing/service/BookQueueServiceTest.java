@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import ru.innopolis.stc12.booksharing.model.dao.BookQueueDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookQueueDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookQueue;
 
 import java.util.List;
@@ -12,7 +12,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
 
 class BookQueueServiceTest {
     private BookQueueService bookQueueService;
