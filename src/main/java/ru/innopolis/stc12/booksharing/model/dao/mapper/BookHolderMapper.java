@@ -27,8 +27,8 @@ public class BookHolderMapper implements RowMapper<BookHolder> {
                 rs.getInt(19),
                 rs.getString(20),
                 rs.getString(21),
-                rs.getInt(24),
-                rs.getString(25),
+                rs.getInt(25),
+                rs.getString(26),
                 rs.getInt(23)
         );
         BookCopy bookCopy = new BookCopy(
@@ -38,12 +38,12 @@ public class BookHolderMapper implements RowMapper<BookHolder> {
                 BookCopiesStatus.valueOf(rs.getString(10))
         );
         User user = new User(
-                rs.getInt(26),
-                rs.getString(27),
+                rs.getInt(27),
                 rs.getString(28),
-                rs.getInt(31),
-                rs.getString(32),
-                rs.getInt(30)
+                rs.getString(29),
+                rs.getInt(33),
+                rs.getString(34),
+                rs.getInt(31)
         );
         return new BookHolder(
                 rs.getInt(1),

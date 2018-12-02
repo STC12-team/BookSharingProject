@@ -6,6 +6,7 @@
                            countBookCopy="${countBookCopy}"
                            countBookCopyInStatusFree="${countBookCopyInStatusFree}"
                            userCountInQueue="${userCountInQueue}"
+                           placeInQueue="${placeInQueue}"
         />
     </jsp:body>
 </t:default>

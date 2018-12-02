@@ -76,6 +76,8 @@ public class BookEditionsController {
         model.addAttribute("countBookCopy", countBookCopy);
         model.addAttribute("countBookCopyInStatusFree", countBookCopyInStatusFree);
         model.addAttribute("userCountInQueue", countUserInQueue);
+        //TODO fake data
+        model.addAttribute("placeInQueue", 0);
         return "bookEditionDescription";
     }
 }
