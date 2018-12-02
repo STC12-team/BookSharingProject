@@ -7,7 +7,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "user_details")
 public class UserDetails implements Serializable {
-    private int id;
+    private long id;
     private User user;
     private String firstName;
     private String lastName;
@@ -27,10 +27,10 @@ public class UserDetails implements Serializable {
     @Column(name = "id")
     @SequenceGenerator(name = "userDetailsSeq", sequenceName = "user_details_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userDetailsSeq")
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

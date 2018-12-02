@@ -16,19 +16,19 @@ import java.util.List;
 
 @Repository
 public abstract class AbstractDaoImp<T extends Serializable> implements AbstractDao<T>  {
-    public CriteriaBuilder getCriteriaBuilder(){
+    protected CriteriaBuilder getCriteriaBuilder(){
         return getCurrentSession().getCriteriaBuilder();
     }
 
-    private CriteriaQuery<T> getCriteriaQuery() {
+    protected CriteriaQuery<T> getCriteriaQuery() {
         return getCriteriaBuilder().createQuery(clazz);
     }
 
-    public Root<T> getRoot() {
+    protected Root<T> getRoot() {
         return getCriteriaQuery().from(clazz);
     }
 
-    public List<T> getListByPredicates(Predicate... args) {
+    protected List<T> getListByPredicates(Predicate... args) {
         if (args.length == 0) {
             return findAll();
         }
@@ -53,7 +53,7 @@ public abstract class AbstractDaoImp<T extends Serializable> implements Abstract
         clazz = clazzToSet;
     }
 
-    public T findOne(int id) {
+    public T findOne(long id) {
         return (T) getCurrentSession().get(clazz, id);
     }
 
@@ -73,7 +73,7 @@ public abstract class AbstractDaoImp<T extends Serializable> implements Abstract
         getCurrentSession().delete(entity);
     }
 
-    public void deleteById(final int id) {
+    public void deleteById(final long id) {
         final T entity = findOne(id);
         delete(entity);
     }

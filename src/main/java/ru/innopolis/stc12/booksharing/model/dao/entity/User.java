@@ -20,7 +20,7 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    private int id;
+    private long id;
     private String login;
     private String password;
     private Role role;
@@ -35,10 +35,10 @@ public class User implements Serializable {
     @Column(name = "id", nullable=false)
     @SequenceGenerator(name = "usersIdSeq", sequenceName = "users_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usersIdSeq")
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

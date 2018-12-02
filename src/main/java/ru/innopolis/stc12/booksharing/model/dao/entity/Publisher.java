@@ -7,7 +7,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "publishers")
 public class Publisher implements Serializable {
-    private int id;
+    private long id;
     private String name;
 
     public Publisher() {
@@ -20,10 +20,10 @@ public class Publisher implements Serializable {
     @Id
     @SequenceGenerator(name = "publisherIdGenerator", sequenceName = "publishers_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "publisherIdGenerator")
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

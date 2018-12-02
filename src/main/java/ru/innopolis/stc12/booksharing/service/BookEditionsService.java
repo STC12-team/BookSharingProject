@@ -52,7 +52,7 @@ public class BookEditionsService {
         return resultList;
     }
 
-    public BookEdition getById(int id) {
+    public BookEdition getById(long id) {
         return bookEditionsDao.findOne(id);
     }
 

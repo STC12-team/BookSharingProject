@@ -14,7 +14,7 @@ import java.util.Objects;
 @Table(name = "book_queue")
 @TypeDef(name = "book_queue_status_enum", typeClass = PostgreSQLEnumType.class)
 public class BookQueue implements Serializable {
-    private int id;
+    private long id;
     private BookEdition bookEdition;
     private User user;
     private Timestamp addedAt;
@@ -34,10 +34,10 @@ public class BookQueue implements Serializable {
     @Column(name = "id")
     @SequenceGenerator(name = "bookQueueSeq", sequenceName = "book_queue_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookQueueSeq")
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

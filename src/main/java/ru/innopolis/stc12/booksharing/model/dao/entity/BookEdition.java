@@ -9,7 +9,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "book_editions")
 public class BookEdition implements Serializable {
-    private int id;
+    private long id;
     private String title;
     private String description;
     private String isbn;
@@ -34,10 +34,10 @@ public class BookEdition implements Serializable {
     @Column(name = "id")
     @SequenceGenerator(name = "bookEditionsIdGenerator", sequenceName = "book_editions_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookEditionsIdGenerator")
-    public int getId() {
+    public long getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -49,8 +49,8 @@ public class BookEdition implements Serializable {
         this.isbn = isbn;
     }
 
-    @OneToOne
-    @JoinColumn(name = "publisher_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "publisher_id", referencedColumnName = "id")
     public Publisher getPublisher() {
         return publisher;
     }

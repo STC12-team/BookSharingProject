@@ -33,7 +33,7 @@ public class BookQueueService {
         this.bookQueueDao.setClazz(BookQueue.class);
     }
 
-    public List<BookQueue> getBookQueueByBookEditionId(Integer id) {
+    public List<BookQueue> getBookQueueByBookEditionId(long id) {
         BookEdition bookEdition = bookEditionsDao.findOne(id);
         return bookEdition.getBookQueue();
     }
@@ -42,7 +42,7 @@ public class BookQueueService {
         return bookQueueDao.update(bookQueue);
     }
 
-    public int getBookQueueCountByBookEditionId(int id) {
+    public int getBookQueueCountByBookEditionId(long id) {
         List<BookQueue> bookQueueList = getBookQueueByBookEditionId(id);
         return bookQueueList.size();
     }

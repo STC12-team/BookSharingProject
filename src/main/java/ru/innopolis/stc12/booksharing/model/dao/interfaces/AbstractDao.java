@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface AbstractDao<T extends Serializable> {
-    T findOne(int id);
+    T findOne(long id);
 
     List<T> findAll();
 
@@ -14,7 +14,7 @@ public interface AbstractDao<T extends Serializable> {
 
     void delete(T entity);
 
-    void deleteById(int id);
+    void deleteById(long id);
 
     void setClazz(Class<T> clazzToSet);
 }

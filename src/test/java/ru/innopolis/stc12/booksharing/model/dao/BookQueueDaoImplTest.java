@@ -51,10 +51,10 @@ class BookQueueDaoImplTest {
         when(bookQueue.getBookEdition()).thenReturn(bookEdition);
         when(bookQueue.getUser()).thenReturn(user);
         when(bookQueue.getStatus()).thenReturn(BookQueueStatus.WAIT);
-        when(bookEdition.getId()).thenReturn(1);
-        when(user.getId()).thenReturn((int) 1);
+        when(bookEdition.getId()).thenReturn(1L);
+        when(user.getId()).thenReturn(1L);
         when(bookQueue.getAddedAt()).thenReturn(timestamp);
-        when(bookQueue.getId()).thenReturn(1);
+        when(bookQueue.getId()).thenReturn(1L);
         when(jdbcTemplate.update(anyString(), anyInt(), anyInt(), any(), anyString(), anyInt())).thenReturn(0);
 //        assertEquals(false, bookQueueDao.updateBookQueue(bookQueue));
     }
