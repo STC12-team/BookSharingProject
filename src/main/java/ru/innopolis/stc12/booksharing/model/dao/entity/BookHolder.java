@@ -8,14 +8,14 @@ import java.util.Objects;
 @Entity
 @Table(name = "book_holders")
 public class BookHolder implements Serializable {
-    private long id;
+    private int id;
     private BookCopy bookCopy;
     private User user;
     private Timestamp getAt;
     private Timestamp gaveAt;
-    private long nextHolder;
+    private int nextHolder;
 
-    public BookHolder(BookCopy bookCopy, User user, Timestamp getAt, Timestamp gaveAt, long nextHolder) {
+    public BookHolder(BookCopy bookCopy, User user, Timestamp getAt, Timestamp gaveAt, int nextHolder) {
         this.bookCopy = bookCopy;
         this.user = user;
         this.getAt = getAt;
@@ -30,10 +30,10 @@ public class BookHolder implements Serializable {
     @Column(name = "id")
     @SequenceGenerator(name = "bookHolderIdGenerator", sequenceName = "book_holders_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookHolderIdGenerator")
-    public long getId() {
+    public int getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -72,10 +72,10 @@ public class BookHolder implements Serializable {
     }
 
     @Column(name = "next_holder_id")
-    public long getNextHolder() {
+    public int getNextHolder() {
         return nextHolder;
     }
-    public void setNextHolder(long nextHolder) {
+    public void setNextHolder(int nextHolder) {
         this.nextHolder = nextHolder;
     }
 

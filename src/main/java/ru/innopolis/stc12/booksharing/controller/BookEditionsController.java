@@ -71,7 +71,7 @@ public class BookEditionsController {
     }
 
     @GetMapping(value = "/bookEditionDesc/{id}")
-    public String showBookEditionDescriptionPage(@PathVariable long id, Model model) {
+    public String showBookEditionDescriptionPage(@PathVariable int id, Model model) {
         BookEdition bookEdition = bookEditionsService.getById(id);
 
         int countBookCopy = bookCopiesService.getBookCopyCountByBookEditionId(id);

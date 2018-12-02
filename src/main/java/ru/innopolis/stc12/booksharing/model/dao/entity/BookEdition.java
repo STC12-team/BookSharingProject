@@ -9,7 +9,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "book_editions")
 public class BookEdition implements Serializable {
-    private long id;
+    private int id;
     private String title;
     private String description;
     private String isbn;
@@ -34,10 +34,10 @@ public class BookEdition implements Serializable {
     @Column(name = "id")
     @SequenceGenerator(name = "bookEditionsIdGenerator", sequenceName = "book_editions_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookEditionsIdGenerator")
-    public long getId() {
+    public int getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

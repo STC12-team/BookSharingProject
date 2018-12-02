@@ -47,7 +47,7 @@ public class BookCopiesService {
         bookCopiesDao.save(book);
     }
 
-    public List<BookCopy> getBookCopiesByUser(long userId) {
+    public List<BookCopy> getBookCopiesByUser(int userId) {
         User user = userDao.findOne(userId);
         return getBookCopiesByUser(user);
     }
@@ -56,12 +56,12 @@ public class BookCopiesService {
         return user.getBookCopies();
     }
 
-    public List<BookCopy> getBookCopiesByEdition(long editionId) {
+    public List<BookCopy> getBookCopiesByEdition(int editionId) {
         BookEdition bookEdition = bookEditionsDao.findOne(editionId);
         return bookEdition.getBookCopies();
     }
 
-    public BookCopy getBookCopyById(long id) {
+    public BookCopy getBookCopyById(int id) {
         return bookCopiesDao.findOne(id);
     }
 
@@ -69,11 +69,11 @@ public class BookCopiesService {
         return bookCopiesDao.update(bookCopy);
     }
 
-    public int getBookCopyCountByBookEditionId(long id) {
+    public int getBookCopyCountByBookEditionId(int id) {
         return getBookCopiesByEdition(id).size();
     }
 
-    public int getBookCopyCountByBookEditionIdInStatusFree(long id) {
+    public int getBookCopyCountByBookEditionIdInStatusFree(int id) {
         List<BookCopy> bookCopies = getBookCopiesByEdition(id);
 
         return bookCopies.stream()

@@ -10,17 +10,17 @@ public class Role implements Serializable {
     public Role() {
     }
 
-    private long id;
+    private int id;
     private String name;
 
     @Id
     @Column(name = "id")
     @SequenceGenerator(name = "rolesIdSeq", sequenceName = "roles_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rolesIdSeq")
-    public long getId() {
+    public int getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

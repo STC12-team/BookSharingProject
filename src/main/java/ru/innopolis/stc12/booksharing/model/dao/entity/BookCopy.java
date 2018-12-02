@@ -23,7 +23,7 @@ public class BookCopy implements Serializable {
         this.status = status;
     }
 
-    private long id;
+    private int id;
     private BookEdition bookEdition;
     private User owner;
     private BookCopiesStatus status;
@@ -32,10 +32,10 @@ public class BookCopy implements Serializable {
     @Column(name = "id")
     @SequenceGenerator(name = "bookCopiesIdSeq", sequenceName = "book_copies_id_seq")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookCopiesIdSeq")
-    public long getId() {
+    public int getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

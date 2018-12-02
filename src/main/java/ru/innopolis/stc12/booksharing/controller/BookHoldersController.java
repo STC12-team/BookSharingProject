@@ -63,7 +63,7 @@ public class BookHoldersController {
     String readEnd(
             @RequestParam(value = "bookCopyId") String bookCopyId,
             Model model) {
-        BookCopy bookCopy = bookCopiesService.getBookCopyById(Long.parseLong(bookCopyId));
+        BookCopy bookCopy = bookCopiesService.getBookCopyById(Integer.valueOf(bookCopyId));
         if (bookCopy == null) {
             LOGGER.warn("Не удалось найти книгу с id - " + bookCopyId);
             model.addAttribute(MESSAGE_ATTRIBUTE, "Не удалось найти книгу, попробуйте позднее.");
