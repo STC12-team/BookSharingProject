@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.view.RedirectView;
+import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
@@ -30,6 +31,12 @@ class ProfileControllerTest {
     @Mock
     private Model model;
 
+    @Mock
+    private User user;
+
+    @Mock
+    UserDetails userDetails;
+
     @BeforeEach
     void setUp() {
         initMocks(this);
@@ -42,22 +49,27 @@ class ProfileControllerTest {
 
     @Test
     void getProfilePage() {
-//        when(userService.getAuthenticatedUserDetails()).thenReturn(new UserDetails());
-        when(model.addAttribute(anyString())).thenReturn(model);
-//        assertEquals("userProfile", profileController.getProfilePage(model));
+        when(userService.getAuthenticatedUserDetails()).thenReturn(user);
+        when(user.getUserDetails()).thenReturn(userDetails);
+        assertEquals("userProfile", profileController.getProfilePage(model));
+        verify(model, times(1)).addAttribute("userDetails", userDetails);
     }
 
     @Test
     void getProfileEditPageWithNullDetails() {
-//        assertEquals("userProfile", profileController.getProfilePage(model));
+        when(userService.getAuthenticatedUserDetails()).thenReturn(user);
+        when(user.getUserDetails()).thenReturn(null);
+        assertEquals("userProfile", profileController.getProfilePage(model));
+        verify(model, times(1)).addAttribute("errorMessage", "Cannot get authenticated user");
     }
 
     @Test
     void getProfileEditPageWithDetails() {
-//        when(userService.getAuthenticatedUserDetails()).thenReturn(new UserDetails());
+        when(userService.getAuthenticatedUserDetails()).thenReturn(user);
+        when(user.getUserDetails()).thenReturn(userDetails);
         when(model.addAttribute(anyString(), any())).thenReturn(model);
         profileController.setUserPasswordConfirmed(true);
-//        assertEquals("userEdit", profileController.getProfileEditPage(model));
+        assertEquals("userEdit", profileController.getProfileEditPage(model));
     }
 
     @Test
