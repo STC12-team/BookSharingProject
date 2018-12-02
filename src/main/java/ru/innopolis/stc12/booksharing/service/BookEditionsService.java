@@ -1,10 +1,11 @@
 package ru.innopolis.stc12.booksharing.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.innopolis.stc12.booksharing.model.dao.BookEditionsDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.utils.RegexMatcher;
 
@@ -17,12 +18,14 @@ import java.util.Map;
 @Transactional
 @EnableTransactionManagement
 public class BookEditionsService {
-    private BookEditionsDao bookEditionsDao;
+    private Logger logger = Logger.getLogger(BookEditionsService.class);
+    private BookEditionsDao<BookEdition> bookEditionsDao;
     private static final String REGEXP_SENTENCE_BY_ONE_WORD = "\\S+";
 
     @Autowired
     public void setBookEditionsDao(BookEditionsDao bookEditionsDao) {
         this.bookEditionsDao = bookEditionsDao;
+        this.bookEditionsDao.setClazz(BookEdition.class);
     }
 
     public BookEdition getByIsbn(String isbn) {
@@ -34,11 +37,11 @@ public class BookEditionsService {
     }
 
     public List<BookEdition> getAllBookEditions() {
-        return bookEditionsDao.getAllBookEditions();
+        return bookEditionsDao.findAll();
     }
 
-    public boolean addBookEdition(BookEdition bookEdition) {
-        return bookEditionsDao.addBookEdition(bookEdition);
+    public void addBookEdition(BookEdition bookEdition) {
+        bookEditionsDao.save(bookEdition);
     }
 
     public List<BookEdition> getBookEditionsBySearchValue(String searchValue) {
@@ -52,7 +55,7 @@ public class BookEditionsService {
     }
 
     public BookEdition getById(int id) {
-        return bookEditionsDao.getBookEditionById(id);
+        return bookEditionsDao.findOne(id);
     }
 
     public List<BookEdition> getBookEditionsByPublisher(String publisher) {

@@ -23,7 +23,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="${pageContext.request.contextPath}/library">
-                        <spring:message code="nav.catalog"/>
+                        <spring:message code="nav.library"/>
                         <span class="sr-only">(current)</span></a>
                 </li>
                 <sec:authorize access="hasRole('ROLE_USER')">
@@ -53,44 +53,3 @@
         </ul>
     </div>
 </nav>
-<%--
-<div class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-            <a class="nav-link" href="/about">О проекте<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/catalog">Каталог книг</a>
-        </li>
-        <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
-            <li class="nav-item">
-                <a class="nav-link" href="/login?logout">Выйти</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/userProfile">Профиль</a>
-            </li>
-        </sec:authorize>
-        <sec:authorize access="hasRole('ROLE_ADMIN')">
-            <li class="nav-item">
-                <a class="nav-link" href="/bookEditions">Книжные издания</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/addBookEdition">Добавить книжное издание</a>
-            </li>
-        </sec:authorize>
-        <sec:authorize access="hasRole('ROLE_USER')">
-            <li class="nav-item">
-                <a class="nav-link" href="/addBookByUser">Добавить книгу пользователя</a>
-            </li>
-        </sec:authorize>
-        <sec:authorize access="!hasRole('ROLE_ADMIN') and !hasRole('ROLE_USER')">
-            <li class="nav-item">
-                <a class="nav-link" href="/login">Войти</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/register">Зарегистрироваться</a>
-            </li>
-        </sec:authorize>
-    </ul>
-</div>
---%>

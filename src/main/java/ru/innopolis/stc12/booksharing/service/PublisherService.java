@@ -1,19 +1,27 @@
 package ru.innopolis.stc12.booksharing.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.innopolis.stc12.booksharing.model.dao.PublisherDao;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.annotation.Transactional;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.PublisherDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 
 import java.util.List;
 
+@EnableTransactionManagement
 @Service
+@Transactional
 public class PublisherService {
-    private PublisherDao publisherDao;
+    private Logger logger = Logger.getLogger(PublisherService.class);
+
+    private PublisherDao<Publisher> publisherDao;
 
     @Autowired
-    public void setPublisherDao(PublisherDao publisherDao) {
+    public void setPublisherDao(PublisherDao<Publisher> publisherDao) {
         this.publisherDao = publisherDao;
+        this.publisherDao.setClazz(Publisher.class);
     }
 
     public Publisher getByName(String name) {
@@ -21,11 +29,11 @@ public class PublisherService {
     }
 
     public List<Publisher> getAllPublishers() {
-        return publisherDao.getAllPublishers();
+        return publisherDao.findAll();
     }
 
-    public boolean addPublisher(Publisher publisher) {
-        return publisherDao.addPublisher(publisher);
+    public void addPublisher(Publisher publisher) {
+        publisherDao.save(publisher);
     }
 
     public Publisher getByNameOrCreate(String name) {

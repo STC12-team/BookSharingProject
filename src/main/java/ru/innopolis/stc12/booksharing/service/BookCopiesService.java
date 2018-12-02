@@ -1,46 +1,84 @@
 package ru.innopolis.stc12.booksharing.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.innopolis.stc12.booksharing.model.dao.BookCopiesDao;
-import ru.innopolis.stc12.booksharing.model.pojo.BookCopy;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookCopiesDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
+import ru.innopolis.stc12.booksharing.model.dao.entity.User;
+import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @EnableTransactionManagement
 @Service
 @Transactional
 public class BookCopiesService {
-    private BookCopiesDao bookCopiesDao;
+    private Logger logger = Logger.getLogger(BookCopiesService.class);
+    private BookCopiesDao<BookCopy> bookCopiesDao;
+    private BookEditionsDao<BookEdition> bookEditionsDao;
+    private UserDao<User> userDao;
 
     @Autowired
-    public void setBookCopiesDao(BookCopiesDao bookCopiesDao) {
+    public void setBookCopiesDao(BookCopiesDao<BookCopy> bookCopiesDao) {
         this.bookCopiesDao = bookCopiesDao;
+        this.bookCopiesDao.setClazz(BookCopy.class);
     }
 
-    public boolean addBook(BookCopy book) {
-        return bookCopiesDao.addBookCopy(book);
+    @Autowired
+    public void setUserDao(UserDao<User> userDao) {
+        this.userDao = userDao;
+        this.userDao.setClazz(User.class);
     }
 
-    public List<BookCopy> getAllBookCopies() {
-        return bookCopiesDao.getAllBookCopies();
+    @Autowired
+    public void setBookEditionsDao(BookEditionsDao<BookEdition> bookEditionsDao) {
+        this.bookEditionsDao = bookEditionsDao;
+        this.bookEditionsDao.setClazz(BookEdition.class);
     }
 
-    public BookCopy getBookCopyById(Integer id) {
-        return bookCopiesDao.getBookCopiesById(id);
+    public void addBook(BookCopy book) {
+        bookCopiesDao.save(book);
     }
 
-    public boolean updateBookCopy(BookCopy bookCopy) {
-        return bookCopiesDao.updateBookCopy(bookCopy);
+    public List<BookCopy> getBookCopiesByUser(int userId) {
+        User user = userDao.findOne(userId);
+        return getBookCopiesByUser(user);
+    }
+
+    public List<BookCopy> getBookCopiesByUser(User user) {
+        return user.getBookCopies();
+    }
+
+    public List<BookCopy> getBookCopiesByEdition(int editionId) {
+        BookEdition bookEdition = bookEditionsDao.findOne(editionId);
+        return bookEdition.getBookCopies();
+    }
+
+    public BookCopy getBookCopyById(int id) {
+        return bookCopiesDao.findOne(id);
+    }
+
+    public BookCopy updateBookCopy(BookCopy bookCopy) {
+        return bookCopiesDao.update(bookCopy);
     }
 
     public int getBookCopyCountByBookEditionId(int id) {
-        return bookCopiesDao.getBookCopyCountByBookEditionId(id);
+        return getBookCopiesByEdition(id).size();
     }
 
     public int getBookCopyCountByBookEditionIdInStatusFree(int id) {
-        return bookCopiesDao.getBookCopyCountByBookEditionIdInStatusFree(id);
+        List<BookCopy> bookCopies = getBookCopiesByEdition(id);
+
+        return bookCopies.stream()
+                .filter(item -> item.getStatus() == BookCopiesStatus.FREE)
+                .collect(Collectors.toList())
+                .size();
     }
 }

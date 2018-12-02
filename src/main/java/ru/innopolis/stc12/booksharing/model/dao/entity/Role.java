@@ -1,21 +1,17 @@
 package ru.innopolis.stc12.booksharing.model.dao.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
 @Table(name = "roles")
-public class Role {
+public class Role implements Serializable {
     public Role() {
     }
 
     private int id;
     private String name;
-
-    public Role(Integer id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 
     @Id
     @Column(name = "id")
@@ -28,6 +24,7 @@ public class Role {
         this.id = id;
     }
 
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -41,19 +38,5 @@ public class Role {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Role role = (Role) o;
-        return Objects.equals(id, role.id) &&
-                Objects.equals(name, role.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
     }
 }

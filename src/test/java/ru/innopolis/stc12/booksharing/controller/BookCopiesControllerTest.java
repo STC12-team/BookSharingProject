@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.ui.Model;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.service.BookCopiesService;
 import ru.innopolis.stc12.booksharing.service.BookEditionsService;
 import ru.innopolis.stc12.booksharing.service.UserService;
@@ -107,7 +107,6 @@ class BookCopiesControllerTest {
         when(bookEditionsService.getByIsbn(anyString())).thenReturn(bookEdition);
         when(userService.getUserByLogin(anyString())).thenReturn(user);
         when(principal.getName()).thenReturn("name");
-        when(bookCopiesService.addBook(any())).thenReturn(true);
         assertEquals("addBookByUser", bookCopiesController.addBook(anyString(), model, principal));
         verify(bookEditionsService, times(1)).getByIsbn(anyString());
         verify(userService, times(1)).getUserByLogin(anyString());

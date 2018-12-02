@@ -1,5 +1,6 @@
 package ru.innopolis.stc12.booksharing.controller;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,11 +10,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
 @Controller
 public class RegisterController {
+    private Logger logger = Logger.getLogger(RegisterController.class);
     private UserService userService;
 
     @Autowired
@@ -31,6 +33,7 @@ public class RegisterController {
     @ExceptionHandler(ControllerException.class)
     public ModelAndView postRegisterPage(@RequestParam(value = "newLogin") String login,
                                          @RequestParam(value = "newPassword") String password,
+                                         @RequestParam(value = "newEmail") String email,
                                          Model model) {
 
         if (userService.getUserByLogin(login) != null) {
@@ -38,7 +41,7 @@ public class RegisterController {
             return new ModelAndView("register");
         }
 
-        User user = userService.addUser(login, password);
+        User user = userService.addNewUser(login, password, email);
         model.addAttribute("user", user);
 
         return new ModelAndView("library");

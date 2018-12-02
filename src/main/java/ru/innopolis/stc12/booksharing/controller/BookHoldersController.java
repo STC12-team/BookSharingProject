@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.innopolis.stc12.booksharing.exceptions.UnexpectedEmptyListException;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookHolder;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookQueue;
 import ru.innopolis.stc12.booksharing.model.pojo.*;
 import ru.innopolis.stc12.booksharing.service.BookCopiesService;
 import ru.innopolis.stc12.booksharing.service.BookHoldersService;
@@ -67,13 +70,8 @@ public class BookHoldersController {
             return PAGE_NAME;
         }
         bookCopy.setStatus(BookCopiesStatus.FREE);
-        if (bookCopiesService.updateBookCopy(bookCopy)) {
-            model.addAttribute(MESSAGE_ATTRIBUTE, "Книга отмечена как прочитанная");
-        } else {
-            LOGGER.warn("Не удалось отменить книгу прочитанной с id - " + bookCopyId);
-            model.addAttribute(MESSAGE_ATTRIBUTE, "Не удалось отметить книгу прочитанной, попробуйте позднее.");
-            return PAGE_NAME;
-        }
+        bookCopiesService.updateBookCopy(bookCopy);
+        model.addAttribute(MESSAGE_ATTRIBUTE, "Книга отмечена как прочитанная");
         List<BookQueue> bookQueueList = bookQueueService.getBookQueueByBookEditionId(bookCopy.getBookEdition().getId());
         if (bookQueueList.isEmpty()) {
             model.addAttribute(TRANSFER_MESSAGE_ATTRIBUTE, "Эта книга ни кому не нужна...");

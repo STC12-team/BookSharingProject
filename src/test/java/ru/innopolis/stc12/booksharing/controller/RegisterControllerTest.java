@@ -6,7 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
-import ru.innopolis.stc12.booksharing.model.pojo.User;
+import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -50,6 +50,7 @@ class RegisterControllerTest {
     void postRegisterPage() {
         when(model.addAttribute(anyString())).thenReturn(model);
         when(userService.getUserByLogin("newLogin")).thenReturn(user);
-        assertSame(new ModelAndView("register").getView(), registerController.postRegisterPage("newLogin", "newPassword", model).getView());
+        assertSame(new ModelAndView("register").getView(),
+                registerController.postRegisterPage("newLogin", "newPassword", "newEmail", model).getView());
     }
 }

@@ -6,14 +6,15 @@ import org.hibernate.annotations.TypeDef;
 import ru.innopolis.stc12.booksharing.model.pojo.BookQueueStatus;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
 @Table(name = "book_queue")
 @TypeDef(name = "book_queue_status_enum", typeClass = PostgreSQLEnumType.class)
-public class BookQueue {
-    private Integer id;
+public class BookQueue implements Serializable {
+    private int id;
     private BookEdition bookEdition;
     private User user;
     private Timestamp addedAt;
@@ -22,8 +23,7 @@ public class BookQueue {
     public BookQueue() {
     }
 
-    public BookQueue(Integer id, BookEdition bookEdition, User user, Timestamp addedAt, BookQueueStatus status) {
-        this.id = id;
+    public BookQueue(BookEdition bookEdition, User user, Timestamp addedAt, BookQueueStatus status) {
         this.bookEdition = bookEdition;
         this.user = user;
         this.addedAt = addedAt;
@@ -32,11 +32,12 @@ public class BookQueue {
 
     @Id
     @Column(name = "id")
-    public Integer getId() {
+    @SequenceGenerator(name = "bookQueueSeq", sequenceName = "book_queue_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bookQueueSeq")
+    public int getId() {
         return id;
     }
-
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -46,7 +47,6 @@ public class BookQueue {
     public BookEdition getBookEdition() {
         return bookEdition;
     }
-
     public void setBookEdition(BookEdition bookEdition) {
         this.bookEdition = bookEdition;
     }
@@ -57,7 +57,6 @@ public class BookQueue {
     public User getUser() {
         return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }
@@ -66,7 +65,6 @@ public class BookQueue {
     public Timestamp getAddedAt() {
         return addedAt;
     }
-
     public void setAddedAt(Timestamp addedAt) {
         this.addedAt = addedAt;
     }
@@ -77,7 +75,6 @@ public class BookQueue {
     public BookQueueStatus getStatus() {
         return status;
     }
-
     public void setStatus(BookQueueStatus status) {
         this.status = status;
     }
@@ -98,7 +95,7 @@ public class BookQueue {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BookQueue bookQueue = (BookQueue) o;
-        return Objects.equals(id, bookQueue.id) &&
+        return id == bookQueue.id &&
                 Objects.equals(bookEdition, bookQueue.bookEdition) &&
                 Objects.equals(user, bookQueue.user) &&
                 Objects.equals(addedAt, bookQueue.addedAt) &&
