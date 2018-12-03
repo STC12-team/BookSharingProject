@@ -16,30 +16,6 @@ import java.util.List;
 
 @Repository
 public abstract class AbstractDaoImp<T extends Serializable> implements AbstractDao<T>  {
-    protected CriteriaBuilder getCriteriaBuilder(){
-        return getCurrentSession().getCriteriaBuilder();
-    }
-
-    protected CriteriaQuery<T> getCriteriaQuery() {
-        return getCriteriaBuilder().createQuery(clazz);
-    }
-
-    protected Root<T> getRoot() {
-        return getCriteriaQuery().from(clazz);
-    }
-
-    protected List<T> getListByPredicates(Predicate... args) {
-        if (args.length == 0) {
-            return findAll();
-        }
-
-        CriteriaQuery<T> criteriaQuery = getCriteriaQuery();
-        criteriaQuery.select(getRoot()).where(args);
-
-        Query<T> query = getCurrentSession().createQuery(criteriaQuery);
-        return query.getResultList();
-    }
-
     private Class<T> clazz;
 
     @Autowired
@@ -76,5 +52,29 @@ public abstract class AbstractDaoImp<T extends Serializable> implements Abstract
     public void deleteById(final int id) {
         final T entity = findOne(id);
         delete(entity);
+    }
+
+    class QueryObject {
+        Session session;
+        CriteriaBuilder criteriaBuilder;
+        CriteriaQuery<T> criteriaQuery;
+        Root<T> root;
+
+        QueryObject() {
+            session = sessionFactory.getCurrentSession();
+            criteriaBuilder = session.getCriteriaBuilder();
+            criteriaQuery = criteriaBuilder.createQuery(clazz);
+            root = criteriaQuery.from(clazz);
+        }
+
+        List<T> executeQuery(Predicate... args) {
+            if (args.length == 0) {
+                criteriaQuery.select(root);
+            } else {
+                criteriaQuery.select(root).where(args);
+            }
+            Query<T> query = session.createQuery(criteriaQuery);
+            return query.getResultList();
+        }
     }
 }

@@ -1,5 +1,5 @@
 <%@tag description="User details template" pageEncoding="UTF-8" %>
-<%@attribute name="userDetails" required="true" type="ru.innopolis.stc12.booksharing.model.pojo.UserDetails" %>
+<%@attribute name="userDetails" required="true" type="ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails" %>
 
 <div class="row">
     <div class="col">
@@ -61,24 +61,24 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="form-group has-danger">
-                        <label class="sr-only" for="email">Почта</label>
-                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
-                            <input type="email" name="email" class="form-control" id="email"
-                                   placeholder="${userDetails.email}" disabled>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="form-control-feedback">
-                            <span class="text-danger align-middle">
-                                <!-- email Error -->
-                            </span>
-                    </div>
-                </div>
-            </div>
+            <%--            <div class="row">
+                            <div class="col-md-9">
+                                <div class="form-group has-danger">
+                                    <label class="sr-only" for="email">Почта</label>
+                                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                        <input type="email" name="email" class="form-control" id="email"
+                                               placeholder="${userDetails.email}" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-control-feedback">
+                                        <span class="text-danger align-middle">
+                                            <!-- email Error -->
+                                        </span>
+                                </div>
+                            </div>
+                        </div>--%>
             <div class="row">
                 <div class="col-md-9">
                     <div class="form-group has-danger">
