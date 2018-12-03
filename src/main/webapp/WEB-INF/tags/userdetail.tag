@@ -15,7 +15,7 @@
     </div>
     <div class="col">
         <h3 class="display-4">${userDetails.firstName} ${userDetails.lastName} ${userDetails.surname}</h3>
-        <%--<p><span class="text-muted">Email:</span> ${userDetails.email}</p>--%>
+        <p><span class="text-muted">Email:</span> ${userDetails.getUser().email}</p>
     </div>
 </div>
 
