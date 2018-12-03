@@ -13,7 +13,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <ul class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav mr-auto" id="collapsibleNavbar">
             <%--Главное меню--%>
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
@@ -46,10 +46,10 @@
                     </li>
                 </sec:authorize>
             </ul>
+        </ul>
             <%--Переключение языка--%>
             <t:language/>
             <%--Форма авторизации, регистрации...--%>
             <t:authorization/>
-        </ul>
     </div>
 </nav>
