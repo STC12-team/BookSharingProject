@@ -2,6 +2,7 @@ package ru.innopolis.stc12.booksharing.controller;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.ui.Model;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
@@ -20,6 +21,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class BookCopiesControllerTest {
+    @InjectMocks
     private BookCopiesController bookCopiesController;
     @Mock
     private Model model;
@@ -41,10 +43,6 @@ class BookCopiesControllerTest {
     @BeforeEach
     void setUp() {
         initMocks(this);
-        bookCopiesController = new BookCopiesController();
-        bookCopiesController.setBookEditionsService(bookEditionsService);
-        bookCopiesController.setUsersService(userService);
-        bookCopiesController.setBookCopiesService(bookCopiesService);
     }
 
     @Test
