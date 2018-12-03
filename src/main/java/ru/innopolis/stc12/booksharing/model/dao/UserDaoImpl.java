@@ -11,8 +11,9 @@ import java.util.List;
 public class UserDaoImpl extends AbstractDaoImp implements UserDao {
     @Override
     public User getUserByLogin(String login) {
-        Predicate predicate = getCriteriaBuilder().equal(getRoot().get("login"), login);
-        List<User> list = getListByPredicates(predicate);
+        QueryObject queryObject = new QueryObject();
+        Predicate predicate = queryObject.criteriaBuilder.equal(queryObject.root.get("login"), login);
+        List<User> list = queryObject.executeQuery(predicate);
         if (list.isEmpty()) { return null; }
         return list.get(0);
     }

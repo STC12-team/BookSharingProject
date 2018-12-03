@@ -1,5 +1,5 @@
 <%@tag description="User details template" pageEncoding="UTF-8" %>
-<%@attribute name="userDetails" required="true" type="ru.innopolis.stc12.booksharing.model.pojo.UserDetails" %>
+<%@attribute name="userDetails" required="true" type="ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails" %>
 
 <div class="row">
     <div class="col">
@@ -15,7 +15,7 @@
     </div>
     <div class="col">
         <h3 class="display-4">${userDetails.firstName} ${userDetails.lastName} ${userDetails.surname}</h3>
-        <p><span class="text-muted">Email:</span> ${userDetails.email}</p>
+        <p><span class="text-muted">Email:</span> ${userDetails.getUser().email}</p>
     </div>
 </div>
 
