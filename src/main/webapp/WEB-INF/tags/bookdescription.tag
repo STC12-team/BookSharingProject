@@ -7,7 +7,7 @@
 <%@attribute name="countBookCopy" required="true" rtexprvalue="true" type="java.lang.Integer" %>
 <%@attribute name="countBookCopyInStatusFree" required="true" rtexprvalue="true" type="java.lang.Integer" %>
 <%@attribute name="userCountInQueue" required="true" rtexprvalue="true" type="java.lang.Integer" %>
-<%@attribute name="placeInQueue" required="true" rtexprvalue="true" type="java.lang.Integer" %>
+<%@attribute name="userPlaceInQueue" required="true" rtexprvalue="true" type="java.lang.Integer" %>
 
 <%--Book edition info--%>
 <div class="card mb-3">
@@ -23,18 +23,17 @@
                 <p class="card-text"><spring:message code="bookDesc.year"/>: ${bookEdition.yearOfPublication}</p>
                 <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
                     <c:choose>
-                        <c:when test="${placeInQueue == 0}">
+                        <c:when test="${userPlaceInQueue == 0}">
                             <a href="#" class="btn btn-primary"><spring:message code="bookDesc.getInQueue"/></a>
                         </c:when>
-                        <c:when test="${countBookCopyInStatusFree >= placeInQueue}">
-                            <a href="#" class="btn btn-primary"><spring:message code="bookDesc.take"/></a>
+                        <c:when test="${userPlaceInQueue >= 1}">
+                            <p><a href="#" class="btn btn-primary"><spring:message code="bookDesc.getOutOfQueue"/></a></p>
+                            <p class="card-text"><span class="badge badge-info"><spring:message code="bookDesc.placeInQueue"/> - ${userPlaceInQueue}</span></p>
                         </c:when>
-                        <c:otherwise>
-                            <div class="alert alert-primary" role="alert" style="width: 300px">
-                                <spring:message code="bookDesc.placeInQueue"/> - ${placeInQueue}
-                            </div>
-                        </c:otherwise>
                     </c:choose>
+                </sec:authorize>
+                <sec:authorize access="!hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+                    <p><spring:message code="bookDesc.authorizeForQueueAccess"/></p>
                 </sec:authorize>
             </div>
         </div>

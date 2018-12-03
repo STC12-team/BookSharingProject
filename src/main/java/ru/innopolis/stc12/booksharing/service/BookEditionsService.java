@@ -81,4 +81,8 @@ public class BookEditionsService {
             put("place", 2);
         }}; // sonar recommendations ignored for temporary solution.
     }
+
+    public int getUserPlaceInQueue() { // TODO: replace with real life value
+        return (int)(Math.random()*2); // return random value from sequence [0,1]
+    }
 }
