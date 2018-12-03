@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
-import ru.innopolis.stc12.booksharing.service.BookCopiesService;
-import ru.innopolis.stc12.booksharing.service.BookEditionsService;
-import ru.innopolis.stc12.booksharing.service.BookQueueService;
-import ru.innopolis.stc12.booksharing.service.PublisherService;
+import ru.innopolis.stc12.booksharing.model.dao.entity.User;
+import ru.innopolis.stc12.booksharing.service.*;
+
+import java.security.Principal;
 
 @Controller
 public class BookEditionsController {
@@ -21,6 +21,12 @@ public class BookEditionsController {
     private PublisherService publisherService;
     private BookCopiesService bookCopiesService;
     private BookQueueService bookQueueService;
+    private UserService userService;
+
+    @Autowired
+    public void setUsersService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Autowired
     public void setBookEditionsService(BookEditionsService bookEditionsService) {
@@ -84,6 +90,24 @@ public class BookEditionsController {
         model.addAttribute("countBookCopyInStatusFree", countBookCopyInStatusFree);
         model.addAttribute("userCountInQueue", countUserInQueue);
         model.addAttribute("userPlaceInQueue", userPlaceInQueue);
+        return "bookEditionDescription";
+    }
+
+    @GetMapping(value = "/bookEditionDesc/{id}/getOutOfQueue")
+    public String getOutOfQueue(@PathVariable int id, Model model, Principal principal) {
+        BookEdition bookEdition = bookEditionsService.getById(id);
+        User user = userService.getUserByLogin(principal.getName());
+        bookQueueService.deleteUserFromQueue(user, bookEdition);
+        model.addAttribute("bookEdition", bookEdition);
+        return "bookEditionDescription";
+    }
+
+    @GetMapping(value = "/bookEditionDesc/{id}/getInQueue")
+    public String getInQueue(@PathVariable int id, Model model, Principal principal) {
+        BookEdition bookEdition = bookEditionsService.getById(id);
+        User user = userService.getUserByLogin(principal.getName());
+        bookQueueService.addUserToBookQueue(user, bookEdition);
+        model.addAttribute("bookEdition", bookEdition);
         return "bookEditionDescription";
     }
 }
