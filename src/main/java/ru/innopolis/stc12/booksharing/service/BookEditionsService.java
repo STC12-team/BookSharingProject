@@ -77,4 +77,8 @@ public class BookEditionsService {
         return new HashMap<String, Integer>() {{
             put("all", 10); put("free", 4); put("queue", 6);}}; // sonar recommendations ignored for temporary solution.
     }
+
+    public int getUserPlaceInQueue() { // TODO: replace with real life value
+        return (int)(Math.random()*2); // return random value from sequence [0,1]
+    }
 }

@@ -77,11 +77,13 @@ public class BookEditionsController {
         int countBookCopy = bookCopiesService.getBookCopyCountByBookEditionId(id);
         int countBookCopyInStatusFree = bookCopiesService.getBookCopyCountByBookEditionIdInStatusFree(id);
         int countUserInQueue = bookQueueService.getBookQueueCountByBookEditionId(id);
+        int userPlaceInQueue = bookEditionsService.getUserPlaceInQueue();
 
         model.addAttribute("bookEdition", bookEdition);
         model.addAttribute("countBookCopy", countBookCopy);
         model.addAttribute("countBookCopyInStatusFree", countBookCopyInStatusFree);
         model.addAttribute("userCountInQueue", countUserInQueue);
+        model.addAttribute("userPlaceInQueue", userPlaceInQueue);
         return "bookEditionDescription";
     }
 }

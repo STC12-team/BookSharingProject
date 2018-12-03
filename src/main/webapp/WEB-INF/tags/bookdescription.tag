@@ -18,8 +18,15 @@
                 <p class="card-text">ISBN: ${bookEdition.isbn}</p>
                 <p class="card-text">Издательство: ${bookEdition.publisher.name}</p>
                 <p class="card-text">Год издания: ${bookEdition.yearOfPublication}</p>
-                <a href="#" class="btn btn-primary">Взять</a>
-                <a href="#" class="btn btn-primary">Встать в очередь</a>
+                <c:choose>
+                    <c:when test="${userPlaceInQueue == 0}">
+                        <a href="#" class="btn btn-primary">Встать в очередь</a>
+                    </c:when>
+                    <c:when test="${userPlaceInQueue == 1}">
+                        <p><a href="#" class="btn btn-primary">Покинуть очередь</a></p>
+                        <p class="card-text"><span class="badge badge-info">Ваше место в очереди - ${userPlaceInQueue}</span></p>
+                    </c:when>
+                </c:choose>
             </div>
         </div>
     </div>
