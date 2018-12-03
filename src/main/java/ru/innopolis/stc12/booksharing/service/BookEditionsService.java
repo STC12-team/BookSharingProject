@@ -75,7 +75,11 @@ public class BookEditionsService {
      */
     public Map<String, Integer> getMockedAttributes() {
         return new HashMap<String, Integer>() {{
-            put("all", 10); put("free", 4); put("queue", 6);}}; // sonar recommendations ignored for temporary solution.
+            put("all", 10);
+            put("free", 4);
+            put("queue", 6);
+            put("place", 2);
+        }}; // sonar recommendations ignored for temporary solution.
     }
 
     public int getUserPlaceInQueue() { // TODO: replace with real life value

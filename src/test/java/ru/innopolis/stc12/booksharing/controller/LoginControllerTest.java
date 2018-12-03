@@ -6,6 +6,7 @@ import org.mockito.Mock;
 import org.springframework.ui.Model;
 import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -29,9 +30,12 @@ class LoginControllerTest {
     }
 
     @Test
-    void getLoginPageGet() {
-        when(model.addAttribute("error")).thenReturn(model);
-        assertThrows(ControllerException.class, () -> loginController.getLoginPage("", model));
-        //assertEquals("login", loginController.getLoginPage("", model));
+    void getLoginPageWithError() {
+        assertThrows(ControllerException.class, () -> loginController.getLoginPage("error", model));
+    }
+
+    @Test
+    void getLoginPage() {
+        assertEquals("login", loginController.getLoginPage(null, model));
     }
 }

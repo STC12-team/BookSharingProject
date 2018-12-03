@@ -37,7 +37,7 @@ public class CatalogController {
         if (!bookCopies.isEmpty()) {
             model.addAttribute("bookCopies", bookCopies);
         } else {
-            model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "Что то пошло не так :(");
+            model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, "У этого пользователя нет книжных экземпляров");
             logger.error("BookCopies is Empty");
         }
         return "catalog";
