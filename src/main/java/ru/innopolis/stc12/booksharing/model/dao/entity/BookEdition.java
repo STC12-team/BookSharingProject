@@ -49,7 +49,7 @@ public class BookEdition implements Serializable {
         this.isbn = isbn;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "publisher_id", referencedColumnName = "id")
     public Publisher getPublisher() {
         return publisher;
