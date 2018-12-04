@@ -107,6 +107,7 @@ class BookEditionsControllerTest {
         when(userService.getUserByLogin(anyString())).thenReturn(user);
         doNothing().when(bookQueueService).deleteUserFromQueue(user, bookEdition);
         assertEquals("bookEditionDescription", bookEditionsController.getOutOfQueue(1, model, principal));
+        verify(bookQueueService, times(1)).deleteUserFromQueue(user, bookEdition);
         verify(model, times(1)).addAttribute("bookEdition", bookEdition);
     }
 
@@ -116,8 +117,9 @@ class BookEditionsControllerTest {
         when(principal.getName()).thenReturn("user");
         when(bookEditionsService.getById(anyInt())).thenReturn(bookEdition);
         when(userService.getUserByLogin(anyString())).thenReturn(user);
-        doNothing().when(bookQueueService).deleteUserFromQueue(user, bookEdition);
+        doNothing().when(bookQueueService).addUserToBookQueue(user, bookEdition);
         assertEquals("bookEditionDescription", bookEditionsController.getInQueue(1, model, principal));
+        verify(bookQueueService, times(1)).addUserToBookQueue(user, bookEdition);
         verify(model, times(1)).addAttribute("bookEdition", bookEdition);
     }
 

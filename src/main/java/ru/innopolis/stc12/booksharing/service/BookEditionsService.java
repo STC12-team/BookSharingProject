@@ -1,12 +1,11 @@
 package ru.innopolis.stc12.booksharing.service;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
 import ru.innopolis.stc12.booksharing.utils.RegexMatcher;
 
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import java.util.Map;
 @Transactional
 @EnableTransactionManagement
 public class BookEditionsService {
-    private Logger logger = Logger.getLogger(BookEditionsService.class);
     private BookEditionsDao<BookEdition> bookEditionsDao;
     private static final String REGEXP_SENTENCE_BY_ONE_WORD = "\\S+";
 
@@ -74,12 +72,12 @@ public class BookEditionsService {
     TODO Replace mock with real object logic
      */
     public Map<String, Integer> getMockedAttributes() {
-        return new HashMap<String, Integer>() {{
-            put("all", 10);
-            put("free", 4);
-            put("queue", 6);
-            put("place", 2);
-        }}; // sonar recommendations ignored for temporary solution.
+        Map<String, Integer> map = new HashMap<>();
+        map.put("all", 10);
+        map.put("free", 4);
+        map.put("queue", 6);
+        map.put("place", 2);
+        return map;
     }
 
     public int getUserPlaceInQueue() { // TODO: replace with real life value

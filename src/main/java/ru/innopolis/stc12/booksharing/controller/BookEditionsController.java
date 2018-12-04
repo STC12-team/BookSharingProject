@@ -1,6 +1,6 @@
 package ru.innopolis.stc12.booksharing.controller;
 
-import org.apache.log4j.Logger;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,13 +15,14 @@ import java.security.Principal;
 
 @Controller
 public class BookEditionsController {
-    private Logger logger = Logger.getLogger(BookEditionsController.class);
 
     private BookEditionsService bookEditionsService;
     private PublisherService publisherService;
     private BookCopiesService bookCopiesService;
     private BookQueueService bookQueueService;
     private UserService userService;
+    private static final String BOOK_EDITION_DESCRIPTION_PAGE = "bookEditionDescription";
+    private static final String BOOK_EDITION_ATTRIBUTE = "bookEdition";
 
     @Autowired
     public void setUsersService(UserService userService) {
@@ -85,12 +86,12 @@ public class BookEditionsController {
         int countUserInQueue = bookQueueService.getBookQueueCountByBookEditionId(id);
         int userPlaceInQueue = bookEditionsService.getUserPlaceInQueue();
 
-        model.addAttribute("bookEdition", bookEdition);
+        model.addAttribute(BOOK_EDITION_ATTRIBUTE, bookEdition);
         model.addAttribute("countBookCopy", countBookCopy);
         model.addAttribute("countBookCopyInStatusFree", countBookCopyInStatusFree);
         model.addAttribute("userCountInQueue", countUserInQueue);
         model.addAttribute("userPlaceInQueue", userPlaceInQueue);
-        return "bookEditionDescription";
+        return BOOK_EDITION_DESCRIPTION_PAGE;
     }
 
     @GetMapping(value = "/bookEditionDesc/{id}/getOutOfQueue")
@@ -98,8 +99,8 @@ public class BookEditionsController {
         BookEdition bookEdition = bookEditionsService.getById(id);
         User user = userService.getUserByLogin(principal.getName());
         bookQueueService.deleteUserFromQueue(user, bookEdition);
-        model.addAttribute("bookEdition", bookEdition);
-        return "bookEditionDescription";
+        model.addAttribute(BOOK_EDITION_ATTRIBUTE, bookEdition);
+        return BOOK_EDITION_DESCRIPTION_PAGE;
     }
 
     @GetMapping(value = "/bookEditionDesc/{id}/getInQueue")
@@ -107,7 +108,7 @@ public class BookEditionsController {
         BookEdition bookEdition = bookEditionsService.getById(id);
         User user = userService.getUserByLogin(principal.getName());
         bookQueueService.addUserToBookQueue(user, bookEdition);
-        model.addAttribute("bookEdition", bookEdition);
-        return "bookEditionDescription";
+        model.addAttribute(BOOK_EDITION_ATTRIBUTE, bookEdition);
+        return BOOK_EDITION_DESCRIPTION_PAGE;
     }
 }
