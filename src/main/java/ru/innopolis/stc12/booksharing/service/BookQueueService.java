@@ -68,6 +68,8 @@ public class BookQueueService {
         for (BookCopy bookCopy : listOfBookCopies) {
             if (bookCopy.getStatus().equals(BookCopiesStatus.FREE)) {
                 bookQueue.setStatus(BookQueueStatus.GETTING);
+                logger.info(user + " is in " + BookQueueStatus.GETTING + " status");
+                break;
             }
         }
         bookQueueDao.save(bookQueue);
