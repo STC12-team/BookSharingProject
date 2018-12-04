@@ -1,16 +1,15 @@
 package ru.innopolis.stc12.booksharing.service;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookCopiesDao;
-import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
-import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookCopiesDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
 
 import java.util.List;
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 public class BookCopiesService {
-    private Logger logger = Logger.getLogger(BookCopiesService.class);
     private BookCopiesDao<BookCopy> bookCopiesDao;
     private BookEditionsDao<BookEdition> bookEditionsDao;
     private UserDao<User> userDao;
