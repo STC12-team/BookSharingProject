@@ -36,7 +36,6 @@ class BookQueueServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        bookQueueService = new BookQueueService();
         bookQueueService.setBookQueueDao(bookQueueDao);
         bookQueueService.setBookCopiesDao(bookCopiesDao);
     }
@@ -54,11 +53,10 @@ class BookQueueServiceTest {
     }
 
     @Test
-    void addUserToBookQueue() {
+    void addUserToBookQueueInWaitStatus() {
         BookEdition bookEdition = new BookEdition();
         BookCopy first = new BookCopy(bookEdition, new User(), BookCopiesStatus.BUSY);
         BookCopy second = new BookCopy(bookEdition, new User(), BookCopiesStatus.BUSY);
-        BookCopy third = new BookCopy(bookEdition, new User(), BookCopiesStatus.FREE);
         List<BookCopy> list = new ArrayList<>();
         list.add(first);
         list.add(second);
@@ -66,10 +64,20 @@ class BookQueueServiceTest {
         ArgumentCaptor<BookQueue> valueCapture = ArgumentCaptor.forClass(BookQueue.class);
         doNothing().when(bookQueueDao).save(valueCapture.capture());
         bookQueueService.addUserToBookQueue(new User(), new BookEdition());
-        BookQueue bookQueue = new BookQueue();
-        bookQueue.setStatus(BookQueueStatus.WAIT);
-        assertEquals(bookQueue.getStatus(), valueCapture.getValue().getStatus());
-        list.add(third);
+        assertEquals(BookQueueStatus.WAIT, valueCapture.getValue().getStatus());
+    }
+
+    @Test
+    void addUserToBookQueueInGettingStatus() {
+        BookEdition bookEdition = new BookEdition();
+        BookCopy first = new BookCopy(bookEdition, new User(), BookCopiesStatus.BUSY);
+        BookCopy second = new BookCopy(bookEdition, new User(), BookCopiesStatus.FREE);
+        List<BookCopy> list = new ArrayList<>();
+        list.add(first);
+        list.add(second);
+        when(bookCopiesDao.getBookCopiesOfBookEdition(any(BookEdition.class))).thenReturn(list);
+        ArgumentCaptor<BookQueue> valueCapture = ArgumentCaptor.forClass(BookQueue.class);
+        doNothing().when(bookQueueDao).save(valueCapture.capture());
         bookQueueService.addUserToBookQueue(new User(), new BookEdition());
         assertEquals(BookQueueStatus.GETTING, valueCapture.getValue().getStatus());
     }
