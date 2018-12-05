@@ -10,10 +10,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Role;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 
 import java.util.List;
 import java.util.Objects;
@@ -50,13 +50,13 @@ public class UserService {
     }
 
     @Autowired
-    public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public boolean checkUserPasswordMatches(String currentPassword, String password) {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder.matches(password, currentPassword);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(password, currentPassword);
     }
 
     public List<User> getUsers() {
