@@ -11,6 +11,7 @@ import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookCopiesDao;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
+import ru.innopolis.stc12.booksharing.service.Interfaces.IBookCopiesService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,11 +44,6 @@ public class BookCopiesService {
 
     public void addBook(BookCopy book) {
         bookCopiesDao.save(book);
-    }
-
-    public List<BookCopy> getBookCopiesByUser(int userId) {
-        User user = userDao.findOne(userId);
-        return getBookCopiesByUser(user);
     }
 
     public List<BookCopy> getBookCopiesByUser(User user) {
