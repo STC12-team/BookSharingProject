@@ -4,14 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
+import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
 import ru.innopolis.stc12.booksharing.utils.RegexMatcher;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -81,6 +84,13 @@ public class BookEditionsService {
     }
 
     public int getUserPlaceInQueue() { // TODO: replace with real life value
-        return (int)(Math.random()*2); // return random value from sequence [0,1]
+        return (int) (Math.random() * 2); // return random value from sequence [0,1]
+    }
+
+    public List<BookCopy> getBookCopiesByBookEditionIdInStatusFree(int id) {
+        return bookEditionsDao.getBookCopiesByBookEditionId(id)
+                .stream()
+                .filter(i -> i.getStatus() == BookCopiesStatus.FREE)
+                .collect(Collectors.toList());
     }
 }

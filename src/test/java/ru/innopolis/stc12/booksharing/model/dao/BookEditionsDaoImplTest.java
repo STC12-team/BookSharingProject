@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 
@@ -15,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -44,6 +44,9 @@ class BookEditionsDaoImplTest {
 
     @Mock
     Join<BookEdition, Publisher> join;
+
+    @Mock
+    BookEdition bookEdition;
 
     @BeforeEach
     void setUp() {
@@ -110,5 +113,13 @@ class BookEditionsDaoImplTest {
         List<BookEdition> list = new ArrayList<>();
         when(query.getResultList()).thenReturn(list);
 //        assertEquals(list, bookEditionsDao.getBookEditionByTitle("title"));
+    }
+
+    @Test
+    void getBookCopiesByBookEditionId() {
+        List<BookCopy> bookCopyList = new ArrayList<>();
+        when(bookEdition.getBookCopies()).thenReturn(bookCopyList);
+        when(session.load(BookEdition.class, 1)).thenReturn(bookEdition);
+        assertEquals(bookCopyList, bookEditionsDao.getBookCopiesByBookEditionId(1));
     }
 }
