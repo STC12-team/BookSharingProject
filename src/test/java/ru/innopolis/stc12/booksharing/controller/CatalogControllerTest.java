@@ -57,7 +57,7 @@ public class CatalogControllerTest {
         when(bookCopiesService.getBookCopiesByUser(user)).thenReturn(bookCopies);
         when(bookCopies.isEmpty()).thenReturn(true);
         assertEquals("catalog", catalogController.showCatalogPage(model));
-//        verify(model, times(1)).addAttribute("errorMessage", "У этого пользователя нет книжных экземпляров");
+        verify(model, times(1)).addAttribute("errorMessage", "У этого пользователя нет книжных экземпляров");
     }
 
 }

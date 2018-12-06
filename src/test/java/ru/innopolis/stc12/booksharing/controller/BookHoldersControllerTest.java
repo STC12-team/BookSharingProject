@@ -53,7 +53,7 @@ class BookHoldersControllerTest {
     void takenBooksWhenPrincipalIsNull() {
         assertEquals("takenBooks", bookHoldersController.takenBooks(model, null));
         //TODO не понимает кириллицу
-//        verify(model, times(1)).addAttribute("message", "У Вас нет прав на просмотр данной страницы!");
+        verify(model, times(1)).addAttribute("message", "У Вас нет прав на просмотр данной страницы!");
     }
 
     @Test
@@ -68,7 +68,7 @@ class BookHoldersControllerTest {
     void readEndWhenBookCopyIdIsIncorrect() {
         when(bookCopiesService.getBookCopyById(1)).thenReturn(null);
         assertEquals("takenBooks", bookHoldersController.readEnd("1", model));
-//        verify(model, times(1)).addAttribute("message", "Не удалось найти книгу, попробуйте позднее.");
+        verify(model, times(1)).addAttribute("message", "Не удалось найти книгу, попробуйте позднее.");
     }
 
     @Test
@@ -79,8 +79,8 @@ class BookHoldersControllerTest {
         when(bookCopy.getBookEdition()).thenReturn(bookEdition);
         when(bookEdition.getId()).thenReturn(1);
         assertEquals("takenBooks", bookHoldersController.readEnd("1", model));
-//        verify(model, times(1)).addAttribute("message", "Книга отмечена как прочитанная");
-//        verify(model, times(1)).addAttribute("transfer_message", "Эта книга ни кому не нужна...");
+        verify(model, times(1)).addAttribute("message", "Книга отмечена как прочитанная");
+        verify(model, times(1)).addAttribute("transfer_message", "Эта книга ни кому не нужна...");
     }
 
     @Test
@@ -94,8 +94,8 @@ class BookHoldersControllerTest {
         when(bookQueueList.get(0)).thenReturn(bookQueue);
         when(bookQueue.getUser()).thenReturn(user);
         assertEquals("takenBooks", bookHoldersController.readEnd("1", model));
-//        verify(model, times(1)).addAttribute("message", "Книга отмечена как прочитанная");
-//        verify(model, times(1)).addAttribute("transfer_message", "Следующий на очереди:");
+        verify(model, times(1)).addAttribute("message", "Книга отмечена как прочитанная");
+        verify(model, times(1)).addAttribute("transfer_message", "Следующий на очереди:");
         verify(model, times(1)).addAttribute("user", user);
     }
 }
