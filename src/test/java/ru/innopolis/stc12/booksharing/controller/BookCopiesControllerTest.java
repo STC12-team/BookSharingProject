@@ -25,9 +25,6 @@ import static org.mockito.MockitoAnnotations.initMocks;
 class BookCopiesControllerTest {
     @InjectMocks
     private BookCopiesController bookCopiesController;
-
-    // cannot pass null to mocked object (see usage on line 111in current file)
-    private BookCopiesController bookCopiesControllerForNullConditionCheck;
     @Mock
     private Model model;
     @Mock
@@ -50,8 +47,6 @@ class BookCopiesControllerTest {
     @BeforeEach
     void setUp() {
         initMocks(this);
-        bookCopiesControllerForNullConditionCheck = new BookCopiesController();
-        bookCopiesControllerForNullConditionCheck.setMessageSource(new ResourceBundleMessageSource());
         when(model.addAttribute(anyString(), anyString())).thenReturn(model);
     }
 
@@ -108,7 +103,8 @@ class BookCopiesControllerTest {
     @Test
     void addBookWhenPrincipalIsNull() {
         when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("");
-        assertEquals("addBookByUser", bookCopiesControllerForNullConditionCheck.addBook(anyString(), model, eq(null)));
+        bookCopiesController.setMessageSource(new ResourceBundleMessageSource());
+        assertEquals("addBookByUser", bookCopiesController.addBook(anyString(), model, eq(null)));
         verify(model, times(1)).addAttribute(anyString(), anyString());
     }
 
