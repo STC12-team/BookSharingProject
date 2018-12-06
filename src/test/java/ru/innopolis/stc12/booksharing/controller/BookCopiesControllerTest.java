@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.ui.Model;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
@@ -23,6 +25,9 @@ import static org.mockito.MockitoAnnotations.initMocks;
 class BookCopiesControllerTest {
     @InjectMocks
     private BookCopiesController bookCopiesController;
+
+    // cannot pass null to mocked object (see usage on line 111in current file)
+    private BookCopiesController bookCopiesControllerForNullConditionCheck;
     @Mock
     private Model model;
     @Mock
@@ -39,10 +44,15 @@ class BookCopiesControllerTest {
     private Principal principal;
     @Mock
     private BookCopiesService bookCopiesService;
+    @Mock
+    private MessageSource messageSource;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
+        bookCopiesControllerForNullConditionCheck = new BookCopiesController();
+        bookCopiesControllerForNullConditionCheck.setMessageSource(new ResourceBundleMessageSource());
+        when(model.addAttribute(anyString(), anyString())).thenReturn(model);
     }
 
     @Test
@@ -53,6 +63,7 @@ class BookCopiesControllerTest {
 
     @Test
     void searchBookWhenSearchValueIsNull() {
+        when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("");
         assertEquals("addBookByUser", bookCopiesController.searchBook(null, model));
         verify(model, times(2)).addAttribute(anyString(), anyString());
     }
@@ -96,8 +107,9 @@ class BookCopiesControllerTest {
 
     @Test
     void addBookWhenPrincipalIsNull() {
-        assertEquals("addBookByUser", bookCopiesController.addBook(anyString(), model, eq(null)));
-        verify(model, times(1)).addAttribute(anyString(), any());
+        when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("");
+        assertEquals("addBookByUser", bookCopiesControllerForNullConditionCheck.addBook(anyString(), model, eq(null)));
+        verify(model, times(1)).addAttribute(anyString(), anyString());
     }
 
     @Test

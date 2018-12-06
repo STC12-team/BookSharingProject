@@ -3,16 +3,21 @@ package ru.innopolis.stc12.booksharing.controller;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.ui.Model;
 import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class LoginControllerTest {
+
     private LoginController loginController;
 
     @Mock
@@ -22,6 +27,7 @@ class LoginControllerTest {
     void setUp() {
         initMocks(this);
         loginController = new LoginController();
+        loginController.setMessageSource(new ResourceBundleMessageSource());
     }
 
     @Test
