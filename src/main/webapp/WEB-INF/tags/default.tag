@@ -3,6 +3,7 @@
 <%@attribute name="title" required="true" rtexprvalue="true" type="java.lang.String" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <meta http-equiv=Content-Type content="text/html;charset=UTF-8">
@@ -19,9 +20,8 @@
 <body>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
-    <h1>Book sharing</h1>
-    <p>Добро пожаловать в p2p букшеринг. Решение для прозрачного децентрализованного обмена книг от человека к
-        человеку.</p>
+    <h1><spring:message code="message.title"/></h1>
+    <p><spring:message code="message.welcome"/></p>
 </div>
 <div id="body">
     <div class="container">

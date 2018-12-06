@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <t:default title="Book sharing">
     <jsp:body>
@@ -8,11 +9,11 @@
             <div class="row">
                 <div class="form-group col-md-11">
                     <input type="text" name="searchValue" id="searchValue" class="form-control" required="true"
-                           placeholder="Введите ISBN, название или автора книги"/>
+                           placeholder="<spring:message code="form.isbn"/>"/>
                 </div>
                 <div class="col-md-1">
                     <button type="submit" class="btn btn-info">
-                        <span class="glyphicon glyphicon-search"></span> Поиск
+                        <span class="glyphicon glyphicon-search"></span> <spring:message code="form.searchButton"/>
                     </button>
 
                 </div>
@@ -32,11 +33,11 @@
             </c:when>
             <c:when test="${not empty showSendRequestForm && showSendRequestForm == 'true'}">
                 <form action="/addBookByUser/sendRequest" method="post" role="form" data-toggle="validator">
-                    <h2>Отправить запрос на добавление книги в базу</h2>
+                    <h2><spring:message code="addBookRequest.send"/></h2>
                     <div class="form-group col-xs-4">
-                        <label for="bookName" class="control-label col-xs-4">Название:</label>
+                        <label for="bookName" class="control-label col-xs-4"><spring:message code="bookRequest.title"/>:</label>
                         <input type="text" name="bookName" id="bookName" class="form-control" required="true"/>
-                        <label for="bookAuthor" class="control-label col-xs-4">Автор:</label>
+                        <label for="bookAuthor" class="control-label col-xs-4"><spring:message code="bookRequest.author"/>:</label>
                         <input type="text" name="bookAuthor" id="bookAuthor" class="form-control" required="true"/>
                         <label for="bookIsbn" class="control-label col-xs-4">ISBN:</label>
                         <input type="text" name="bookIsbn" id="bookIsbn" class="form-control" required="true"/>

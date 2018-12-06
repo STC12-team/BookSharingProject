@@ -1,5 +1,6 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <t:default title="Букшеринг">
     <jsp:body>
@@ -9,11 +10,11 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="form-group has-danger">
-                        <label class="sr-only" for="bookEditionTitle">Title</label>
+                        <label class="sr-only" for="bookEditionTitle"><spring:message code="bookEditions.bookTitleLabel"/></label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><span class="fa fa-book"></span></div>
                             <input type="text" name="bookEditionTitle" class="form-control" id="bookEditionTitle"
-                                   placeholder="Название книги" required autofocus>
+                                   placeholder="<spring:message code="bookEditions.bookTitle"/>" required autofocus>
                         </div>
                     </div>
                 </div>
@@ -30,11 +31,11 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="form-group has-danger">
-                        <label class="sr-only" for="bookEditionDescription">Description</label>
+                        <label class="sr-only" for="bookEditionDescription"><spring:message code="bookEditions.bookShortDescriptionLabel"/></label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><span class="fa fa-book"></span></div>
                             <input type="text" name="bookEditionDescription" class="form-control" id="bookEditionDescription"
-                                   placeholder="Краткое описание" required autofocus>
+                                   placeholder="<spring:message code="bookEditions.bookShortDescription"/>" required autofocus>
                         </div>
                     </div>
                 </div>
@@ -51,12 +52,12 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="form-group has-danger">
-                        <label class="sr-only" for="bookEditionPublisher">Publisher</label>
+                        <label class="sr-only" for="bookEditionPublisher"><spring:message code="bookEditions.bookPublisherLabel"/></label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><span class="fa fa-book"></span></div>
                             <input type="text" name="bookEditionPublisher" class="form-control"
                                    id="bookEditionPublisher"
-                                   placeholder="Издание" required autofocus>
+                                   placeholder="<spring:message code="bookEditions.bookPublisher"/>" required autofocus>
                         </div>
                     </div>
                 </div>
@@ -92,7 +93,7 @@
             <div class="row" style="padding-top: 1rem">
                 <div class="col-md-9">
                     <button type="submit" class="btn btn-primary float-right" value="Add">
-                        Добавить книжное издание в базу
+                        <spring:message code="bookEditions.bookAddButton"/>
                     </button>
                 </div>
             </div>
