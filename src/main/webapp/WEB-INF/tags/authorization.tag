@@ -31,7 +31,7 @@
                             </label>
                             <br>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Войти</button>
+                        <button type="submit" class="btn btn-primary w-100"><spring:message code="form.loginButton"/></button>
                         <a href="#" class="btn btn-outline-warning btn-sm w-100" style="margin-top: 20px">
                             <spring:message code="nav.forgotPass"/>
                         </a>
