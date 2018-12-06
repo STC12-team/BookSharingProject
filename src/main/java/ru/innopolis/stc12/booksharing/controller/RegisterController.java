@@ -37,6 +37,7 @@ public class RegisterController {
                                          Model model) {
 
         if (userService.getUserByLogin(login) != null) {
+            logger.info("Пользователь с таким именем уже есть");
             model.addAttribute("loginErrorMessage", "Пользователь с таким именем уже есть");
             return new ModelAndView("register");
         }

@@ -1,6 +1,5 @@
 package ru.innopolis.stc12.booksharing.controller;
 
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -13,7 +12,6 @@ import java.util.Locale;
 
 @Controller
 public class AboutController {
-    private Logger logger = Logger.getLogger(AboutController.class);
 
     @Autowired
     private ApplicationContext appContext;

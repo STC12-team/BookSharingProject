@@ -8,13 +8,12 @@ import org.mockito.Mock;
 import org.springframework.ui.Model;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
-import ru.innopolis.stc12.booksharing.service.BookCopiesService;
-import ru.innopolis.stc12.booksharing.service.BookEditionsService;
-import ru.innopolis.stc12.booksharing.service.BookQueueService;
-import ru.innopolis.stc12.booksharing.service.PublisherService;
+import ru.innopolis.stc12.booksharing.model.dao.entity.User;
+import ru.innopolis.stc12.booksharing.service.*;
+
+import java.security.Principal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
@@ -37,6 +36,10 @@ class BookEditionsControllerTest {
     private BookCopiesService bookCopiesService;
     @Mock
     private BookQueueService bookQueueService;
+    @Mock
+    private UserService userService;
+    @Mock
+    private Principal principal;
 
     @BeforeEach
     void setUp() {
@@ -95,4 +98,30 @@ class BookEditionsControllerTest {
         verify(model, times(1)).addAttribute("countBookCopyInStatusFree", 1);
         verify(model, times(1)).addAttribute("userCountInQueue", 1);
     }
+
+    @Test
+    void getOutOfQueue() {
+        User user = new User();
+        when(principal.getName()).thenReturn("user");
+        when(bookEditionsService.getById(anyInt())).thenReturn(bookEdition);
+        when(userService.getUserByLogin(anyString())).thenReturn(user);
+        doNothing().when(bookQueueService).deleteUserFromQueue(user, bookEdition);
+        assertEquals("bookEditionDescription", bookEditionsController.getOutOfQueue(1, model, principal));
+        verify(bookQueueService, times(1)).deleteUserFromQueue(user, bookEdition);
+        verify(model, times(1)).addAttribute("bookEdition", bookEdition);
+    }
+
+    @Test
+    void getInQueue() {
+        User user = new User();
+        when(principal.getName()).thenReturn("user");
+        when(bookEditionsService.getById(anyInt())).thenReturn(bookEdition);
+        when(userService.getUserByLogin(anyString())).thenReturn(user);
+        doNothing().when(bookQueueService).addUserToBookQueue(user, bookEdition);
+        assertEquals("bookEditionDescription", bookEditionsController.getInQueue(1, model, principal));
+        verify(bookQueueService, times(1)).addUserToBookQueue(user, bookEdition);
+        verify(model, times(1)).addAttribute("bookEdition", bookEdition);
+    }
+
+
 }

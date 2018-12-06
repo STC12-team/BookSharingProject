@@ -2,12 +2,13 @@ package ru.innopolis.stc12.booksharing.model.dao.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Table(name = "roles")
 public class Role implements Serializable {
+
     public Role() {
+        //base Role Constructor. Comment only for Sonar
     }
 
     private int id;
