@@ -33,18 +33,6 @@
                             <span class="sr-only">(current)</span></a>
                     </li>
                 </sec:authorize>
-                <sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/login?logout">
-                            <spring:message code="nav.logout"/>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/userProfile">
-                            <spring:message code="nav.profile"/>
-                        </a>
-                    </li>
-                </sec:authorize>
             </ul>
         </ul>
             <%--Переключение языка--%>

@@ -1,8 +1,9 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <t:default title="Book sharing">
     <jsp:body>
-        <p>Ошибка 404. Страница не найдена.</p>
+        <p><spring:message code="exception.404"/></p>
     </jsp:body>
 </t:default>

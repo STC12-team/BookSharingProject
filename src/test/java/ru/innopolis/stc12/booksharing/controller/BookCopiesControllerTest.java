@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.context.MessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.ui.Model;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
@@ -39,10 +41,13 @@ class BookCopiesControllerTest {
     private Principal principal;
     @Mock
     private BookCopiesService bookCopiesService;
+    @Mock
+    private MessageSource messageSource;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
+        when(model.addAttribute(anyString(), anyString())).thenReturn(model);
     }
 
     @Test
@@ -53,6 +58,7 @@ class BookCopiesControllerTest {
 
     @Test
     void searchBookWhenSearchValueIsNull() {
+        when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("");
         assertEquals("addBookByUser", bookCopiesController.searchBook(null, model));
         verify(model, times(2)).addAttribute(anyString(), anyString());
     }
@@ -96,8 +102,10 @@ class BookCopiesControllerTest {
 
     @Test
     void addBookWhenPrincipalIsNull() {
+        when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("");
+        bookCopiesController.setMessageSource(new ResourceBundleMessageSource());
         assertEquals("addBookByUser", bookCopiesController.addBook(anyString(), model, eq(null)));
-        verify(model, times(1)).addAttribute(anyString(), any());
+        verify(model, times(1)).addAttribute(anyString(), anyString());
     }
 
     @Test

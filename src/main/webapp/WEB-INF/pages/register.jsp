@@ -1,6 +1,7 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <t:default title="Регистрация нового пользователя">
     <jsp:body>
@@ -8,7 +9,7 @@
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <h2>Регистрация</h2>
+                    <h2><spring:message code="form.registerTitle"/></h2>
                     <hr>
                 </div>
             </div>
@@ -20,7 +21,7 @@
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><span class="fa fa-at"></span></div>
                             <input type="text" name="newLogin" class="form-control" id="newLogin"
-                                   placeholder="Придумайте имя пользователя" required autofocus>
+                                   placeholder="<spring:message code="form.registerChooseUserName"/>" required autofocus>
                         </div>
                     </div>
                 </div>
@@ -40,7 +41,7 @@
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><span class="fa fa-key"></span></div>
                             <input type="password" name="newPassword" class="form-control" id="newPassword"
-                                   placeholder="Придумайте пароль" required>
+                                   placeholder="<spring:message code="form.registerChoosePassword"/>" required>
                         </div>
                     </div>
                 </div>
@@ -60,7 +61,7 @@
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><span class="fa fa-key"></span></div>
                             <input type="password" name="confirmPassword" class="form-control" id="confirmPassword"
-                                   placeholder="Повторите пароль" required>
+                                   placeholder="<spring:message code="form.registerConfirmPassword"/>" required>
                         </div>
                     </div>
                 </div>
@@ -75,7 +76,7 @@
             <div class="row" style="padding-top: 1rem">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">
-                    <button type="submit" class="btn btn-success"><span class="fa fa-sign-in"></span>Зарегистрироваться</button>
+                    <button type="submit" class="btn btn-success"><span class="fa fa-sign-in"></span><spring:message code="form.registerButton"/></button>
                 </div>
             </div>
         </form>

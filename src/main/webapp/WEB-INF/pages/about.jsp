@@ -7,8 +7,8 @@
     <jsp:body>
         <div class="main flex-fill">
         <!-- Introduction Row -->
-        <h1 class="my-4">Букшеринг
-            <small> - это круто!</small>
+        <h1 class="my-4"><spring:message code="message.title"/>
+            <small><spring:message code="message.titleAbout"/></small>
 
         <a class="github-button" href="https://github.com/STC12-team" aria-label="Follow @STC12-team on GitHub">Follow @STC12-team</a>
         <a class="github-button" href="https://github.com/STC12-team/BookSharingProject/subscription" data-icon="octicon-eye" aria-label="Watch STC12-team/BookSharingProject on GitHub">Watch</a>
@@ -21,36 +21,36 @@
         <!-- Team Members Row -->
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="my-4">Наша команда</h2>
+                <h2 class="my-4"><spring:message code="message.team"/></h2>
             </div>
             <div class="col-lg-4 col-sm-6 text-center mb-4">
                 <img class="rounded-circle img-fluid d-block mx-auto" style="width: 200px; height: 200px;" src="https://avatars0.githubusercontent.com/u/42582906?s=400&v=4" alt="">
-                <h3>Сергей Вдовин</h3>
-                <p class="text-muted small"><small>Java full stack developer</small></p>
+                <h3><spring:message code="message.teamSergey"/></h3>
+                <p class="text-muted"><spring:message code="message.developer"/></p>
                 <p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
             </div>
             <div class="col-lg-4 col-sm-6 text-center mb-4">
                 <img class="rounded-circle img-fluid d-block mx-auto" style="width: 200px; height: 200px;" src="https://avatars3.githubusercontent.com/u/30622502?s=460&v=4" alt="">
-                <h3>Александр Бойко</h3>
-                <p class="text-muted">Java full stack developer</p>
+                <h3><spring:message code="message.teamAlexander"/></h3>
+                <p class="text-muted"><spring:message code="message.developer"/></p>
                 <p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
             </div>
             <div class="col-lg-4 col-sm-6 text-center mb-4">
                 <img class="rounded-circle img-fluid d-block mx-auto" style="width: 200px; height: 200px;" src="https://avatars2.githubusercontent.com/u/21145755?s=460&v=4" alt="">
-                <h3>Ленар Шагиев</h3>
-                <p class="text-muted">Java full stack developer</p>
+                <h3><spring:message code="message.teamLenar"/></h3>
+                <p class="text-muted"><spring:message code="message.developer"/></p>
                 <p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
             </div>
             <div class="col-lg-4 col-sm-6 text-center mb-4">
                 <img class="rounded-circle img-fluid d-block mx-auto" style="width: 200px; height: 200px;" src="https://avatars3.githubusercontent.com/u/42567523?s=460&v=4" alt="">
-                <h3>Раиль Муниров</h3>
-                <p class="text-muted">Java full stack developer</p>
+                <h3><spring:message code="message.teamRail"/></h3>
+                <p class="text-muted"><spring:message code="message.developer"/></p>
                 <p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
             </div>
             <div class="col-lg-4 col-sm-6 text-center mb-4">
                 <img class="rounded-circle img-fluid d-block mx-auto" style="width: 200px; height: 200px;" src="https://avatars2.githubusercontent.com/u/2053703?s=460&v=4" alt="">
-                <h3>Артем Зиновьев</h3>
-                <p class="text-muted">Java full stack developer</p>
+                <h3><spring:message code="message.teamArtem"/></h3>
+                <p class="text-muted"><spring:message code="message.developer"/></p>
                 <p>What does this team member to? Keep it short! This is also a great spot for social links!</p>
             </div>
         </div>
