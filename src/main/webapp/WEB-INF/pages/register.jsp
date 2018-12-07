@@ -32,6 +32,29 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="form-group has-danger">
+                        <label class="sr-only" for="newEmail">NewEmail</label>
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon" style="width: 2.6rem"><span class="fa fa-at"></span></div>
+                            <input type="text" name="newEmail" class="form-control" id="newEmail"
+                                   placeholder="Введите ваш email" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-control-feedback">
+                        <span class="text-danger align-middle">
+                                ${emailErrorMessage}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+
             <div class="row">
                 <div class="col-md-3"></div>
                 <div class="col-md-6">

@@ -41,6 +41,11 @@ public class RegisterController {
             model.addAttribute("loginErrorMessage", "Пользователь с таким именем уже есть");
             return new ModelAndView("register");
         }
+        if (userService.getUserByEmail(email) != null) {
+            logger.info("Пользователь с таким email уже есть");
+            model.addAttribute("emailErrorMessage", "Пользователь с таким email уже есть");
+            return new ModelAndView("register");
+        }
 
         User user = userService.addNewUser(login, password, email);
         model.addAttribute("user", user);

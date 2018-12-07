@@ -10,10 +10,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Role;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.RoleDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +29,7 @@ public class UserService {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserDao<User> userDao;
-    private UserDao<Role> roleDao;
+    private RoleDao roleDao;
     private UserDao<UserDetails> userDetailsDao;
 
     @Autowired
@@ -38,7 +39,7 @@ public class UserService {
     }
 
     @Autowired
-    public void setRoleDao(UserDao<Role> roleDao) {
+    public void setRoleDao(RoleDao roleDao) {
         this.roleDao = roleDao;
         this.roleDao.setClazz(Role.class);
     }
@@ -67,6 +68,14 @@ public class UserService {
         User user = null;
         if (login != null && !login.isEmpty()) {
             user = userDao.getUserByLogin(login);
+        }
+        return user;
+    }
+
+    public User getUserByEmail(String email) {
+        User user = null;
+        if (email != null && !email.isEmpty()) {
+            user = userDao.getUserByEmail(email);
         }
         return user;
     }
