@@ -5,8 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,5 +55,12 @@ class BookEditionsServiceTest {
         List<BookEdition> expected = new ArrayList<>();
         when(bookEditionsDao.getBookEditionsBySearchValue(anyString())).thenReturn(new ArrayList<>());
         assertEquals(expected, bookEditionsService.getBookEditionsBySearchValue("My search"));
+    }
+
+    @Test
+    void getBookCopiesByBookEditionIdInStatusFree() {
+        List<BookCopy> bookCopyList = new ArrayList<>();
+        when(bookEditionsDao.getBookCopiesByBookEditionId(1)).thenReturn(bookCopyList);
+        assertEquals(bookCopyList, bookEditionsService.getBookCopiesByBookEditionIdInStatusFree(1));
     }
 }
