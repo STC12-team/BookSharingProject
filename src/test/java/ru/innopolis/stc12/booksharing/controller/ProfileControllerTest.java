@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.view.RedirectView;
@@ -37,9 +38,13 @@ class ProfileControllerTest {
     @Mock
     UserDetails userDetails;
 
+    @Mock
+    private MessageSource messageSource;
+
     @BeforeEach
     void setUp() {
         initMocks(this);
+        when(model.addAttribute(anyString(), anyString())).thenReturn(model);
     }
 
     @Test
@@ -57,6 +62,7 @@ class ProfileControllerTest {
 
     @Test
     void getProfileEditPageWithNullDetails() {
+        when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("Cannot get authenticated user");
         when(userService.getAuthenticatedUserDetails()).thenReturn(user);
         when(user.getUserDetails()).thenReturn(null);
         assertEquals("userProfile", profileController.getProfilePage(model));

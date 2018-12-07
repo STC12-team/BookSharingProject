@@ -2,6 +2,8 @@ package ru.innopolis.stc12.booksharing.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,6 +28,12 @@ public class BookCopiesController {
     private BookEditionsService bookEditionsService;
     private UserService userService;
     private BookCopiesService bookCopiesService;
+    private MessageSource messageSource;
+
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @Autowired
     public void setBookEditionsService(BookEditionsService bookEditionsService) {
@@ -57,7 +65,8 @@ public class BookCopiesController {
             model.addAttribute("bookEditionList", bookEditionList);
         } else {
             logger.info("Книга не найдена");
-            model.addAttribute(MESSAGE_ATTRIBUTE, "Книга не найдена");
+            model.addAttribute(MESSAGE_ATTRIBUTE,
+                    messageSource.getMessage("model.errorBookCopiesControllerNotFound", null, "", LocaleContextHolder.getLocale()));
             model.addAttribute("showSendRequestForm", "true");
         }
         return PAGE_NAME;
@@ -72,7 +81,8 @@ public class BookCopiesController {
         if (bookEdition != null) {
             model.addAttribute("bookEdition", bookEdition);
         } else {
-            model.addAttribute(MESSAGE_ATTRIBUTE, "Что то пошло не так :(");
+            model.addAttribute(MESSAGE_ATTRIBUTE,
+                    messageSource.getMessage("model.errorBookCopiesControllerSomethingWrong", null, "", LocaleContextHolder.getLocale()));
         }
         return PAGE_NAME;
     }
@@ -84,18 +94,21 @@ public class BookCopiesController {
             Model model,
             Principal principal) {
         if (principal == null) {
-            model.addAttribute(MESSAGE_ATTRIBUTE, "Доступ запрещен, пройдите авторизацию");
+            model.addAttribute(MESSAGE_ATTRIBUTE,
+                    messageSource.getMessage("model.errorBookCopiesControllerAccessDenied", null, "", LocaleContextHolder.getLocale()));
             return PAGE_NAME;
         }
         BookEdition bookEdition = bookEditionsService.getByIsbn(isbn);
         User user = userService.getUserByLogin(principal.getName());
         if (bookEdition == null || user == null) {
-            model.addAttribute(MESSAGE_ATTRIBUTE, "Что то пошло не так:(");
+            model.addAttribute(MESSAGE_ATTRIBUTE,
+                    messageSource.getMessage("model.errorBookCopiesControllerSomethingWrong", null, "", LocaleContextHolder.getLocale()));
             return PAGE_NAME;
         }
 
         bookCopiesService.addBook(new BookCopy(bookEdition, user, BookCopiesStatus.FREE));
-        model.addAttribute(MESSAGE_ATTRIBUTE, "Книга успешно добавлена");
+        model.addAttribute(MESSAGE_ATTRIBUTE,
+                messageSource.getMessage("model.messageBookCopiesControllerSuccessfullyAdded", null, "", LocaleContextHolder.getLocale()));
         return PAGE_NAME;
     }
 

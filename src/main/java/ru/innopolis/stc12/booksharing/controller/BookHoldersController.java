@@ -2,6 +2,8 @@ package ru.innopolis.stc12.booksharing.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,6 +32,12 @@ public class BookHoldersController {
     private static final String PAGE_NAME = "takenBooks";
     private BookCopiesService bookCopiesService;
     private BookQueueService bookQueueService;
+    private MessageSource messageSource;
+
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @Autowired
     public void setBookHoldersService(BookHoldersService bookHoldersService) {
@@ -49,7 +57,8 @@ public class BookHoldersController {
     @GetMapping("/takenBooks")
     String takenBooks(Model model, Principal principal) {
         if (principal == null) {
-            model.addAttribute(MESSAGE_ATTRIBUTE, "У Вас нет прав на просмотр данной страницы!");
+            model.addAttribute(MESSAGE_ATTRIBUTE,
+                    messageSource.getMessage("model.errorBookHoldersControllerAccess", null, "", LocaleContextHolder.getLocale()));
             return PAGE_NAME;
         }
         String login = principal.getName();
@@ -66,7 +75,8 @@ public class BookHoldersController {
         BookCopy bookCopy = bookCopiesService.getBookCopyById(Integer.valueOf(bookCopyId));
         if (bookCopy == null) {
             LOGGER.warn("Не удалось найти книгу с id - " + bookCopyId);
-            model.addAttribute(MESSAGE_ATTRIBUTE, "Не удалось найти книгу, попробуйте позднее.");
+            model.addAttribute(MESSAGE_ATTRIBUTE,
+                    messageSource.getMessage("model.errorBookHoldersControllerCannotGetBook", null, "", LocaleContextHolder.getLocale()));
             return PAGE_NAME;
         }
         bookCopy.setStatus(BookCopiesStatus.FREE);
@@ -74,10 +84,12 @@ public class BookHoldersController {
         model.addAttribute(MESSAGE_ATTRIBUTE, "Книга отмечена как прочитанная");
         List<BookQueue> bookQueueList = bookQueueService.getBookQueueByBookEditionId(bookCopy.getBookEdition().getId());
         if (bookQueueList.isEmpty()) {
-            model.addAttribute(TRANSFER_MESSAGE_ATTRIBUTE, "Эта книга ни кому не нужна...");
+            model.addAttribute(TRANSFER_MESSAGE_ATTRIBUTE,
+                    messageSource.getMessage("model.errorBookHoldersControllerBookNoNeed", null, "", LocaleContextHolder.getLocale()));
             //TODO предложить вернуть владельцу
         } else {
-            model.addAttribute(TRANSFER_MESSAGE_ATTRIBUTE, "Следующий на очереди:");
+            model.addAttribute(TRANSFER_MESSAGE_ATTRIBUTE,
+                    messageSource.getMessage("model.errorBookHoldersControllerNextInQueue", null, "", LocaleContextHolder.getLocale()));
             BookQueue bookQueue = getFirstUserFromQueue(bookQueueList);
             bookQueue.setStatus(BookQueueStatus.GETTING);
             bookQueueService.updateBookQueue(bookQueue);
@@ -95,7 +107,9 @@ public class BookHoldersController {
         if (min.isPresent()) {
             return min.get();
         } else {
-            throw new UnexpectedEmptyListException("Ошибка получения читателя из очереди");
+            throw new UnexpectedEmptyListException(
+                    messageSource.getMessage("model.errorBookHoldersControllerReaderGetError", null, "", LocaleContextHolder.getLocale())
+            );
         }
     }
 }

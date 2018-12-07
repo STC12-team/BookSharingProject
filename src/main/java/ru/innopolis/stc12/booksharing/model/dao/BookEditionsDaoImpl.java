@@ -1,6 +1,7 @@
 package ru.innopolis.stc12.booksharing.model.dao;
 
 import org.springframework.stereotype.Repository;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
@@ -47,6 +48,12 @@ public class BookEditionsDaoImpl extends AbstractDaoImp implements BookEditionsD
         Predicate predicateIsbn = queryObject.criteriaBuilder.equal(queryObject.root.get("isbn"), searchValue);
         Predicate predicateOr = queryObject.criteriaBuilder.or(predicatePublisher, predicateTitle, predicateIsbn);
         return queryObject.executeQuery(predicateOr);
+    }
+
+    @Override
+    public List<BookCopy> getBookCopiesByBookEditionId(int id) {
+        BookEdition bookEdition = getCurrentSession().load(BookEdition.class, id);
+        return bookEdition.getBookCopies();
     }
 
 }

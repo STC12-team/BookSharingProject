@@ -3,15 +3,18 @@ package ru.innopolis.stc12.booksharing.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.service.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 public class BookEditionsController {
@@ -78,6 +81,7 @@ public class BookEditionsController {
     }
 
     @GetMapping(value = "/bookEditionDesc/{id}")
+    @Transactional
     public String showBookEditionDescriptionPage(@PathVariable int id, Model model) {
         BookEdition bookEdition = bookEditionsService.getById(id);
 
@@ -91,6 +95,11 @@ public class BookEditionsController {
         model.addAttribute("countBookCopyInStatusFree", countBookCopyInStatusFree);
         model.addAttribute("userCountInQueue", countUserInQueue);
         model.addAttribute("userPlaceInQueue", userPlaceInQueue);
+
+        //TODO need added using on view
+        List<BookCopy> bookCopyList = bookEditionsService.getBookCopiesByBookEditionIdInStatusFree(id);
+        model.addAttribute("bookCopyListInStatusFree", bookCopyList);
+
         return BOOK_EDITION_DESCRIPTION_PAGE;
     }
 

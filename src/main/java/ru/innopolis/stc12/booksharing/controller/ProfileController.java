@@ -2,6 +2,8 @@ package ru.innopolis.stc12.booksharing.controller;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -23,15 +25,17 @@ public class ProfileController {
     private static final String EDIT_DETAILS_PAGE_ATTRIBUTE = "userEdit";
 
     private static final String MESSAGE_CANNOT_GET_USER = "Cannot get authenticated user";
-    private static final String MESSAGE_REQUEST_PASS_CONFIRMATION = "Confirm your password before editing profile";
-    private static final String MESSAGE_SUCCESSFULLY_UPDATE = "Record was updated";
-    private static final String MESSAGE_CANNOT_UPDATE = "Cannot update user details";
-    private static final String MESSAGE_WRONG_PASS = "Wrong password";
 
     private Logger logger = Logger.getLogger(ProfileController.class);
     private UserService userService;
     private UserDetails authenticatedUserDetails;
     private boolean userPasswordConfirmed = false;
+    private MessageSource messageSource;
+
+    @Autowired
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -51,7 +55,8 @@ public class ProfileController {
     public String getProfilePage(Model model) {
         authenticatedUserDetails = userService.getAuthenticatedUserDetails().getUserDetails();
         if (authenticatedUserDetails == null) {
-            model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, MESSAGE_CANNOT_GET_USER);
+            model.addAttribute(ERROR_MESSAGE_ATTRIBUTE,
+                    messageSource.getMessage("model.errorCannotGetAuthenticatedUser", null, "", LocaleContextHolder.getLocale()));
             logger.error(MESSAGE_CANNOT_GET_USER);
         } else {
             model.addAttribute(USER_DETAILS_PAGE_ATTRIBUTE, authenticatedUserDetails);
@@ -64,12 +69,14 @@ public class ProfileController {
     public String getProfileEditPage(Model model) {
         authenticatedUserDetails = userService.getAuthenticatedUserDetails().getUserDetails();
         if (authenticatedUserDetails == null) {
-            model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, MESSAGE_CANNOT_GET_USER);
+            model.addAttribute(ERROR_MESSAGE_ATTRIBUTE,
+                    messageSource.getMessage("model.errorCannotGetAuthenticatedUser", null, "", LocaleContextHolder.getLocale()));
             logger.error(MESSAGE_CANNOT_GET_USER);
         } else {
             model.addAttribute(USER_DETAILS_PAGE_ATTRIBUTE, authenticatedUserDetails);
             if (!userPasswordConfirmed) {
-                model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, MESSAGE_REQUEST_PASS_CONFIRMATION);
+                model.addAttribute(ERROR_MESSAGE_ATTRIBUTE,
+                        messageSource.getMessage("model.errorRequestPasswordConfirmation", null, "", LocaleContextHolder.getLocale()));
                 return PROFILE_PAGE_ATTRIBUTE;
             }
         }
@@ -85,13 +92,15 @@ public class ProfileController {
         model.addAttribute(USER_DETAILS_PAGE_ATTRIBUTE, authenticatedUserDetails);
         UserDetails userDetails = userService.updateUserDetails(firstName, lastName, surname);
         if (userDetails != null) {
-            model.addAttribute(MODEL_UPDATED_ATTRIBUTE, MESSAGE_SUCCESSFULLY_UPDATE);
+            model.addAttribute(MODEL_UPDATED_ATTRIBUTE,
+                    messageSource.getMessage("model.messageUpdate", null, "", LocaleContextHolder.getLocale()));
             setUserPasswordConfirmed(false); // set value back to false after editing for reconfirmation on next visit
             status.setComplete(); // clean up session attributes
             return new RedirectView(PROFILE_PAGE_ATTRIBUTE);
         }
 
-        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, MESSAGE_CANNOT_UPDATE);
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE,
+                messageSource.getMessage("model.errorUpdate", null, "", LocaleContextHolder.getLocale()));
         return new RedirectView(PROFILE_PAGE_ATTRIBUTE);
     }
 
@@ -106,7 +115,8 @@ public class ProfileController {
                 return new RedirectView(EDIT_DETAILS_PAGE_ATTRIBUTE);
             }
         }
-        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE, MESSAGE_WRONG_PASS);
+        model.addAttribute(ERROR_MESSAGE_ATTRIBUTE,
+                messageSource.getMessage("model.errorWrongPassword", null, "", LocaleContextHolder.getLocale()));
         return new RedirectView(PROFILE_PAGE_ATTRIBUTE);
     }
 }
