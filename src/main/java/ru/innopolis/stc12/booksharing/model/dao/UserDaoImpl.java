@@ -17,4 +17,13 @@ public class UserDaoImpl extends AbstractDaoImp implements UserDao {
         if (list.isEmpty()) { return null; }
         return list.get(0);
     }
+
+    @Override
+    public User getUserByEmail(String email) {
+        QueryObject queryObject = new QueryObject();
+        Predicate predicate = queryObject.criteriaBuilder.equal(queryObject.root.get("email"), email);
+        List<User> list = queryObject.executeQuery(predicate);
+        if (list.isEmpty()) { return null; }
+        return list.get(0);
+    }
 }
