@@ -4,6 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.ui.Model;
 import ru.innopolis.stc12.booksharing.model.dao.entity.*;
 import ru.innopolis.stc12.booksharing.service.BookCopiesService;
@@ -43,14 +47,18 @@ class BookHoldersControllerTest {
     private BookQueue bookQueue;
     @Mock
     private User user;
+    @Mock
+    private MessageSource messageSource;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
+        when(model.addAttribute(anyString(), anyString())).thenReturn(model);
     }
 
     @Test
     void takenBooksWhenPrincipalIsNull() {
+        when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("У Вас нет прав на просмотр данной страницы!");
         assertEquals("takenBooks", bookHoldersController.takenBooks(model, null));
         //TODO не понимает кириллицу
         verify(model, times(1)).addAttribute("message", "У Вас нет прав на просмотр данной страницы!");
@@ -66,6 +74,7 @@ class BookHoldersControllerTest {
 
     @Test
     void readEndWhenBookCopyIdIsIncorrect() {
+        when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("Не удалось найти книгу, попробуйте позднее.");
         when(bookCopiesService.getBookCopyById(1)).thenReturn(null);
         assertEquals("takenBooks", bookHoldersController.readEnd("1", model));
         verify(model, times(1)).addAttribute("message", "Не удалось найти книгу, попробуйте позднее.");
@@ -73,6 +82,8 @@ class BookHoldersControllerTest {
 
     @Test
     void readEndWhenBookQueueListIsEmpty() {
+        when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("Книга отмечена как прочитанная");
+        when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("Эта книга ни кому не нужна...");
         when(bookCopiesService.getBookCopyById(anyInt())).thenReturn(bookCopy);
         when(bookQueueService.getBookQueueByBookEditionId(1)).thenReturn(bookQueueList);
         when(bookQueueList.isEmpty()).thenReturn(true);
@@ -85,6 +96,8 @@ class BookHoldersControllerTest {
 
     @Test
     void readEndWhenBookQueueListIsSet() {
+        when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("Книга отмечена как прочитанная");
+        when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("Следующий на очереди:");
         when(bookCopiesService.getBookCopyById(anyInt())).thenReturn(bookCopy);
         when(bookQueueService.getBookQueueByBookEditionId(1)).thenReturn(bookQueueList);
         when(bookQueueList.isEmpty()).thenReturn(false);

@@ -51,13 +51,13 @@ public class UserService {
     }
 
     @Autowired
-    public void setbCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public void setBCryptPasswordEncoder(BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public boolean checkUserPasswordMatches(String currentPassword, String password) {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder.matches(password, currentPassword);
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(password, currentPassword);
     }
 
     public List<User> getUsers() {

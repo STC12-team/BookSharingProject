@@ -1,5 +1,6 @@
 <%@tag description="User details template" pageEncoding="UTF-8" %>
 <%@attribute name="userDetails" required="true" type="ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div class="row">
     <div class="col">
@@ -10,7 +11,7 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="form-group has-danger">
-                        <label class="sr-only" for="firstName">Имя</label>
+                        <label class="sr-only" for="firstName"><spring:message code="form.labelName"/></label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <input type="text" name="firstName" class="form-control" id="firstName"
                                    placeholder="${userDetails.firstName}" autofocus>
@@ -28,7 +29,7 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="form-group has-danger">
-                        <label class="sr-only" for="lastName">Отчество</label>
+                        <label class="sr-only" for="lastName"><spring:message code="form.labelLastname"/></label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <input type="text" name="lastName" class="form-control" id="lastName"
                                    placeholder="${userDetails.lastName}">
@@ -46,7 +47,7 @@
             <div class="row">
                 <div class="col-md-9">
                     <div class="form-group has-danger">
-                        <label class="sr-only" for="surname">Фамилия</label>
+                        <label class="sr-only" for="surname"><spring:message code="form.labelSurname"/></label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <input type="text" name="surname" class="form-control" id="surname"
                                    placeholder="${userDetails.surname}">
@@ -62,6 +63,24 @@
                 </div>
             </div>
             <div class="row">
+<<<<<<< HEAD
+                <div class="col-md-9">
+                    <div class="form-group has-danger">
+                        <label class="sr-only" for="email"><spring:message code="form.labelEmail"/></label>
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <input type="email" name="email" class="form-control" id="email"
+                                   placeholder="${userDetails.email}" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-control-feedback">
+                            <span class="text-danger align-middle">
+                                <!-- email Error -->
+                            </span>
+                    </div>
+                </div>
+=======
                             <div class="col-md-9">
                                 <div class="form-group has-danger">
                                     <label class="sr-only" for="email">Почта</label>
@@ -78,14 +97,15 @@
                                         </span>
                                 </div>
                             </div>
+>>>>>>> develop
             </div>
             <div class="row">
                 <div class="col-md-9">
                     <div class="form-group has-danger">
-                        <label class="sr-only" for="password">Пароль</label>
+                        <label class="sr-only" for="password"><spring:message code="form.labelPassword"/></label>
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <input type="password" name="password" class="form-control" id="password"
-                                   placeholder="Новый пароль" disabled>
+                                   placeholder="<spring:message code="form.newPassword"/>" disabled>
                         </div> <!-- TODO: implement it -->
                     </div>
                 </div>
@@ -99,7 +119,7 @@
             </div>
             <div class="row" style="padding-top: 1rem">
                 <div class="col-md-9">
-                    <button type="submit" class="btn btn-success float-right" value="Сохранить изменения"><span class="fa fa-sign-in"></span>
+                    <button type="submit" class="btn btn-success float-right" value="<spring:message code="form.saveChanges"/>"><span class="fa fa-sign-in"></span>
                         Сохранить изменения
                     </button>
                 </div>

@@ -17,12 +17,12 @@
                         <div class="form-group">
                             <label for="j_username"><spring:message code="nav.loginLabel"/></label>
                             <input type="text" class="form-control" id="j_username" name="j_username"
-                                   placeholder="User">
+                                   placeholder="<spring:message code="auth.userField"/>">
                         </div>
                         <div class="form-group">
                             <label for="j_password"><spring:message code="nav.passLabel"/></label>
                             <input type="password" class="form-control" id="j_password" name="j_password"
-                                   placeholder="Password">
+                                   placeholder="<spring:message code="auth.passwordField"/>">
                         </div>
                         <div class="form-check">
                             <input type="checkbox" class="form-check-input" id="dropdownCheck2">
@@ -31,7 +31,7 @@
                             </label>
                             <br>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Войти</button>
+                        <button type="submit" class="btn btn-primary w-100"><spring:message code="form.loginButton"/></button>
                         <a href="#" class="btn btn-outline-warning btn-sm w-100" style="margin-top: 20px">
                             <spring:message code="nav.forgotPass"/>
                         </a>

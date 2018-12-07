@@ -84,9 +84,9 @@
                                         </div>
                                         <div class="card-body">
                                             <p>
-                                                <span class="badge badge-info">всего: <c:out value="${bookEditionsAll * bookEdition.id}"/></span>
-                                                <span class="badge badge-info">свободно: <c:out value="${bookEditionsFree * bookEdition.id}"/></span>
-                                                <span class="badge badge-info">очередь: <c:out value="${bookEditionsQueue * bookEdition.id}"/></span>
+                                                <span class="badge badge-info"><spring:message code="library.all"/>: <c:out value="${bookEditionsAll * bookEdition.id}"/></span>
+                                                <span class="badge badge-info"><spring:message code="library.free"/>: <c:out value="${bookEditionsFree * bookEdition.id}"/></span>
+                                                <span class="badge badge-info"><spring:message code="library.queue"/>: <c:out value="${bookEditionsQueue * bookEdition.id}"/></span>
                                             </p>
                                         </div>
                                     </div>

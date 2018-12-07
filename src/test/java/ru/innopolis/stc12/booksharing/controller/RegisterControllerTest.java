@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
@@ -27,12 +28,16 @@ class RegisterControllerTest {
     @Mock
     private User user;
 
+    @Mock
+    private MessageSource messageSource;
+
     @InjectMocks
     private RegisterController registerController;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
+        when(model.addAttribute(anyString(), anyString())).thenReturn(model);
     }
 
     @Test

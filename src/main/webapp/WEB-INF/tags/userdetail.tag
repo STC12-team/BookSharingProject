@@ -1,10 +1,11 @@
 <%@tag description="User details template" pageEncoding="UTF-8" %>
 <%@attribute name="userDetails" required="true" type="ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <div class="row">
     <div class="col">
         <form action="#" method="get">
-            <button id="userEdit" type="button" data-toggle="modal" data-target="#confirm-submit" class="btn btn-info float-right">Редактировать</button>
+            <button id="userEdit" type="button" data-toggle="modal" data-target="#confirm-submit" class="btn btn-info float-right"><spring:message code="form.editButton"/></button>
         </form>
     </div>
 </div>
@@ -23,18 +24,18 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                Пожалуйста подтвердите пароль
+                <spring:message code="form.passwordConfirm"/>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form" action="${pageContext.request.contextPath}/userConfirmation" method="POST" id="password__confirmation__form">
                     <input type="password" name="password__confirmation" class="form-control" id="password__confirmation"
-                           placeholder="Введите пароль" required>
+                           placeholder="<spring:message code="form.passwordInput"/>" required>
                 </form>
             </div>
 
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                <a href="#" id="submit" class="btn btn-success success">Подтвердить</a>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><spring:message code="form.cancelButton"/></button>
+                <a href="#" id="submit" class="btn btn-success success"><spring:message code="form.confirmButton"/></a>
             </div>
         </div>
     </div>

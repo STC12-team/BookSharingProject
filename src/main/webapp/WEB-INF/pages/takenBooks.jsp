@@ -1,6 +1,7 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" language="java" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <t:default title="Взятые книги">
     <jsp:body>
@@ -17,8 +18,8 @@
         </c:if>
         <c:if test="${not empty user}">
             <h2>${user.login}</h2>
-            <p>Телефон</p>
-            <p>Email</p>
+            <p><spring:message code="book.takenPhone"/></p>
+            <p><spring:message code="book.takenEmail"/></p>
         </c:if>
     </jsp:body>
 </t:default>
