@@ -46,12 +46,26 @@ public class RegisterController {
 
         if (userService.getUserByLogin(login) != null) {
             logger.info("Пользователь с таким именем уже есть");
-            model.addAttribute("loginErrorMessage", messageSource.getMessage("model.loginErrorMessage", null, "", LocaleContextHolder.getLocale()));
+            model.addAttribute("loginErrorMessage",
+                    messageSource.getMessage(
+                            "model.loginErrorMessage",
+                            null,
+                            "",
+                            LocaleContextHolder.getLocale()
+                    )
+            );
             return new ModelAndView("register");
         }
         if (userService.getUserByEmail(email) != null) {
             logger.info("Пользователь с таким email уже есть");
-            model.addAttribute("emailErrorMessage", "Пользователь с таким email уже есть");
+            model.addAttribute("emailErrorMessage",
+                    messageSource.getMessage(
+                            "model.emailErrorMessage",
+                            null,
+                            "",
+                            LocaleContextHolder.getLocale()
+                    )
+            );
             return new ModelAndView("register");
         }
 

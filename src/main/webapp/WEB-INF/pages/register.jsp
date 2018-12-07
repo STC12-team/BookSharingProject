@@ -42,7 +42,7 @@
                         <div class="input-group mb-2 mr-sm-2 mb-sm-0">
                             <div class="input-group-addon" style="width: 2.6rem"><span class="fa fa-at"></span></div>
                             <input type="text" name="newEmail" class="form-control" id="newEmail"
-                                   placeholder="Введите ваш email" required>
+                                   placeholder="<spring:message code="form.registerEnterEmail"/>" required>
                         </div>
                     </div>
                 </div>
