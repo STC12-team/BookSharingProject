@@ -21,18 +21,11 @@ import java.util.stream.Collectors;
 public class BookCopiesService {
     private BookCopiesDao<BookCopy> bookCopiesDao;
     private BookEditionsDao<BookEdition> bookEditionsDao;
-    private UserDao<User> userDao;
 
     @Autowired
     public void setBookCopiesDao(BookCopiesDao<BookCopy> bookCopiesDao) {
         this.bookCopiesDao = bookCopiesDao;
         this.bookCopiesDao.setClazz(BookCopy.class);
-    }
-
-    @Autowired
-    public void setUserDao(UserDao<User> userDao) {
-        this.userDao = userDao;
-        this.userDao.setClazz(User.class);
     }
 
     @Autowired
@@ -43,11 +36,6 @@ public class BookCopiesService {
 
     public void addBook(BookCopy book) {
         bookCopiesDao.save(book);
-    }
-
-    public List<BookCopy> getBookCopiesByUser(int userId) {
-        User user = userDao.findOne(userId);
-        return getBookCopiesByUser(user);
     }
 
     public List<BookCopy> getBookCopiesByUser(User user) {
