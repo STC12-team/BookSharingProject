@@ -51,11 +51,6 @@ class BookCopiesServiceTest {
     }
 
     @Test
-    void setUserDao() {
-        verify(userDao, times(1)).setClazz(User.class);
-    }
-
-    @Test
     void setBookEditionsDao() {
         verify(bookEditionsDao, times(1)).setClazz(BookEdition.class);
     }
