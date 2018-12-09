@@ -73,32 +73,32 @@ class BookCopiesControllerTest {
         verify(bookEditionList, times(1)).isEmpty();
         verify(bookEditionsService, times(1)).getBookEditionsBySearchValue(anyString());
         verify(model, times(1)).addAttribute(anyString(), any());
-        when(bookEditionsService.getByIsbn(anyString())).thenReturn(bookEdition);
+        when(bookEditionsService.getBookEditionByIsbn(anyString())).thenReturn(bookEdition);
         assertEquals("addBookByUser", bookCopiesController.searchBook("ISBN 978-3-642-11746-6", model));
     }
 
     @Test
     void chooseBookWhenBookNotFound() {
-        when(bookEditionsService.getByIsbn(anyString())).thenReturn(null);
+        when(bookEditionsService.getBookEditionByIsbn(anyString())).thenReturn(null);
         assertEquals("addBookByUser", bookCopiesController.chooseBook(anyString(), model));
-        verify(bookEditionsService, times(1)).getByIsbn(anyString());
+        verify(bookEditionsService, times(1)).getBookEditionByIsbn(anyString());
         assertEquals("addBookByUser", bookCopiesController.chooseBook("ISBN 0-596-00681-0", model));
     }
 
     @Test
     void chooseBookWhenBookIsFound() {
-        when(bookEditionsService.getByIsbn(anyString())).thenReturn(bookEdition);
+        when(bookEditionsService.getBookEditionByIsbn(anyString())).thenReturn(bookEdition);
         assertEquals("addBookByUser", bookCopiesController.chooseBook(anyString(), model));
-        verify(bookEditionsService, times(1)).getByIsbn(anyString());
+        verify(bookEditionsService, times(1)).getBookEditionByIsbn(anyString());
     }
 
     @Test
     void addBookWhenBookOrUserIsNull() {
-        when(bookEditionsService.getByIsbn(anyString())).thenReturn(null);
+        when(bookEditionsService.getBookEditionByIsbn(anyString())).thenReturn(null);
         when(userService.getUserByLogin(anyString())).thenReturn(null);
         when(principal.getName()).thenReturn("name");
         assertEquals("addBookByUser", bookCopiesController.addBook(anyString(), model, principal));
-        verify(bookEditionsService, times(1)).getByIsbn(anyString());
+        verify(bookEditionsService, times(1)).getBookEditionByIsbn(anyString());
         verify(userService, times(1)).getUserByLogin(anyString());
     }
 
@@ -112,11 +112,11 @@ class BookCopiesControllerTest {
 
     @Test
     void addBookWhenBookOrUserIsNotNull() {
-        when(bookEditionsService.getByIsbn(anyString())).thenReturn(bookEdition);
+        when(bookEditionsService.getBookEditionByIsbn(anyString())).thenReturn(bookEdition);
         when(userService.getUserByLogin(anyString())).thenReturn(user);
         when(principal.getName()).thenReturn("name");
         assertEquals("addBookByUser", bookCopiesController.addBook(anyString(), model, principal));
-        verify(bookEditionsService, times(1)).getByIsbn(anyString());
+        verify(bookEditionsService, times(1)).getBookEditionByIsbn(anyString());
         verify(userService, times(1)).getUserByLogin(anyString());
         verify(model, times(1)).addAttribute(anyString(), any());
     }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.innopolis.stc12.booksharing.exceptions.UnexpectedEmptyListException;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookHolder;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookQueue;
@@ -24,7 +23,6 @@ import ru.innopolis.stc12.booksharing.service.UserService;
 import java.security.Principal;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class BookHoldersController {
@@ -108,9 +106,14 @@ public class BookHoldersController {
             model.addAttribute(TRANSFER_MESSAGE_ATTRIBUTE,
                     messageSource.getMessage("model.errorBookHoldersControllerNextInQueue", null, "", LocaleContextHolder.getLocale()));
             BookQueue bookQueue = getFirstUserFromQueue(bookQueueList);
-            bookQueue.setStatus(BookQueueStatus.GETTING);
-            bookQueueService.updateBookQueue(bookQueue);
-            model.addAttribute("user", bookQueue.getUser());
+            if (bookQueue != null) {
+                bookQueue.setStatus(BookQueueStatus.GETTING);
+                bookQueueService.updateBookQueue(bookQueue);
+                model.addAttribute("user", bookQueue.getUser());
+            } else {
+                model.addAttribute("user", null);
+            }
+
             //TODO отправить уведомление следующему читателю, о том, что он может взять книгу
         }
         return PAGE_NAME;
@@ -153,13 +156,6 @@ public class BookHoldersController {
         if (list.size() == 1) {
             return list.get(0);
         }
-        Optional<BookQueue> min = list.stream().min(Comparator.comparing(BookQueue::getAddedAt));
-        if (min.isPresent()) {
-            return min.get();
-        } else {
-            throw new UnexpectedEmptyListException(
-                    messageSource.getMessage("model.errorBookHoldersControllerReaderGetError", null, "", LocaleContextHolder.getLocale())
-            );
-        }
+        return list.stream().min(Comparator.comparing(BookQueue::getAddedAt)).orElse(null);
     }
 }

@@ -81,7 +81,7 @@ public class BookCopiesController {
     public String chooseBook(
             @RequestParam(value = "chooseBook") String isbn,
             Model model) {
-        BookEdition bookEdition = bookEditionsService.getByIsbn(isbn);
+        BookEdition bookEdition = bookEditionsService.getBookEditionByIsbn(isbn);
         if (bookEdition != null) {
             model.addAttribute("bookEdition", bookEdition);
         } else {
@@ -102,7 +102,7 @@ public class BookCopiesController {
                     messageSource.getMessage("model.errorBookCopiesControllerAccessDenied", null, "", LocaleContextHolder.getLocale()));
             return PAGE_NAME;
         }
-        BookEdition bookEdition = bookEditionsService.getByIsbn(isbn);
+        BookEdition bookEdition = bookEditionsService.getBookEditionByIsbn(isbn);
         User user = userService.getUserByLogin(principal.getName());
         if (bookEdition == null || user == null) {
             model.addAttribute(MESSAGE_ATTRIBUTE,

@@ -24,17 +24,9 @@ public class BookEditionsService {
     private static final String REGEXP_SENTENCE_BY_ONE_WORD = "\\S+";
 
     @Autowired
-    public void setBookEditionsDao(BookEditionsDao bookEditionsDao) {
+    public void setBookEditionsDao(BookEditionsDao<BookEdition> bookEditionsDao) {
         this.bookEditionsDao = bookEditionsDao;
         this.bookEditionsDao.setClazz(BookEdition.class);
-    }
-
-    public BookEdition getByIsbn(String isbn) {
-        return bookEditionsDao.getBookEditionByIsbn(isbn);
-    }
-
-    public List<BookEdition> getByName(String name) {
-        return bookEditionsDao.getBookEditionByTitle(name);
     }
 
     public List<BookEdition> getAllBookEditions() {

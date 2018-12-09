@@ -1,6 +1,6 @@
 package ru.innopolis.stc12.booksharing.model.dao.interfaces;
 
-import ru.innopolis.stc12.booksharing.model.dao.entity.Role;
+import java.io.Serializable;
 
-public interface RoleDao extends AbstractDao<Role> {
+public interface RoleDao<T extends Serializable> extends AbstractDao<T> {
 }
