@@ -29,7 +29,7 @@ public class UserService {
 
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private UserDao<User> userDao;
-    private RoleDao roleDao;
+    private RoleDao<Role> roleDao;
     private UserDao<UserDetails> userDetailsDao;
 
     @Autowired
@@ -39,7 +39,7 @@ public class UserService {
     }
 
     @Autowired
-    public void setRoleDao(RoleDao roleDao) {
+    public void setRoleDao(RoleDao<Role> roleDao) {
         this.roleDao = roleDao;
         this.roleDao.setClazz(Role.class);
     }
@@ -81,7 +81,11 @@ public class UserService {
     }
 
     public User getAuthenticatedUserDetails() {
-        return userDao.getUserByLogin(getAuthenticatedUserLogin());
+        String login = getAuthenticatedUserLogin();
+        if (login != null) {
+            return userDao.getUserByLogin(login);
+        }
+        return null;
     }
 
     public boolean confirmPassword(String password) {

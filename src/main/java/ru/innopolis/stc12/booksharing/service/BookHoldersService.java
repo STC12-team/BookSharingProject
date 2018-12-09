@@ -15,15 +15,7 @@ import java.util.List;
 @Service
 @Transactional
 public class BookHoldersService {
-
-    private BookHoldersDao<BookHolder> bookHoldersDao;
     private UserDao<User> userDao;
-
-    @Autowired
-    public void setBookHoldersDao(BookHoldersDao<BookHolder> bookHoldersDao) {
-        this.bookHoldersDao = bookHoldersDao;
-        this.bookHoldersDao.setClazz(BookHolder.class);
-    }
 
     @Autowired
     public void setUserDao(UserDao<User> userDao) {

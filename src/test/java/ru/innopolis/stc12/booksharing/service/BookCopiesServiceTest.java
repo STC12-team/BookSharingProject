@@ -10,6 +10,7 @@ import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookCopiesDao;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
+import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,5 +83,28 @@ class BookCopiesServiceTest {
         when(bookCopiesDao.update(bookCopy)).thenReturn(bookCopy2);
         assertEquals(bookCopy2, bookCopiesService.updateBookCopy(bookCopy));
     }
+
+    @Test
+    void getBookCopyCountByBookEditionId() {
+        when(bookEditionsDao.findOne(12)).thenReturn(bookEdition);
+        List<BookCopy> bookCopies = new ArrayList<>();
+        bookCopies.add(new BookCopy());
+        bookCopies.add(new BookCopy());
+        bookCopies.add(new BookCopy());
+        when(bookEdition.getBookCopies()).thenReturn(bookCopies);
+        assertEquals(3, bookCopiesService.getBookCopyCountByBookEditionId(12));
+    }
+
+    @Test
+    void getBookCopyCountByBookEditionIdInStatusFree() {
+        when(bookEditionsDao.findOne(12)).thenReturn(bookEdition);
+        List<BookCopy> bookCopies = new ArrayList<>();
+        bookCopies.add(new BookCopy(null, null, BookCopiesStatus.FREE));
+        bookCopies.add(new BookCopy(null, null, BookCopiesStatus.BUSY));
+        bookCopies.add(new BookCopy(null, null, BookCopiesStatus.FREE));
+        when(bookEdition.getBookCopies()).thenReturn(bookCopies);
+        assertEquals(2, bookCopiesService.getBookCopyCountByBookEditionIdInStatusFree(12));
+    }
+
 
 }

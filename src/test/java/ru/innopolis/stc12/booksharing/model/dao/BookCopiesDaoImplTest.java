@@ -22,7 +22,6 @@ import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class BookCopiesDaoImplTest {
-
     @InjectMocks
     private BookCopiesDaoImpl bookCopiesDao;
     @Mock

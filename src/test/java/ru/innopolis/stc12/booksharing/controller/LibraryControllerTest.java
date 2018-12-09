@@ -35,4 +35,11 @@ class LibraryControllerTest {
         assertEquals("/library", libraryController.getLibraryPage(null, model));
         assertEquals("/library", libraryController.getLibraryPage(anyString(), model));
     }
+
+    @Test
+    void getWelcomePage() {
+        assertEquals("/library", libraryController.getWelcomePage());
+    }
+
+
 }
