@@ -20,7 +20,6 @@ import ru.innopolis.stc12.booksharing.service.BookQueueService;
 import java.security.Principal;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class BookHoldersController {
@@ -90,9 +89,14 @@ public class BookHoldersController {
             model.addAttribute(TRANSFER_MESSAGE_ATTRIBUTE,
                     messageSource.getMessage("model.errorBookHoldersControllerNextInQueue", null, "", LocaleContextHolder.getLocale()));
             BookQueue bookQueue = getFirstUserFromQueue(bookQueueList);
-            bookQueue.setStatus(BookQueueStatus.GETTING);
-            bookQueueService.updateBookQueue(bookQueue);
-            model.addAttribute("user", bookQueue.getUser());
+            if (bookQueue != null) {
+                bookQueue.setStatus(BookQueueStatus.GETTING);
+                bookQueueService.updateBookQueue(bookQueue);
+                model.addAttribute("user", bookQueue.getUser());
+            } else {
+                model.addAttribute("user", null);
+            }
+
             //TODO отправить уведомление следующему читателю, о том, что он может взять книгу
         }
         return PAGE_NAME;
