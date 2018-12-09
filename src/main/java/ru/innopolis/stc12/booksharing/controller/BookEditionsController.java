@@ -74,7 +74,8 @@ public class BookEditionsController {
             @RequestParam(value = "bookEditionYear") int yearOfPublication,
             Model model)
     {
-        Publisher publisher = publisherService.getByNameOrCreate(publisherName);
+        //TODO надо проверить издателя
+        Publisher publisher = publisherService.getByName(publisherName);
         BookEdition bookEdition = new BookEdition(title, description, isbn, publisher, yearOfPublication);
         bookEditionsService.addBookEdition(bookEdition);
         return "addBookEdition";

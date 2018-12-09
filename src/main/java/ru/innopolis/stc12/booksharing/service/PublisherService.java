@@ -27,20 +27,7 @@ public class PublisherService {
         return publisherDao.getPublisherByName(name);
     }
 
-    public List<Publisher> getAllPublishers() {
-        return publisherDao.findAll();
-    }
-
     public void addPublisher(Publisher publisher) {
         publisherDao.save(publisher);
-    }
-
-    public Publisher getByNameOrCreate(String name) {
-        Publisher publisher = this.getByName(name);
-        if (publisher == null) {
-            this.addPublisher(new Publisher(name));
-            publisher = this.getByName(name);
-        }
-        return publisher;
     }
 }

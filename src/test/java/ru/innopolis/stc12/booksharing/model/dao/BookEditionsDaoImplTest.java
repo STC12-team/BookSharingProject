@@ -16,88 +16,70 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class BookEditionsDaoImplTest {
-
     @InjectMocks
-    BookEditionsDaoImpl bookEditionsDao;
-
+    private BookEditionsDaoImpl bookEditionsDao;
     @Mock
-    SessionFactory sessionFactory;
-
+    private SessionFactory sessionFactory;
     @Mock
-    Session session;
-
+    private BookEdition bookEdition;
     @Mock
-    CriteriaBuilder criteriaBuilder;
-
+    private Session session;
     @Mock
-    CriteriaQuery<BookEdition> criteriaQuery;
-
+    private AbstractDaoImp.QueryObject queryObject;
     @Mock
-    Root<BookEdition> root;
-
+    private CriteriaBuilder criteriaBuilder;
     @Mock
-    Query<BookEdition> query;
-
+    private CriteriaQuery<BookEdition> criteriaQuery;
+    @Mock
+    private Root<BookEdition> root;
+    @Mock
+    private Query<BookEdition> query;
+    @Mock
+    private Predicate predicate;
     @Mock
     Join<BookEdition, Publisher> join;
-
-    @Mock
-    BookEdition bookEdition;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
+        bookEditionsDao.setClazz(BookEdition.class);
         when(sessionFactory.getCurrentSession()).thenReturn(session);
         when(session.getCriteriaBuilder()).thenReturn(criteriaBuilder);
         when(criteriaBuilder.createQuery(BookEdition.class)).thenReturn(criteriaQuery);
         when(criteriaQuery.from(BookEdition.class)).thenReturn(root);
         when(session.createQuery(criteriaQuery)).thenReturn(query);
         when(criteriaQuery.select(root)).thenReturn(criteriaQuery);
+        when(criteriaQuery.where(any(Predicate.class))).thenReturn(criteriaQuery);
+        queryObject = spy(bookEditionsDao.new QueryObject());
     }
-
-
-    @Test
-    void getBookEditionById() {
-        BookEdition bookEdition = new BookEdition();
-        List<BookEdition> list = new ArrayList<>();
-        list.add(bookEdition);
-        when(query.getResultList()).thenReturn(list);
-//        assertEquals(bookEdition, bookEditionsDao.getBookEditionById(6));
-    }
-
-    @Test
-    void getAllBookEditions() {
-        List<BookEdition> list = new ArrayList<>();
-        when(query.getResultList()).thenReturn(list);
-//        assertEquals(list, bookEditionsDao.getAllBookEditions());
-    }
-
-    @Test
-    void getBookEditionByIsbn() {
-        BookEdition bookEdition = new BookEdition();
-        List<BookEdition> list = new ArrayList<>();
-        list.add(bookEdition);
-        when(query.getResultList()).thenReturn(list);
-//        assertEquals(bookEdition, bookEditionsDao.getBookEditionByIsbn("isbn"));
-    }
-
 
     @Test
     void getBookEditionsByPublisher() {
         List<BookEdition> list = new ArrayList<>();
         when(query.getResultList()).thenReturn(list);
         when(root.join("publisher", JoinType.LEFT)).thenAnswer(invocationOnMock -> join);
-//        assertEquals(list, bookEditionsDao.getBookEditionsByPublisher("publisher"));
+        assertEquals(list, bookEditionsDao.getBookEditionsByPublisher("publisher"));
     }
 
     @Test
-    void addBookEdition() {
-        BookEdition bookEdition = new BookEdition();
-//        assertTrue(bookEditionsDao.addBookEdition(bookEdition));
+    void getBookEditionByIsbn() {
+        List<BookEdition> list = new ArrayList<>();
+        list.add(bookEdition);
+        when(query.getResultList()).thenReturn(list);
+        assertEquals(bookEdition, bookEditionsDao.getBookEditionByIsbn("isbn"));
+    }
+
+    @Test
+    void getBookEditionByTitle() {
+        List<BookEdition> list = new ArrayList<>();
+        when(query.getResultList()).thenReturn(list);
+        assertEquals(list, bookEditionsDao.getBookEditionByTitle("title"));
     }
 
     @Test
@@ -105,14 +87,7 @@ class BookEditionsDaoImplTest {
         List<BookEdition> list = new ArrayList<>();
         when(query.getResultList()).thenReturn(list);
         when(root.join("publisher", JoinType.LEFT)).thenAnswer(invocationOnMock -> join);
-//        assertEquals(list, bookEditionsDao.getBookEditionsBySearchValue("search"));
-    }
-
-    @Test
-    void getBookEditionByTitle() {
-        List<BookEdition> list = new ArrayList<>();
-        when(query.getResultList()).thenReturn(list);
-//        assertEquals(list, bookEditionsDao.getBookEditionByTitle("title"));
+        assertEquals(list, bookEditionsDao.getBookEditionsBySearchValue("search"));
     }
 
     @Test

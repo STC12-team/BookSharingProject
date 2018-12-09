@@ -27,35 +27,25 @@ import static org.mockito.MockitoAnnotations.initMocks;
 
 class BookQueueDaoImplTest {
     @InjectMocks
-    private BookQueueDaoImpl bookQueueDao;
-    @Mock
-    private JdbcTemplate jdbcTemplate;
-    @Mock
-    private List<BookQueue> bookQueueList;
-    @Mock
-    private BookQueue bookQueue;
-    @Mock
-    private Timestamp timestamp;
-    @Mock
-    private BookEdition bookEdition;
+    BookQueueDaoImpl bookQueueDao;
     @Mock
     private User user;
     @Mock
-    private SessionFactory sessionFactory;
+    private BookEdition bookEdition;
     @Mock
-    private Session session;
+    SessionFactory sessionFactory;
     @Mock
-    private AbstractDaoImp.QueryObject queryObject;
+    Session session;
     @Mock
-    private CriteriaBuilder criteriaBuilder;
+    CriteriaBuilder criteriaBuilder;
     @Mock
-    private CriteriaQuery<BookQueue> criteriaQuery;
+    CriteriaQuery<BookQueue> criteriaQuery;
     @Mock
-    private Root<BookQueue> root;
+    Root<BookQueue> root;
     @Mock
-    private Query<BookQueue> query;
+    Query<BookQueue> query;
     @Mock
-    private Predicate predicate;
+    AbstractDaoImp.QueryObject queryObject;
 
     @BeforeEach
     void setUp() {
@@ -72,39 +62,11 @@ class BookQueueDaoImplTest {
     }
 
     @Test
-    void getBookQueueByBookEditionId() {
-//        when(jdbcTemplate.query(anyString(), any(Object[].class), any(RowMapper.class))).thenReturn(bookQueueList);
-//        assertEquals(bookQueueList, bookQueueDao.getBookQueueByBookEditionId(1));
-    }
-
-    @Test
-    void updateBookQueue() {
-        //TODO переделать
-        when(bookQueue.getBookEdition()).thenReturn(bookEdition);
-        when(bookQueue.getUser()).thenReturn(user);
-        when(bookQueue.getStatus()).thenReturn(BookQueueStatus.WAIT);
-        when(bookEdition.getId()).thenReturn(1);
-        when(user.getId()).thenReturn((int) 1);
-        when(bookQueue.getAddedAt()).thenReturn(timestamp);
-        when(bookQueue.getId()).thenReturn(1);
-        when(jdbcTemplate.update(anyString(), anyInt(), anyInt(), any(), anyString(), anyInt())).thenReturn(0);
-//        assertEquals(false, bookQueueDao.updateBookQueue(bookQueue));
-    }
-
-    @Test
-    void getUserCountByBookEditionId() {
-//        when(jdbcTemplate.queryForObject(anyString(), any(Object[].class), eq(Integer.class))).thenReturn(1);
-//        assertEquals(1, bookQueueDao.getUserCountByBookEditionId(1));
-    }
-
-    @Test
     void getUserBookQueueByBookEdition() {
+        BookQueue bookQueue = new BookQueue();
         List<BookQueue> list = new ArrayList<>();
         list.add(bookQueue);
-        when(root.get(anyString())).thenReturn(Mockito.mock(Path.class));
-        when(criteriaBuilder.equal(any(Path.class), any(BookEdition.class))).thenReturn(predicate);
-        when(queryObject.executeQuery(predicate)).thenReturn(list);
-        BookQueue result = bookQueueDao.getUserBookQueueByBookEdition(user, bookEdition);
-        assertEquals(bookQueue, result);
+        when(query.getResultList()).thenReturn(list);
+        assertEquals(bookQueue, bookQueueDao.getUserBookQueueByBookEdition(user, bookEdition));
     }
 }

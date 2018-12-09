@@ -9,7 +9,6 @@ import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookCopiesDao;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
-import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
 
 import java.util.List;

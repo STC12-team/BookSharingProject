@@ -1,5 +1,6 @@
 package ru.innopolis.stc12.booksharing.controller;
 
+import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import ru.innopolis.stc12.booksharing.model.dao.entity.*;
 import ru.innopolis.stc12.booksharing.service.BookCopiesService;
@@ -15,6 +17,8 @@ import ru.innopolis.stc12.booksharing.service.BookHoldersService;
 import ru.innopolis.stc12.booksharing.service.BookQueueService;
 
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -60,7 +64,6 @@ class BookHoldersControllerTest {
     void takenBooksWhenPrincipalIsNull() {
         when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("У Вас нет прав на просмотр данной страницы!");
         assertEquals("takenBooks", bookHoldersController.takenBooks(model, null));
-        //TODO не понимает кириллицу
         verify(model, times(1)).addAttribute("message", "У Вас нет прав на просмотр данной страницы!");
     }
 
@@ -95,7 +98,7 @@ class BookHoldersControllerTest {
     }
 
     @Test
-    void readEndWhenBookQueueListIsSet() {
+    void readEndWhenBookQueueListIsSetOneValue() {
         when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("Книга отмечена как прочитанная");
         when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("Следующий на очереди:");
         when(bookCopiesService.getBookCopyById(anyInt())).thenReturn(bookCopy);
@@ -111,4 +114,25 @@ class BookHoldersControllerTest {
         verify(model, times(1)).addAttribute("transfer_message", "Следующий на очереди:");
         verify(model, times(1)).addAttribute("user", user);
     }
+
+    @Test
+    void readEndWhenBookQueueListIsSetTwoNullValue() {
+        List<BookQueue> bookQueueTestList = new ArrayList<>();
+        Model modelTest = new ExtendedModelMap();
+
+        User user = new User("login", "password", null, 1, "email");
+        BookQueue bookQueue1 = new BookQueue(null, user, new Timestamp(System.currentTimeMillis()), null);
+        BookQueue bookQueue2 = new BookQueue(null, null, new Timestamp(System.currentTimeMillis()+1000), null);
+        bookQueueTestList.add(bookQueue2);
+        bookQueueTestList.add(bookQueue1);
+
+        when(bookCopiesService.getBookCopyById(12)).thenReturn(bookCopy);
+        when(bookQueueService.getBookQueueByBookEditionId(111)).thenReturn(bookQueueTestList);
+        when(bookCopy.getBookEdition()).thenReturn(bookEdition);
+        when(bookEdition.getId()).thenReturn(111);
+        assertEquals("takenBooks", bookHoldersController.readEnd("12", modelTest));
+        assertEquals(modelTest.asMap().get("user"), user);
+    }
+
+
 }

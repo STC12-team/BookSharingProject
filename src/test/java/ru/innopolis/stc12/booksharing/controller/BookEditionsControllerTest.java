@@ -60,7 +60,7 @@ class BookEditionsControllerTest {
 
     @Test
     void addBookEdition() {
-        when(publisherService.getByNameOrCreate("Amazon")).thenReturn(publisher);
+        when(publisherService.getByName("Amazon")).thenReturn(publisher);
 
         assertEquals("addBookEdition", bookEditionsController.addBookEdition(
                 "title",
