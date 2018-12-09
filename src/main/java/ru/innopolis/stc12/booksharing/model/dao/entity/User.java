@@ -30,6 +30,7 @@ public class User implements Serializable {
     private UserDetails userDetails;
     private List<BookCopy> bookCopies = new ArrayList<>();
     private List<BookHolder> bookHolders = new ArrayList<>();
+    private List<BookQueue> bookQueues = new ArrayList<>();
 
     @Id
     @Column(name = "id", nullable=false)
@@ -108,6 +109,16 @@ public class User implements Serializable {
     }
     public void setBookCopies(List<BookCopy> bookCopies) {
         this.bookCopies = bookCopies;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    public List<BookQueue> getBookQueues() {
+        return this.bookQueues;
+    }
+
+    public void setBookQueues(List<BookQueue> bookQueues) {
+        this.bookQueues = bookQueues;
     }
 
     @Override

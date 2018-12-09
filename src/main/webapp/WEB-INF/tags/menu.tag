@@ -26,9 +26,9 @@
                         <spring:message code="nav.library"/>
                         <span class="sr-only">(current)</span></a>
                 </li>
-                <sec:authorize access="hasRole('ROLE_USER')">
+                <sec:authorize access="hasAnyRole('ROLE_USER', 'ROLE_ADMIN')">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="${pageContext.request.contextPath}/myBooks">
                             <spring:message code="nav.myBooks"/>
                             <span class="sr-only">(current)</span></a>
                     </li>

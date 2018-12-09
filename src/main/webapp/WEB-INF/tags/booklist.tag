@@ -4,14 +4,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <form action="/addBookByUser/chooseBook" method="get" role="presentation">
     <div class="row">
-        <c:forEach var="bookEdition" items="${bookEditionList}">
+        <c:forEach var="book" items="${bookEditionList}">
             <div class="col-md-6">
-                <h2>${bookEdition.title}</h2>
-                <p><spring:message code="bookList.isbnTitle"/>: ${bookEdition.isbn}</p>
-                <p><spring:message code="bookList.publisherTitle"/>: ${bookEdition.publisher.name}</p>
-                <p><spring:message code="bookList.publishYearTitle"/>: ${bookEdition.yearOfPublication}</p>
-                <p><spring:message code="bookList.descriptionTitle"/>: ${bookEdition.description}</p>
-                <button type="submit" name="chooseBook" value="${bookEdition.isbn}" class="btn btn-info">
+                <h2>${book.title}</h2>
+                <p><spring:message code="bookList.isbnTitle"/>: ${book.isbn}</p>
+                <p><spring:message code="bookList.publisherTitle"/>: ${book.publisher.name}</p>
+                <p><spring:message code="bookList.publishYearTitle"/>: ${book.yearOfPublication}</p>
+                <p><spring:message code="bookList.descriptionTitle"/>: ${book.description}</p>
+                <button type="submit" name="chooseBook" value="${book.isbn}" class="btn btn-info">
                     <span><spring:message code="bookList.chooseButton"/></span>
                 </button>
             </div>

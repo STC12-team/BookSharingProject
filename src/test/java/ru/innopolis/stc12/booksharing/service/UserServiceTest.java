@@ -7,16 +7,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class UserServiceTest {
@@ -88,5 +85,15 @@ class UserServiceTest {
     void updateUserDetails() {
 //        userService.updateUserDetails("", "", "");
 //        verify(userDao, times(0)).updateUserDetails(userDetails);
+    }
+
+    @Test
+    void getBookHoldersByUserLogin() {
+
+    }
+
+    @Test
+    void getById() {
+
     }
 }

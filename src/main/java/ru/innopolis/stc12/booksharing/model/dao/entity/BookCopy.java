@@ -1,8 +1,8 @@
 package ru.innopolis.stc12.booksharing.model.dao.entity;
 
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
-import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
 
 import javax.persistence.*;
@@ -39,7 +39,7 @@ public class BookCopy implements Serializable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "book_edition_id", referencedColumnName = "id")
     public BookEdition getBookEdition() { return bookEdition; }
     public void setBookEdition(BookEdition bookEdition) {

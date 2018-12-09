@@ -42,7 +42,6 @@ public class BookQueue implements Serializable {
     }
 
     @ManyToOne(optional=false)
-    @ElementCollection(targetClass=BookEdition.class)
     @JoinColumn(name="book_edition_id", referencedColumnName = "id")
     public BookEdition getBookEdition() {
         return bookEdition;
@@ -52,7 +51,6 @@ public class BookQueue implements Serializable {
     }
 
     @ManyToOne
-    @ElementCollection(targetClass=User.class)
     @JoinColumn(name="user_id", referencedColumnName = "id")
     public User getUser() {
         return user;

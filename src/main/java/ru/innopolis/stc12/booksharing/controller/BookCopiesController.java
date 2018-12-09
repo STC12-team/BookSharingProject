@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
@@ -25,6 +26,9 @@ public class BookCopiesController {
     private Logger logger = Logger.getLogger(BookCopiesController.class);
     private static final String MESSAGE_ATTRIBUTE = "message";
     private static final String PAGE_NAME = "addBookByUser";
+    private static final String MY_BOOKS_PAGE_NAME = "userBooks";
+    private static final String BOOK_COPY_ATTRIBUTE = "bookCopy";
+    private static final String BOOK_COPY_DESCRIPTION_PAGE = "bookCopyDescription";
     private BookEditionsService bookEditionsService;
     private UserService userService;
     private BookCopiesService bookCopiesService;
@@ -121,5 +125,30 @@ public class BookCopiesController {
         model.addAttribute(MESSAGE_ATTRIBUTE, "Запрос отправлен, Вам придет уведомление на Ваш email");
         //TODO: add implement for email send
         return PAGE_NAME;
+    }
+
+    @GetMapping(value = "/myBooks")
+    public String getMyBooks(Model model, Principal principal) {
+        if (principal == null) {
+            model.addAttribute(MESSAGE_ATTRIBUTE,
+                    messageSource.getMessage("model.errorBookHoldersControllerAccess", null, "", LocaleContextHolder.getLocale()));
+            return MY_BOOKS_PAGE_NAME;
+        }
+        String login = principal.getName();
+        List<BookCopy> bookCopyList = userService.getBookCopiesByUserLogin(login);
+        if (bookCopyList.isEmpty()) {
+            model.addAttribute(MESSAGE_ATTRIBUTE, messageSource.getMessage("model.errorCatalogController", null, "", LocaleContextHolder.getLocale()));
+        } else {
+            model.addAttribute("bookCopyList", bookCopyList);
+        }
+
+        return MY_BOOKS_PAGE_NAME;
+    }
+
+    @GetMapping(value = "/bookCopyDesc/{id}")
+    public String showBookEditionDescriptionPage(@PathVariable int id, Model model) {
+        BookCopy bookCopy = bookCopiesService.getBookCopyById(id);
+        model.addAttribute(BOOK_COPY_ATTRIBUTE, bookCopy);
+        return BOOK_COPY_DESCRIPTION_PAGE;
     }
 }

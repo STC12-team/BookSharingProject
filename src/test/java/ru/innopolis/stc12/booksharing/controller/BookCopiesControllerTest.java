@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.springframework.context.MessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.ui.Model;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.service.BookCopiesService;
@@ -14,6 +15,7 @@ import ru.innopolis.stc12.booksharing.service.BookEditionsService;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -123,5 +125,20 @@ class BookCopiesControllerTest {
     void sendRequest() {
         assertEquals("addBookByUser", bookCopiesController.sendRequest("", "", "", model));
         verify(model, times(1)).addAttribute(anyString(), any());
+    }
+
+    @Test
+    void getMyBooks() {
+        List<BookCopy> bookCopyList = new ArrayList<>();
+        bookCopyList.add(new BookCopy());
+        when(principal.getName()).thenReturn("name");
+        when(userService.getBookCopiesByUserLogin("user")).thenReturn(bookCopyList);
+        assertEquals("userBooks", bookCopiesController.getMyBooks(model, principal));
+    }
+
+    @Test
+    void showBookEditionDescriptionPage() {
+        when(bookCopiesService.getBookCopyById(1)).thenReturn(new BookCopy());
+        assertEquals("bookCopyDescription", bookCopiesController.showBookEditionDescriptionPage(1, model));
     }
 }

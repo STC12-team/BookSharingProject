@@ -71,22 +71,28 @@
                     <c:choose>
                         <c:when test="${not empty bookEditionList}">
                             <div class="card-columns text-center">
-                                <c:forEach var="bookEdition" items="${bookEditionList}">
+                                <c:forEach var="book" items="${bookEditionList}">
                                     <div class="card">
-                                        <a href="/bookEditionDesc/${bookEdition.id}">
+                                        <a href="/bookEditionDesc/${book.id}">
                                             <img class="card-img-top" src="/images/no_cover.png"
-                                                 alt="${bookEdition.title}">
+                                                 alt="${book.title}">
                                         </a>
                                         <div class="card-body text-truncate" data-toogle="tooltip" data-placement="top"
-                                             title="${bookEdition.title}">
-                                            <a href="/bookEditionDesc/${bookEdition.id}"
-                                               class="card-link">${bookEdition.title}</a>
+                                             title="${book.title}">
+                                            <a href="/bookEditionDesc/${book.id}"
+                                               class="card-link">${book.title}</a>
                                         </div>
                                         <div class="card-body">
                                             <p>
-                                                <span class="badge badge-info"><spring:message code="library.all"/>: <c:out value="${bookEditionsAll * bookEdition.id}"/></span>
-                                                <span class="badge badge-info"><spring:message code="library.free"/>: <c:out value="${bookEditionsFree * bookEdition.id}"/></span>
-                                                <span class="badge badge-info"><spring:message code="library.queue"/>: <c:out value="${bookEditionsQueue * bookEdition.id}"/></span>
+                                                <span class="badge badge-info"><spring:message
+                                                        code="library.all"/>: <c:out
+                                                        value="${bookEditionsAll * book.id}"/></span>
+                                                <span class="badge badge-info"><spring:message
+                                                        code="library.free"/>: <c:out
+                                                        value="${bookEditionsFree * book.id}"/></span>
+                                                <span class="badge badge-info"><spring:message
+                                                        code="library.queue"/>: <c:out
+                                                        value="${bookEditionsQueue * book.id}"/></span>
                                             </p>
                                         </div>
                                     </div>

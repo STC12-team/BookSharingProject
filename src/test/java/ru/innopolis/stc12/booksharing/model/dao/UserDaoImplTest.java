@@ -2,27 +2,26 @@ package ru.innopolis.stc12.booksharing.model.dao;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class UserDaoImplTest {
 
-    @Mock
+    @InjectMocks
     UserDaoImpl userDao;
+
+    @Mock
+    private User user;
 
     @BeforeEach
     void setUp() {
         initMocks(this);
-
-        userDao = new UserDaoImpl();
     }
 
     @Test
@@ -69,5 +68,35 @@ class UserDaoImplTest {
 //                userDetails.getSurname(),
 //                userDetails.getUserId())).thenReturn(1);
 //        assertFalse(userDao.updateUserDetails(userDetails));
+    }
+
+    @Test
+    public void getBookHoldersByUserLogin() {
+/*
+        List<BookHolder> bookHolderList = new ArrayList<>();
+        when(userDao.getUserByLogin("user")).thenReturn(user);
+        when(user.getBookHolders()).thenReturn(bookHolderList);
+        assertEquals(bookHolderList, userDao.getBookHoldersByUserLogin("user"));
+*/
+    }
+
+    @Test
+    public void getBookCopiesByUserLogin() {
+/*
+        List<BookCopy> bookCopyList = new ArrayList<>();
+        when(userDao.getUserByLogin("user")).thenReturn(user);
+        when(user.getBookCopies()).thenReturn(bookCopyList);
+        assertEquals(bookCopyList, userDao.getBookCopiesByUserLogin("user"));
+*/
+    }
+
+    @Test
+    public void getBookQueueByUserLogin() {
+/*
+        List<BookQueue> bookQueueList = new ArrayList<>();
+        when(userDao.getUserByLogin("user")).thenReturn(user);
+        when(user.getBookQueues()).thenReturn(bookQueueList);
+        assertEquals(bookQueueList, userDao.getBookQueueByUserLogin("user"));
+*/
     }
 }

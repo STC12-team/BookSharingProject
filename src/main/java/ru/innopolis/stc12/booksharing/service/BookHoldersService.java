@@ -1,5 +1,6 @@
 package ru.innopolis.stc12.booksharing.service;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -34,5 +35,12 @@ public class BookHoldersService {
     public List<BookHolder> getBookHoldersByUserLogin(String login) {
         User user = userDao.getUserByLogin(login);
         return user.getBookHolders();
+    }
+
+    public BookHolder getById(int id) {
+        BookHolder bookHolder = bookHoldersDao.findOne(id);
+        //TODO hibernate init
+        Hibernate.initialize(bookHolder.getBookCopy().getBookEdition());
+        return bookHolder;
     }
 }

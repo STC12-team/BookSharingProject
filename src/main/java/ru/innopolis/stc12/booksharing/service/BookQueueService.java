@@ -1,6 +1,7 @@
 package ru.innopolis.stc12.booksharing.service;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -48,6 +49,8 @@ public class BookQueueService {
 
     public List<BookQueue> getBookQueueByBookEditionId(int id) {
         BookEdition bookEdition = bookEditionsDao.findOne(id);
+        //TODO hibernate init
+        Hibernate.initialize(bookEdition.getBookQueue());
         return bookEdition.getBookQueue();
     }
 
@@ -79,5 +82,9 @@ public class BookQueueService {
     public void deleteUserFromQueue(User user, BookEdition bookEdition) {
         BookQueue bookQueue = bookQueueDao.getUserBookQueueByBookEdition(user, bookEdition);
         bookQueueDao.delete(bookQueue);
+    }
+
+    public BookQueue getById(int id) {
+        return bookQueueDao.findOne(id);
     }
 }
