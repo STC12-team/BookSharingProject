@@ -4,9 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import ru.innopolis.stc12.booksharing.model.dao.UserDaoImpl;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookHolder;
-import ru.innopolis.stc12.booksharing.model.dao.BookHoldersDaoImpl;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 

@@ -17,12 +17,20 @@ import java.util.List;
 @Transactional
 public class BookHoldersService {
     private UserDao<User> userDao;
+    private BookHoldersDao<BookHolder> bookHoldersDao;
 
     @Autowired
     public void setUserDao(UserDao<User> userDao) {
         this.userDao = userDao;
         this.userDao.setClazz(User.class);
     }
+
+    @Autowired
+    public void setBookHoldersDao(BookHoldersDao<BookHolder> bookHoldersDao) {
+        this.bookHoldersDao = bookHoldersDao;
+        this.bookHoldersDao.setClazz(BookHolder.class);
+    }
+
 
     public List<BookHolder> getBookHoldersByUserLogin(String login) {
         User user = userDao.getUserByLogin(login);

@@ -7,20 +7,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.jdbc.core.JdbcTemplate;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookQueue;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
-import ru.innopolis.stc12.booksharing.model.pojo.BookQueueStatus;
 
-import javax.persistence.criteria.*;
-import java.sql.Timestamp;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -30,8 +29,6 @@ class BookQueueDaoImplTest {
     BookQueueDaoImpl bookQueueDao;
     @Mock
     private User user;
-    @Mock
-    private BookEdition bookEdition;
     @Mock
     SessionFactory sessionFactory;
     @Mock
@@ -46,6 +43,8 @@ class BookQueueDaoImplTest {
     Query<BookQueue> query;
     @Mock
     AbstractDaoImp.QueryObject queryObject;
+    @Mock
+    private BookEdition bookEdition;
 
     @BeforeEach
     void setUp() {

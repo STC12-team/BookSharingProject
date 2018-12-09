@@ -7,7 +7,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -17,9 +16,9 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
@@ -53,7 +52,8 @@ class UserDaoImplTest {
         when(session.createQuery(criteriaQuery)).thenReturn(query);
         when(criteriaQuery.select(root)).thenReturn(criteriaQuery);
         when(criteriaQuery.where(any(Predicate.class))).thenReturn(criteriaQuery);
-        queryObject = spy(userDao.new QueryObject());    }
+        queryObject = spy(userDao.new QueryObject());
+    }
 
     @Test
     void getUserByLogin() {

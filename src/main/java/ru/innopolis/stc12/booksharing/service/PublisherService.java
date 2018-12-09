@@ -8,8 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Publisher;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.PublisherDao;
 
-import java.util.List;
-
 @EnableTransactionManagement
 @Service
 @Transactional

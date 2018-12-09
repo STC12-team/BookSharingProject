@@ -121,7 +121,7 @@ class BookHoldersControllerTest {
 
         User user = new User("login", "password", null, 1, "email");
         BookQueue bookQueue1 = new BookQueue(null, user, new Timestamp(System.currentTimeMillis()), null);
-        BookQueue bookQueue2 = new BookQueue(null, null, new Timestamp(System.currentTimeMillis()+1000), null);
+        BookQueue bookQueue2 = new BookQueue(null, null, new Timestamp(System.currentTimeMillis() + 1000), null);
         bookQueueTestList.add(bookQueue2);
         bookQueueTestList.add(bookQueue1);
 

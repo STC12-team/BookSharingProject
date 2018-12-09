@@ -10,16 +10,17 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.innopolis.stc12.booksharing.model.dao.entity.Role;
-import ru.innopolis.stc12.booksharing.model.dao.interfaces.RoleDao;
-import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.RoleDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 
 class UserServiceTest {

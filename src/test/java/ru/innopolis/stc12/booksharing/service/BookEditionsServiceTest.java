@@ -1,25 +1,18 @@
 package ru.innopolis.stc12.booksharing.service;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
