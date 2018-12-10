@@ -73,6 +73,9 @@ class BookEditionsDaoImplTest {
         list.add(bookEdition);
         when(query.getResultList()).thenReturn(list);
         assertEquals(bookEdition, bookEditionsDao.getBookEditionByIsbn("isbn"));
+        list = new ArrayList<>();
+        when(query.getResultList()).thenReturn(list);
+        assertEquals(null, bookEditionsDao.getBookEditionByIsbn("isbn"));
     }
 
     @Test

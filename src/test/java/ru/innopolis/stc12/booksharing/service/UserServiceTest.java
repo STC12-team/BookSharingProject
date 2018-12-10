@@ -136,7 +136,7 @@ class UserServiceTest {
         bookCopy.setBookEdition(bookEdition);
         bookHolders.add(bookHolder);
         when(userDao.getBookHoldersByUserLogin("user")).thenReturn(bookHolders);
-        assertEquals(bookHolders, userDao.getBookHoldersByUserLogin("user"));
+        assertEquals(bookHolders, userService.getBookHoldersByUserLogin("user"));
     }
 
     @Test
@@ -147,7 +147,7 @@ class UserServiceTest {
         bookCopy.setBookEdition(bookEdition);
         bookCopies.add(bookCopy);
         when(userDao.getBookCopiesByUserLogin("user")).thenReturn(bookCopies);
-        assertEquals(bookCopies, userDao.getBookCopiesByUserLogin("user"));
+        assertEquals(bookCopies, userService.getBookCopiesByUserLogin("user"));
     }
 
     @Test
@@ -158,6 +158,6 @@ class UserServiceTest {
         bookQueue.setBookEdition(bookEdition);
         bookQueues.add(bookQueue);
         when(userDao.getBookQueueByUserLogin("user")).thenReturn(bookQueues);
-        assertEquals(bookQueues, userDao.getBookQueueByUserLogin("user"));
+        assertEquals(bookQueues, userService.getBookQueueByUserLogin("user"));
     }
 }

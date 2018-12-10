@@ -118,6 +118,6 @@ class UserDaoImplTest {
         List<BookQueue> bookQueues = new ArrayList<>();
         when(query.getResultList()).thenReturn(list);
         when(user.getBookQueues()).thenReturn(bookQueues);
-        assertEquals(bookQueues, userDao.getBookCopiesByUserLogin("user"));
+        assertEquals(bookQueues, userDao.getBookQueueByUserLogin("user"));
     }
 }
