@@ -12,7 +12,7 @@
 
 <div class="row">
     <div class="col">
-        <img src="https://via.placeholder.com/250" class="img-fluid" alt="">
+        <img src="/images/no_avatar.png" class="img-fluid" alt="">
     </div>
     <div class="col">
         <h3 class="display-4">${userDetails.firstName} ${userDetails.lastName} ${userDetails.surname}</h3>

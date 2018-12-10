@@ -12,13 +12,13 @@
                 <TD>DESCRIPTION</TD>
                 <TD>ISBN</TD>
             </TR>
-            <c:forEach var="bookEdition" items="${bookEditions}">
+            <c:forEach var="book" items="${bookEditions}">
 
                 <TR>
-                    <TD>${bookEdition.id}</TD>
-                    <TD>${bookEdition.title}</TD>
-                    <TD>${bookEdition.description}</TD>
-                    <TD>${bookEdition.isbn}</TD>
+                    <TD>${book.id}</TD>
+                    <TD>${book.title}</TD>
+                    <TD>${book.description}</TD>
+                    <TD>${book.isbn}</TD>
                 </TR>
             </c:forEach>
         </table>

@@ -2,6 +2,7 @@ package ru.innopolis.stc12.booksharing.service;
 
 
 import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -10,9 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.annotation.Transactional;
-import ru.innopolis.stc12.booksharing.model.dao.entity.Role;
-import ru.innopolis.stc12.booksharing.model.dao.entity.User;
-import ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails;
+import ru.innopolis.stc12.booksharing.model.dao.entity.*;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.RoleDao;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 
@@ -133,5 +132,35 @@ public class UserService {
             return Objects.requireNonNull(user).getUsername();
         }
         return null;
+    }
+
+    public List<BookHolder> getBookHoldersByUserLogin(String login) {
+        List<BookHolder> list = userDao.getBookHoldersByUserLogin(login);
+        //TODO надо обратиться к данным, чтобы hibernate их подгрузил
+        Hibernate.initialize(list);
+        for (BookHolder b : list) {
+            Hibernate.initialize(b.getBookCopy().getBookEdition());
+        }
+        return list;
+    }
+
+    public List<BookCopy> getBookCopiesByUserLogin(String login) {
+        List<BookCopy> list = userDao.getBookCopiesByUserLogin(login);
+        //TODO надо обратиться к данным, чтобы hibernate их подгрузил
+        Hibernate.initialize(list);
+        for (BookCopy b : list) {
+            Hibernate.initialize(b.getBookEdition());
+        }
+        return list;
+    }
+
+    public List<BookQueue> getBookQueueByUserLogin(String login) {
+        List<BookQueue> list = userDao.getBookQueueByUserLogin(login);
+        //TODO надо обратиться к данным, чтобы hibernate их подгрузил
+        Hibernate.initialize(list);
+        for (BookQueue b : list) {
+            Hibernate.initialize(b.getBookEdition());
+        }
+        return list;
     }
 }

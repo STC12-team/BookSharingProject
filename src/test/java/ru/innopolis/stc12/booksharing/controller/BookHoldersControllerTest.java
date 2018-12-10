@@ -1,20 +1,17 @@
 package ru.innopolis.stc12.booksharing.controller;
 
-import jdk.nashorn.internal.ir.annotations.Ignore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
 import ru.innopolis.stc12.booksharing.model.dao.entity.*;
 import ru.innopolis.stc12.booksharing.service.BookCopiesService;
 import ru.innopolis.stc12.booksharing.service.BookHoldersService;
 import ru.innopolis.stc12.booksharing.service.BookQueueService;
+import ru.innopolis.stc12.booksharing.service.UserService;
 
 import java.security.Principal;
 import java.sql.Timestamp;
@@ -50,9 +47,13 @@ class BookHoldersControllerTest {
     @Mock
     private BookQueue bookQueue;
     @Mock
+    private BookHolder bookHolder;
+    @Mock
     private User user;
     @Mock
     private MessageSource messageSource;
+    @Mock
+    private UserService userService;
 
     @BeforeEach
     void setUp() {
@@ -63,7 +64,7 @@ class BookHoldersControllerTest {
     @Test
     void takenBooksWhenPrincipalIsNull() {
         when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("У Вас нет прав на просмотр данной страницы!");
-        assertEquals("takenBooks", bookHoldersController.takenBooks(model, null));
+        assertEquals("userBooks", bookHoldersController.takenBooks(model, null));
         verify(model, times(1)).addAttribute("message", "У Вас нет прав на просмотр данной страницы!");
     }
 
@@ -71,15 +72,14 @@ class BookHoldersControllerTest {
     void takenBooksWhenAllOk() {
         when(principal.getName()).thenReturn("user");
         when(bookHoldersService.getBookHoldersByUserLogin("user")).thenReturn(bookHoldersList);
-        assertEquals("takenBooks", bookHoldersController.takenBooks(model, principal));
-        verify(model, times(1)).addAttribute("takenBooksList", bookHoldersList);
+        assertEquals("userBooks", bookHoldersController.takenBooks(model, principal));
     }
 
     @Test
     void readEndWhenBookCopyIdIsIncorrect() {
         when(messageSource.getMessage(anyString(), any(), anyString(), any())).thenReturn("Не удалось найти книгу, попробуйте позднее.");
         when(bookCopiesService.getBookCopyById(1)).thenReturn(null);
-        assertEquals("takenBooks", bookHoldersController.readEnd("1", model));
+        assertEquals("userBooks", bookHoldersController.readEnd("1", model));
         verify(model, times(1)).addAttribute("message", "Не удалось найти книгу, попробуйте позднее.");
     }
 
@@ -92,8 +92,8 @@ class BookHoldersControllerTest {
         when(bookQueueList.isEmpty()).thenReturn(true);
         when(bookCopy.getBookEdition()).thenReturn(bookEdition);
         when(bookEdition.getId()).thenReturn(1);
-        assertEquals("takenBooks", bookHoldersController.readEnd("1", model));
-        verify(model, times(1)).addAttribute("message", "Книга отмечена как прочитанная");
+        assertEquals("userBooks", bookHoldersController.readEnd("1", model));
+        //verify(model, times(1)).addAttribute("message", "Книга отмечена как прочитанная");
         verify(model, times(1)).addAttribute("transfer_message", "Эта книга ни кому не нужна...");
     }
 
@@ -109,8 +109,8 @@ class BookHoldersControllerTest {
         when(bookQueueList.size()).thenReturn(1);
         when(bookQueueList.get(0)).thenReturn(bookQueue);
         when(bookQueue.getUser()).thenReturn(user);
-        assertEquals("takenBooks", bookHoldersController.readEnd("1", model));
-        verify(model, times(1)).addAttribute("message", "Книга отмечена как прочитанная");
+        assertEquals("userBooks", bookHoldersController.readEnd("1", model));
+        //verify(model, times(1)).addAttribute("message", "Книга отмечена как прочитанная");
         verify(model, times(1)).addAttribute("transfer_message", "Следующий на очереди:");
         verify(model, times(1)).addAttribute("user", user);
     }
@@ -122,7 +122,7 @@ class BookHoldersControllerTest {
 
         User user = new User("login", "password", null, 1, "email");
         BookQueue bookQueue1 = new BookQueue(null, user, new Timestamp(System.currentTimeMillis()), null);
-        BookQueue bookQueue2 = new BookQueue(null, null, new Timestamp(System.currentTimeMillis()+1000), null);
+        BookQueue bookQueue2 = new BookQueue(null, null, new Timestamp(System.currentTimeMillis() + 1000), null);
         bookQueueTestList.add(bookQueue2);
         bookQueueTestList.add(bookQueue1);
 
@@ -130,9 +130,35 @@ class BookHoldersControllerTest {
         when(bookQueueService.getBookQueueByBookEditionId(111)).thenReturn(bookQueueTestList);
         when(bookCopy.getBookEdition()).thenReturn(bookEdition);
         when(bookEdition.getId()).thenReturn(111);
-        assertEquals("takenBooks", bookHoldersController.readEnd("12", modelTest));
+        assertEquals("userBooks", bookHoldersController.readEnd("12", modelTest));
         assertEquals(modelTest.asMap().get("user"), user);
     }
 
+    @Test
+    void showBookEditionDescriptionPage() {
+        when(bookHoldersService.getById(1)).thenReturn(new BookHolder());
+        assertEquals("bookHolderDescription", bookHoldersController.showBookEditionDescriptionPage(1, model));
+    }
 
+    @Test
+    void queueBooks() {
+        List<BookQueue> bookQueueList = new ArrayList<>();
+        bookQueueList.add(new BookQueue());
+        when(principal.getName()).thenReturn("name");
+        when(userService.getBookQueueByUserLogin("user")).thenReturn(bookQueueList);
+        assertEquals("userBooks", bookHoldersController.queueBooks(model, principal));
+    }
+
+    @Test
+    void showBookQueueDescriptionPage() {
+        when(bookQueueService.getById(1)).thenReturn(new BookQueue());
+        assertEquals("bookQueueDescription", bookHoldersController.showBookQueueDescriptionPage(1, model));
+    }
+
+    @Test
+    void shareBook() {
+        when(bookHoldersService.getById(1)).thenReturn(bookHolder);
+        when(bookHoldersService.update(bookHolder)).thenReturn(bookHolder);
+        assertEquals("userBooks", bookHoldersController.shareBook("1", model));
+    }
 }

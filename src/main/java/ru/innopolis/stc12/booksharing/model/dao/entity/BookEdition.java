@@ -88,6 +88,7 @@ public class BookEdition implements Serializable {
     public List<BookCopy> getBookCopies() {
         return this.bookCopies;
     }
+
     public void setBookCopies(List<BookCopy> bookCopies) {
         this.bookCopies = bookCopies;
     }
@@ -97,6 +98,7 @@ public class BookEdition implements Serializable {
     public List<BookQueue> getBookQueue() {
         return this.bookQueues;
     }
+
     public void setBookQueue(List<BookQueue> bookQueue) {
         this.bookQueues = bookQueue;
     }
