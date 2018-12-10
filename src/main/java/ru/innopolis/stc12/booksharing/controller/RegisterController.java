@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.service.UserService;
@@ -39,7 +39,7 @@ public class RegisterController {
 
     @PostMapping(value = "/register")
     @ExceptionHandler(ControllerException.class)
-    public ModelAndView postRegisterPage(@RequestParam(value = "newLogin") String login,
+    public RedirectView postRegisterPage(@RequestParam(value = "newLogin") String login,
                                          @RequestParam(value = "newPassword") String password,
                                          @RequestParam(value = "newEmail") String email,
                                          Model model) {
@@ -54,7 +54,7 @@ public class RegisterController {
                             LocaleContextHolder.getLocale()
                     )
             );
-            return new ModelAndView("register");
+            return new RedirectView("register");
         }
         if (userService.getUserByEmail(email) != null) {
             logger.info("Пользователь с таким email уже есть");
@@ -66,12 +66,12 @@ public class RegisterController {
                             LocaleContextHolder.getLocale()
                     )
             );
-            return new ModelAndView("register");
+            return new RedirectView("register");
         }
 
         User user = userService.addNewUser(login, password, email);
         model.addAttribute("user", user);
 
-        return new ModelAndView("library");
+        return new RedirectView("library");
     }
 }
