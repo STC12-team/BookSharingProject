@@ -47,6 +47,8 @@ class BookHoldersControllerTest {
     @Mock
     private BookQueue bookQueue;
     @Mock
+    private BookHolder bookHolder;
+    @Mock
     private User user;
     @Mock
     private MessageSource messageSource;
@@ -151,5 +153,12 @@ class BookHoldersControllerTest {
     void showBookQueueDescriptionPage() {
         when(bookQueueService.getById(1)).thenReturn(new BookQueue());
         assertEquals("bookQueueDescription", bookHoldersController.showBookQueueDescriptionPage(1, model));
+    }
+
+    @Test
+    void shareBook() {
+        when(bookHoldersService.getById(1)).thenReturn(bookHolder);
+        when(bookHoldersService.update(bookHolder)).thenReturn(bookHolder);
+        assertEquals("userBooks", bookHoldersController.shareBook("1", model));
     }
 }

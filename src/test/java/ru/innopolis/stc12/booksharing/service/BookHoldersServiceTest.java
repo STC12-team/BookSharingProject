@@ -54,4 +54,10 @@ class BookHoldersServiceTest {
         when(bookCopy.getBookEdition()).thenReturn(bookEdition);
         assertEquals(bookHolder, bookHoldersService.getById(1));
     }
+
+    @Test
+    void update() {
+        when(bookHoldersDao.update(bookHolder)).thenReturn(bookHolder);
+        assertEquals(bookHolder, bookHoldersService.update(bookHolder));
+    }
 }

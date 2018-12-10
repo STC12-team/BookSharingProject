@@ -43,4 +43,8 @@ public class BookHoldersService {
         Hibernate.initialize(bookHolder.getBookCopy().getBookEdition());
         return bookHolder;
     }
+
+    public BookHolder update(BookHolder bookHolder) {
+        return bookHoldersDao.update(bookHolder);
+    }
 }

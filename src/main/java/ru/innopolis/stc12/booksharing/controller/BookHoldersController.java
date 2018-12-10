@@ -21,6 +21,8 @@ import ru.innopolis.stc12.booksharing.service.BookQueueService;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
 import java.security.Principal;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 
@@ -116,6 +118,24 @@ public class BookHoldersController {
 
             //TODO отправить уведомление следующему читателю, о том, что он может взять книгу
         }
+        return PAGE_NAME;
+    }
+
+    @GetMapping("/takenBooks/shareBook")
+    @ExceptionHandler(NumberFormatException.class)
+    String shareBook(
+            @RequestParam(value = "bookHolderId") String bookHolderId,
+            Model model) {
+        BookHolder bookHolder = bookHoldersService.getById(Integer.valueOf(bookHolderId));
+        if (bookHolder == null) {
+            LOGGER.warn("Не удалось найти книгу с id - " + bookHolderId);
+            model.addAttribute(MESSAGE_ATTRIBUTE,
+                    messageSource.getMessage("model.errorBookHoldersControllerCannotGetBook", null, "", LocaleContextHolder.getLocale()));
+            return PAGE_NAME;
+        }
+        bookHolder.setGaveAt(Timestamp.valueOf(LocalDateTime.now()));
+        bookHoldersService.update(bookHolder);
+        model.addAttribute(MESSAGE_ATTRIBUTE, messageSource.getMessage("model.messageBookMarkedAsShared", null, "", LocaleContextHolder.getLocale()));
         return PAGE_NAME;
     }
 

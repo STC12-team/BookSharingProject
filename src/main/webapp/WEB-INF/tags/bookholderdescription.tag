@@ -6,47 +6,51 @@
              type="ru.innopolis.stc12.booksharing.model.dao.entity.BookHolder" %>
 
 <%--Book holder info--%>
-<form action="${pageContext.request.contextPath}/takenBooks/readEnd" method="get" role="presentation">
-    <div class="card mb-3">
-        <div class="row">
-            <div class="col-sm-3">
-                <img class="card-img-left" src="/images/no_cover_max.png"
-                     alt="${bookHolder.bookCopy.bookEdition.title}">
-            </div>
-            <div class="col-sm-9 px-3">
-                <div class="card-block px-3">
-                    <h4 class="card-title">${bookHolder.bookCopy.bookEdition.title}</h4>
-                    <p class="card-text"><spring:message
-                            code="bookList.isbnTitle"/>: ${bookHolder.bookCopy.bookEdition.isbn}</p>
-                    <p class="card-text"><spring:message
-                            code="bookList.publisherTitle"/>: ${bookHolder.bookCopy.bookEdition.publisher.name}</p>
-                    <p class="card-text"><spring:message
-                            code="bookList.publishYearTitle"/>: ${bookHolder.bookCopy.bookEdition.yearOfPublication}</p>
-                    <p class="card-text"><spring:message code="bookList.readStartDate"/>: ${bookHolder.getAt}</p>
-                    <c:choose>
-                        <c:when test="${empty bookHolder.gaveAt}">
-                            <c:if test="${bookHolder.bookCopy.status == 'BUSY'}">
+<div class="card mb-3">
+    <div class="row">
+        <div class="col-sm-3">
+            <img class="card-img-left" src="/images/no_cover_max.png"
+                 alt="${bookHolder.bookCopy.bookEdition.title}">
+        </div>
+        <div class="col-sm-9 px-3">
+            <div class="card-block px-3">
+                <h4 class="card-title">${bookHolder.bookCopy.bookEdition.title}</h4>
+                <p class="card-text"><spring:message
+                        code="bookList.isbnTitle"/>: ${bookHolder.bookCopy.bookEdition.isbn}</p>
+                <p class="card-text"><spring:message
+                        code="bookList.publisherTitle"/>: ${bookHolder.bookCopy.bookEdition.publisher.name}</p>
+                <p class="card-text"><spring:message
+                        code="bookList.publishYearTitle"/>: ${bookHolder.bookCopy.bookEdition.yearOfPublication}</p>
+                <p class="card-text"><spring:message code="bookList.readStartDate"/>: ${bookHolder.getAt}</p>
+                <c:choose>
+                    <c:when test="${empty bookHolder.gaveAt}">
+                        <c:if test="${bookHolder.bookCopy.status == 'BUSY'}">
+                            <form action="${pageContext.request.contextPath}/takenBooks/readEnd" method="get"
+                                  role="presentation">
                                 <button type="submit" name="bookCopyId" value="${bookHolder.bookCopy.id}"
                                         class="btn btn-info">
                                     <span><spring:message code="book.statusFinished"/></span>
                                 </button>
-                            </c:if>
-                            <c:if test="${bookHolder.bookCopy.status == 'FREE'}">
-                                <button type="submit" name="bookCopyId" value="${bookHolder.bookCopy.id}"
+                            </form>
+                        </c:if>
+                        <c:if test="${bookHolder.bookCopy.status == 'FREE'}">
+                            <form action="${pageContext.request.contextPath}/takenBooks/shareBook" method="get"
+                                  role="presentation">
+                                <button type="submit" name="bookHolderId" value="${bookHolder.id}"
                                         class="btn btn-info">
                                     <span><spring:message code="book.statusShare"/></span>
                                 </button>
-                            </c:if>
-                        </c:when>
-                        <c:otherwise>
-                            <p><spring:message code="bookList.readFinishDate"/>: ${bookHolder.gaveAt}</p>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                            </form>
+                        </c:if>
+                    </c:when>
+                    <c:otherwise>
+                        <p><spring:message code="bookList.readFinishDate"/>: ${bookHolder.gaveAt}</p>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>
-</form>
+</div>
 <%--Book edition description--%>
 <div class="card bg-light mb-3">
     <div class="card-header"><spring:message code="bookDesc.description"/></div>
