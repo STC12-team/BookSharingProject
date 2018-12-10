@@ -7,6 +7,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookHolder;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookQueue;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -40,6 +43,8 @@ class UserDaoImplTest {
     Query<User> query;
     @Mock
     AbstractDaoImp.QueryObject queryObject;
+    @Mock
+    User user;
 
     @BeforeEach
     void setUp() {
@@ -57,7 +62,6 @@ class UserDaoImplTest {
 
     @Test
     void getUserByLogin() {
-        User user = new User();
         List<User> list = new ArrayList<>();
         list.add(user);
         when(query.getResultList()).thenReturn(list);
@@ -85,5 +89,35 @@ class UserDaoImplTest {
         List<User> list = new ArrayList<>();
         when(query.getResultList()).thenReturn(list);
         assertNull(userDao.getUserByEmail("email"));
+    }
+
+    @Test
+    void getBookHoldersByUserLogin() {
+        List<User> list = new ArrayList<>();
+        list.add(user);
+        List<BookHolder> bookHolders = new ArrayList<>();
+        when(query.getResultList()).thenReturn(list);
+        when(user.getBookHolders()).thenReturn(bookHolders);
+        assertEquals(bookHolders, userDao.getBookHoldersByUserLogin("user"));
+    }
+
+    @Test
+    void getBookCopiesByUserLogin() {
+        List<User> list = new ArrayList<>();
+        list.add(user);
+        List<BookCopy> bookCopies = new ArrayList<>();
+        when(query.getResultList()).thenReturn(list);
+        when(user.getBookCopies()).thenReturn(bookCopies);
+        assertEquals(bookCopies, userDao.getBookCopiesByUserLogin("user"));
+    }
+
+    @Test
+    void getBookQueueByUserLogin() {
+        List<User> list = new ArrayList<>();
+        list.add(user);
+        List<BookQueue> bookQueues = new ArrayList<>();
+        when(query.getResultList()).thenReturn(list);
+        when(user.getBookQueues()).thenReturn(bookQueues);
+        assertEquals(bookQueues, userDao.getBookCopiesByUserLogin("user"));
     }
 }

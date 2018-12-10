@@ -91,4 +91,11 @@ class BookQueueServiceTest {
         bookQueueService.deleteUserFromQueue(new User(), new BookEdition());
         assertEquals(bookQueue, valueCapture.getValue());
     }
+
+    @Test
+    void getById() {
+        BookQueue bookQueue = new BookQueue();
+        when(bookQueueDao.findOne(1)).thenReturn(bookQueue);
+        assertEquals(bookQueue, bookQueueService.getById(1));
+    }
 }

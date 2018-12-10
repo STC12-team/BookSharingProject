@@ -96,7 +96,7 @@ public class BookHoldersController {
         }
         bookCopy.setStatus(BookCopiesStatus.FREE);
         bookCopiesService.updateBookCopy(bookCopy);
-        model.addAttribute(MESSAGE_ATTRIBUTE, "Книга отмечена как прочитанная");
+        model.addAttribute(MESSAGE_ATTRIBUTE, messageSource.getMessage("model.messageBookMarkedAsRead", null, "", LocaleContextHolder.getLocale()));
         List<BookQueue> bookQueueList = bookQueueService.getBookQueueByBookEditionId(bookCopy.getBookEdition().getId());
         if (bookQueueList.isEmpty()) {
             model.addAttribute(TRANSFER_MESSAGE_ATTRIBUTE,

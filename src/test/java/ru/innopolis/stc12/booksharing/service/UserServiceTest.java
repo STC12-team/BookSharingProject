@@ -9,9 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import ru.innopolis.stc12.booksharing.model.dao.entity.Role;
-import ru.innopolis.stc12.booksharing.model.dao.entity.User;
-import ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails;
+import ru.innopolis.stc12.booksharing.model.dao.entity.*;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.RoleDao;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 
@@ -126,5 +124,40 @@ class UserServiceTest {
         when(userDetailsDao.update(userDetails)).thenReturn(userDetails);
 
         assertEquals(userDetails, userService.updateUserDetails("firstName", "lastName", "surname"));
+    }
+
+    @Test
+    void getBookHoldersByUserLogin() {
+        List<BookHolder> bookHolders = new ArrayList<>();
+        BookHolder bookHolder = new BookHolder();
+        BookCopy bookCopy = new BookCopy();
+        BookEdition bookEdition = new BookEdition();
+        bookHolder.setBookCopy(bookCopy);
+        bookCopy.setBookEdition(bookEdition);
+        bookHolders.add(bookHolder);
+        when(userDao.getBookHoldersByUserLogin("user")).thenReturn(bookHolders);
+        assertEquals(bookHolders, userDao.getBookHoldersByUserLogin("user"));
+    }
+
+    @Test
+    void getBookCopiesByUserLogin() {
+        List<BookCopy> bookCopies = new ArrayList<>();
+        BookCopy bookCopy = new BookCopy();
+        BookEdition bookEdition = new BookEdition();
+        bookCopy.setBookEdition(bookEdition);
+        bookCopies.add(bookCopy);
+        when(userDao.getBookCopiesByUserLogin("user")).thenReturn(bookCopies);
+        assertEquals(bookCopies, userDao.getBookCopiesByUserLogin("user"));
+    }
+
+    @Test
+    void getBookQueueByUserLogin() {
+        List<BookQueue> bookQueues = new ArrayList<>();
+        BookQueue bookQueue = new BookQueue();
+        BookEdition bookEdition = new BookEdition();
+        bookQueue.setBookEdition(bookEdition);
+        bookQueues.add(bookQueue);
+        when(userDao.getBookQueueByUserLogin("user")).thenReturn(bookQueues);
+        assertEquals(bookQueues, userDao.getBookQueueByUserLogin("user"));
     }
 }

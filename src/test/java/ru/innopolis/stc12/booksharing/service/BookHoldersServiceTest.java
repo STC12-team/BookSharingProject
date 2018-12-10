@@ -4,8 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookCopy;
+import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookHolder;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookHoldersDao;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.UserDao;
 
 import java.util.List;
@@ -23,6 +26,14 @@ class BookHoldersServiceTest {
     private User user;
     @Mock
     private List<BookHolder> bookHolderList;
+    @Mock
+    private BookHoldersDao<BookHolder> bookHoldersDao;
+    @Mock
+    private BookHolder bookHolder;
+    @Mock
+    private BookCopy bookCopy;
+    @Mock
+    private BookEdition bookEdition;
 
     @BeforeEach
     void setUp() {
@@ -34,5 +45,13 @@ class BookHoldersServiceTest {
         when(userDao.getUserByLogin("UserLogin")).thenReturn(user);
         when(user.getBookHolders()).thenReturn(bookHolderList);
         assertEquals(bookHolderList, bookHoldersService.getBookHoldersByUserLogin("UserLogin"));
+    }
+
+    @Test
+    void getById() {
+        when(bookHoldersDao.findOne(1)).thenReturn(bookHolder);
+        when(bookHolder.getBookCopy()).thenReturn(bookCopy);
+        when(bookCopy.getBookEdition()).thenReturn(bookEdition);
+        assertEquals(bookHolder, bookHoldersService.getById(1));
     }
 }
