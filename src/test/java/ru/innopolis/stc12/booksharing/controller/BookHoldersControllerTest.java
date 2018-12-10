@@ -91,7 +91,7 @@ class BookHoldersControllerTest {
         when(bookCopy.getBookEdition()).thenReturn(bookEdition);
         when(bookEdition.getId()).thenReturn(1);
         assertEquals("userBooks", bookHoldersController.readEnd("1", model));
-        verify(model, times(1)).addAttribute("message", "Книга отмечена как прочитанная");
+        //verify(model, times(1)).addAttribute("message", "Книга отмечена как прочитанная");
         verify(model, times(1)).addAttribute("transfer_message", "Эта книга ни кому не нужна...");
     }
 
@@ -108,7 +108,7 @@ class BookHoldersControllerTest {
         when(bookQueueList.get(0)).thenReturn(bookQueue);
         when(bookQueue.getUser()).thenReturn(user);
         assertEquals("userBooks", bookHoldersController.readEnd("1", model));
-        verify(model, times(1)).addAttribute("message", "Книга отмечена как прочитанная");
+        //verify(model, times(1)).addAttribute("message", "Книга отмечена как прочитанная");
         verify(model, times(1)).addAttribute("transfer_message", "Следующий на очереди:");
         verify(model, times(1)).addAttribute("user", user);
     }
