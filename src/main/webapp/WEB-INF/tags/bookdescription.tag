@@ -4,10 +4,10 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@attribute name="bookEdition" required="true" rtexprvalue="true"
              type="ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition" %>
-<%@attribute name="countBookCopy" required="true" rtexprvalue="true" type="java.lang.Integer" %>
-<%@attribute name="countBookCopyInStatusFree" required="true" rtexprvalue="true" type="java.lang.Integer" %>
-<%@attribute name="userCountInQueue" required="true" rtexprvalue="true" type="java.lang.Integer" %>
-<%@attribute name="userPlaceInQueue" required="true" rtexprvalue="true" type="java.lang.Integer" %>
+<%@attribute name="countBookCopy" required="false" rtexprvalue="true" type="java.lang.Integer" %>
+<%@attribute name="countBookCopyInStatusFree" required="false" rtexprvalue="true" type="java.lang.Integer" %>
+<%@attribute name="userCountInQueue" required="false" rtexprvalue="true" type="java.lang.Integer" %>
+<%@attribute name="userPlaceInQueue" required="false" rtexprvalue="true" type="java.lang.Integer" %>
 
 <%--Book edition info--%>
 <div class="card mb-3">
@@ -33,6 +33,8 @@
                             <p class="card-text"><span class="badge badge-info"><spring:message code="bookDesc.placeInQueue"/> - ${userPlaceInQueue}</span></p>
                         </c:when>
                     </c:choose>
+                    <a href="/addBookByUser/searchBook?searchValue=${bookEdition.isbn}"
+                       class="btn btn-primary"><spring:message code="bookDesc.addBookCopy"/></a>
                 </sec:authorize>
                 <sec:authorize access="!hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
                     <p><spring:message code="bookDesc.authorizeForQueueAccess"/></p>

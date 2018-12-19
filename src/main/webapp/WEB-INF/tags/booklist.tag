@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@attribute name="bookEditionList" required="true" rtexprvalue="true" type="java.util.List" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<form action="/addBookByUser/chooseBook" method="get" role="presentation">
+<form action="/addBookByUser/addBook" method="get" role="presentation">
     <div class="row">
         <c:forEach var="book" items="${bookEditionList}">
             <div class="col-md-6">
@@ -11,7 +11,7 @@
                 <p><spring:message code="bookList.publisherTitle"/>: ${book.publisher.name}</p>
                 <p><spring:message code="bookList.publishYearTitle"/>: ${book.yearOfPublication}</p>
                 <p><spring:message code="bookList.descriptionTitle"/>: ${book.description}</p>
-                <button type="submit" name="chooseBook" value="${book.isbn}" class="btn btn-info">
+                <button type="submit" name="addBook" value="${book.isbn}" class="btn btn-info">
                     <span><spring:message code="bookList.chooseButton"/></span>
                 </button>
             </div>
