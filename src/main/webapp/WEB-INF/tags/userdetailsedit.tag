@@ -4,7 +4,12 @@
 
 <div class="row">
     <div class="col">
-        <img src="https://via.placeholder.com/250" class="img-fluid" alt="">
+        <c:if test="${not empty userDetails.userPicUrl}">
+            <img src="${userDetails.userPicUrl}" class="img-fluid" alt="">
+        </c:if>
+        <c:if test="${empty userDetails.userPicUrl}">
+            <img src="https://via.placeholder.com/250" class="img-fluid" alt="">
+        </c:if>
     </div>
     <div class="col">
         <form class="form-horizontal" role="form" method="POST" action="/userEdit">
@@ -58,6 +63,24 @@
                     <div class="form-control-feedback">
                             <span class="text-danger align-middle">
                                 <!-- surname Error -->
+                            </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group has-danger">
+                        <label class="sr-only" for="file"><spring:message code="form.photoUpload"/></label>
+                        <div class="custom-file">
+                            <input type="file" name="file" class="btn btn-default" id="file"
+                                   placeholder="${userDetails.userPicUrl}" disabled>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-control-feedback">
+                            <span class="text-danger align-middle">
+                                <!-- file Error -->
                             </span>
                     </div>
                 </div>

@@ -19,5 +19,5 @@
     <include file="2018-10-30-update-book_copies-table.xml" relativeToChangelogFile="true"/>
     <include file="2018-11-05-update-users-table-email-column.xml" relativeToChangelogFile="true"/>
     <include file="2018-11-05-create-user-details-table.xml" relativeToChangelogFile="true"/>
-
+    <include file="2019-12-19-user-details-table-update.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

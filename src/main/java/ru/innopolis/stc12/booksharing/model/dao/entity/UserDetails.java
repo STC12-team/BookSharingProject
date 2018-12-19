@@ -12,15 +12,17 @@ public class UserDetails implements Serializable {
     private String firstName;
     private String lastName;
     private String surname;
+    private String userPicUrl;
 
     public UserDetails() {
     }
 
-    public UserDetails(User user, String firstName, String lastName, String surname) {
+    public UserDetails(User user, String firstName, String lastName, String surname, String userPicUrl) {
         this.user = user;
         this.firstName = firstName;
         this.lastName = lastName;
         this.surname = surname;
+        this.userPicUrl = userPicUrl;
     }
 
     @Id
@@ -67,6 +69,15 @@ public class UserDetails implements Serializable {
         this.surname = surname;
     }
 
+    @Column(name = "user_pic_url")
+    public String getUserPicUrl() {
+        return userPicUrl;
+    }
+
+    public void setUserPicUrl(String userPicUrl) {
+        this.userPicUrl = userPicUrl;
+    }
+
     @Override
     public String toString() {
         return "UserDetails{" +
@@ -75,6 +86,7 @@ public class UserDetails implements Serializable {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", surname='" + surname + '\'' +
+                ", userPicUrl='" + userPicUrl + '\'' +
                 '}';
     }
 
@@ -87,11 +99,12 @@ public class UserDetails implements Serializable {
                 Objects.equals(user, that.user) &&
                 Objects.equals(firstName, that.firstName) &&
                 Objects.equals(lastName, that.lastName) &&
-                Objects.equals(surname, that.surname);
+                Objects.equals(surname, that.surname) &&
+                Objects.equals(userPicUrl, that.userPicUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, user, firstName, lastName, surname);
+        return Objects.hash(id, user, firstName, lastName, surname, userPicUrl);
     }
 }

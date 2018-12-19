@@ -1,6 +1,7 @@
 <%@tag description="User details template" pageEncoding="UTF-8" %>
 <%@attribute name="userDetails" required="true" type="ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div class="row">
     <div class="col">
@@ -12,7 +13,12 @@
 
 <div class="row">
     <div class="col">
-        <img src="/images/no_avatar.png" class="img-fluid" alt="">
+        <c:if test="${not empty userDetails.userPicUrl}">
+            <img src="${userDetails.userPicUrl}" class="img-fluid" alt="">
+        </c:if>
+        <c:if test="${empty userDetails.userPicUrl}">
+            <img src="https://via.placeholder.com/250" class="img-fluid" alt="">
+        </c:if>
     </div>
     <div class="col">
         <h3 class="display-4">${userDetails.firstName} ${userDetails.lastName} ${userDetails.surname}</h3>
