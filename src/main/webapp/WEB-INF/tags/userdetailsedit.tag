@@ -12,7 +12,7 @@
         </c:if>
     </div>
     <div class="col">
-        <form class="form-horizontal" role="form" method="POST" action="/userEdit">
+        <form class="form-horizontal" role="form" method="POST" action="/userEdit" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-9">
                     <div class="form-group has-danger">
@@ -72,8 +72,7 @@
                     <div class="form-group has-danger">
                         <label class="sr-only" for="file"><spring:message code="form.photoUpload"/></label>
                         <div class="custom-file">
-                            <input type="file" name="file" class="btn btn-default" id="file"
-                                   placeholder="${userDetails.userPicUrl}" disabled>
+                            <input type="file" id="file" name="uploadFile">
                         </div>
                     </div>
                 </div>

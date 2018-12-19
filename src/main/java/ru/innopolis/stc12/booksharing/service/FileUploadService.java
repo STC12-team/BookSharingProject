@@ -15,9 +15,9 @@ import java.util.Properties;
 @Service
 public class FileUploadService {
     private static final Logger logger = Logger.getLogger(FileUploadService.class);
-    private static final String PROP_CLOUD_NAME = "CLOUD_NAME";
-    private static final String PROP_API_KEY = "API_KEY";
-    private static final String PROP_API_SECRET = "API_SECRET";
+    private static final String PROP_CLOUD_NAME = "cloud_name";
+    private static final String PROP_API_KEY = "api_key";
+    private static final String PROP_API_SECRET = "api_secret";
 
     /**
      * Загружает изображение в Cloudinary и возвращает ссылку на него

@@ -96,7 +96,7 @@ public class ProfileController {
     public RedirectView postProfileEditPage(@RequestParam(value = "firstName", required = false) String firstName,
                                             @RequestParam(value = "lastName", required = false) String lastName,
                                             @RequestParam(value = "surname", required = false) String surname,
-                                            @RequestParam(value = "file", required = false) MultipartFile photo,
+                                            @RequestParam(value = "uploadFile", required = false) MultipartFile photo,
                                             Model model, SessionStatus status) {
         model.addAttribute(USER_DETAILS_PAGE_ATTRIBUTE, authenticatedUserDetails);
         String fileUrl = fileUploadService.uploadMultipartFile(photo);
