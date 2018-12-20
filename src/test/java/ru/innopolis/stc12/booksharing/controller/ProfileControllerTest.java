@@ -94,6 +94,15 @@ class ProfileControllerTest {
     }
 
     @Test
+    void postProfileEditPageWithNotNullableUserDetails() {
+        when(model.addAttribute(anyString())).thenReturn(model);
+        when(userService.updateUserDetails(anyString(), anyString(), anyString(), anyString())).thenReturn(userDetails);
+        when(fileUploadService.uploadMultipartFile(file)).thenReturn("some URL");
+        assertSame(profileController.postProfileEditPage(
+                "firstname", "lastname", "surname", file, model, status).getUrl(), new RedirectView("userProfile").getUrl());
+    }
+
+    @Test
     void postProfileEditPageWithSuccessOnUpdateDetailsUpdateConfirmationFlagToFalse() {
         when(model.addAttribute(anyString())).thenReturn(model);
         when(userService.updateUserDetails(anyString(), anyString(), anyString(), anyString())).thenReturn(new UserDetails());
