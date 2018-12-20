@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
 
@@ -31,9 +32,7 @@ public class FileUploadService {
             File uploadFile = getFile(file.getOriginalFilename());
             try (FileOutputStream fos = getFileOutputStream(uploadFile)) {
                 fos.write(file.getBytes());
-                ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-                Properties props = new Properties();
-                props.load(classLoader.getResourceAsStream("config.properties"));
+                Properties props = getProperties();
                 String myCloudName = props.getProperty(PROP_CLOUD_NAME);
                 String myApiKey = props.getProperty(PROP_API_KEY);
                 String myApiSecret = props.getProperty(PROP_API_SECRET);
@@ -48,10 +47,6 @@ public class FileUploadService {
             } catch (Exception e) {
                 logger.error(e);
                 return e.getMessage();
-            } finally {
-                if (!uploadFile.delete()) {
-                    logger.error("cannot delete file");
-                }
             }
         } else {
             logger.error("file is empty");
@@ -70,4 +65,13 @@ public class FileUploadService {
     Cloudinary getCloudinary(Map map) {
         return new Cloudinary(map);
     }
+
+    Properties getProperties() throws IOException {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        Properties props = new Properties();
+        props.load(classLoader.getResourceAsStream("config.properties"));
+        return props;
+    }
+
+
 }

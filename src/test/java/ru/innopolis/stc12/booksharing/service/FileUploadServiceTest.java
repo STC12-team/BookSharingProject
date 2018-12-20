@@ -10,11 +10,11 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -35,18 +35,20 @@ public class FileUploadServiceTest {
     Uploader uploader;
 
     @Mock
-    File uploadFile;
+    Properties properties;
 
     @Mock
     FileOutputStream fileOutputStream;
 
 
     @BeforeEach
-    void setUp() throws FileNotFoundException {
+    void setUp() throws IOException {
         MockitoAnnotations.initMocks(this);
         fileUploadService = spy(new FileUploadService());
         doReturn(fileOutputStream).when(fileUploadService).getFileOutputStream(any(File.class));
         doReturn(cloudinary).when(fileUploadService).getCloudinary(any());
+        doReturn(properties).when(fileUploadService).getProperties();
+
     }
 
     @Test
@@ -60,5 +62,24 @@ public class FileUploadServiceTest {
         when(cloudinary.uploader()).thenReturn(uploader);
         when(uploader.upload(any(), any())).thenReturn(expectedMap);
         assertEquals(expectedUrl, fileUploadService.uploadMultipartFile(multipartFile));
+    }
+
+    @Test
+    void uploadMultipartFileGetException() throws IOException {
+        Map expectedMap = new HashMap();
+        String expectedUrl = "Expected URL";
+        expectedMap.put("url", expectedUrl);
+
+        when(multipartFile.getOriginalFilename()).thenReturn("expected path of file");
+        when(multipartFile.getBytes()).thenReturn(new byte[1]);
+        when(cloudinary.uploader()).thenReturn(uploader);
+        when(uploader.upload(any(), any())).thenThrow(new IOException("Expected io exception"));
+        assertEquals("Expected io exception", fileUploadService.uploadMultipartFile(multipartFile));
+    }
+
+    @Test
+    void emptyFileUpload() throws IOException {
+        multipartFile = null;
+        assertEquals("", fileUploadService.uploadMultipartFile(multipartFile));
     }
 }
