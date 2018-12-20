@@ -37,19 +37,28 @@ public class FileUploadService {
                 String myApiKey = props.getProperty(PROP_API_KEY);
                 String myApiSecret = props.getProperty(PROP_API_SECRET);
 
-                Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                Map map = ObjectUtils.asMap(
                         PROP_CLOUD_NAME, myCloudName,
                         PROP_API_KEY, myApiKey,
-                        PROP_API_SECRET, myApiSecret));
+                        PROP_API_SECRET, myApiSecret);
+                Cloudinary cloudinary = getCloudinary(map);
                 Map uploadResult = cloudinary.uploader().upload(uploadFile, ObjectUtils.emptyMap());
                 return (String) uploadResult.get("url");
             } catch (Exception e) {
                 logger.error(e);
                 return e.getMessage();
+            } finally {
+                if (!uploadFile.delete()) {
+                    logger.error("cannot delete file");
+                }
             }
         } else {
             logger.error("file is empty");
             return "";
         }
+    }
+
+    Cloudinary getCloudinary(Map map) {
+        return new Cloudinary(map);
     }
 }

@@ -15,9 +15,12 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class FileUploadServiceTest {
+
+    @InjectMocks
+    FileUploadService fileUploadService;
 
     @Mock
     MultipartFile multipartFile;
@@ -28,33 +31,25 @@ public class FileUploadServiceTest {
     @Mock
     Uploader uploader;
 
-    @InjectMocks
-    FileUploadService fileUploadService;
+
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
+        fileUploadService = spy(new FileUploadService());
+        doReturn(cloudinary).when(fileUploadService).getCloudinary(any());
     }
 
     @Test
-    void uploadMultipartFile() {
+    void uploadMultipartFile() throws IOException {
         Map expectedMap = new HashMap();
         String expectedUrl = "Expected URL";
         expectedMap.put("url", expectedUrl);
 
-
         when(multipartFile.getOriginalFilename()).thenReturn("expected path of file");
-        try {
-            when(multipartFile.getBytes()).thenReturn(new byte[1]);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        when(multipartFile.getBytes()).thenReturn(new byte[1]);
         when(cloudinary.uploader()).thenReturn(uploader);
-        try {
-            when(uploader.upload(any(), any())).thenReturn(expectedMap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        when(uploader.upload(any(), any())).thenReturn(expectedMap);
         assertEquals(expectedUrl, fileUploadService.uploadMultipartFile(multipartFile));
     }
 }
