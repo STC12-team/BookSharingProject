@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.Map;
 import java.util.Properties;
@@ -27,8 +28,8 @@ public class FileUploadService {
      */
     public String uploadMultipartFile(MultipartFile file) {
         if (file != null && !file.isEmpty()) {
-            File uploadFile = new File(file.getOriginalFilename());
-            try (FileOutputStream fos = new FileOutputStream(uploadFile)) {
+            File uploadFile = getFile(file.getOriginalFilename());
+            try (FileOutputStream fos = getFileOutputStream(uploadFile)) {
                 fos.write(file.getBytes());
                 ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
                 Properties props = new Properties();
@@ -56,6 +57,14 @@ public class FileUploadService {
             logger.error("file is empty");
             return "";
         }
+    }
+
+    File getFile(String fileName) {
+        return new File(fileName);
+    }
+
+    FileOutputStream getFileOutputStream(File file) throws FileNotFoundException {
+        return new FileOutputStream(file);
     }
 
     Cloudinary getCloudinary(Map map) {
