@@ -67,10 +67,19 @@ public class FileUploadService {
     }
 
     Properties getProperties() throws IOException {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         Properties props = new Properties();
-        props.load(classLoader.getResourceAsStream("config.properties"));
-        return props;
+        Map<String, String> env = System.getenv();
+        if (env.get(PROP_CLOUD_NAME).isEmpty() || env.get(PROP_API_KEY).isEmpty() || env.get(PROP_API_SECRET).isEmpty()) {
+            ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+
+            props.load(classLoader.getResourceAsStream("config.properties"));
+            return props;
+        } else {
+            props.setProperty(PROP_CLOUD_NAME, env.get(PROP_CLOUD_NAME));
+            props.setProperty(PROP_API_KEY, env.get(PROP_API_KEY));
+            props.setProperty(PROP_API_SECRET, env.get(PROP_API_SECRET));
+            return props;
+        }
     }
 
 
