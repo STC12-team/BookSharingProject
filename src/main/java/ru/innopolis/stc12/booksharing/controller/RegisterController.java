@@ -20,6 +20,7 @@ public class RegisterController {
     private Logger logger = Logger.getLogger(RegisterController.class);
     private UserService userService;
     private MessageSource messageSource;
+    private static final String REGISTER_PAGE = "register";
 
     @Autowired
     public void setMessageSource(MessageSource messageSource) {
@@ -34,7 +35,7 @@ public class RegisterController {
     @GetMapping(value = "/register")
     @ExceptionHandler(ControllerException.class)
     public String getRegisterPage(Model model) {
-        return "register";
+        return REGISTER_PAGE;
     }
 
     @PostMapping(value = "/register")
@@ -54,7 +55,7 @@ public class RegisterController {
                             LocaleContextHolder.getLocale()
                     )
             );
-            return new RedirectView("register");
+            return new RedirectView(REGISTER_PAGE);
         }
         if (userService.getUserByEmail(email) != null) {
             logger.info("Пользователь с таким email уже есть");
@@ -66,7 +67,7 @@ public class RegisterController {
                             LocaleContextHolder.getLocale()
                     )
             );
-            return new RedirectView("register");
+            return new RedirectView(REGISTER_PAGE);
         }
 
         User user = userService.addNewUser(login, password, email);

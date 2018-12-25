@@ -65,6 +65,15 @@ class UserServiceTest {
     }
 
     @Test
+    void getUserByEmail() {
+        User user = new User();
+        when(userDao.getUserByEmail("TestEmail")).thenReturn(user);
+        assertEquals(user, userService.getUserByEmail("TestEmail"));
+        Assertions.assertNull(userService.getUserByEmail(null));
+        Assertions.assertNull(userService.getUserByEmail(""));
+    }
+
+    @Test
     void getAuthenticatedUserLogin() {
         org.springframework.security.core.userdetails.User userSecurity =
                 new org.springframework.security.core.userdetails.User("TestUser", "", new ArrayList());

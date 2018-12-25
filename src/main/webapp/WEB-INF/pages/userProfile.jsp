@@ -5,7 +5,7 @@
 
 <t:default title="Профиль пользователя">
     <jsp:attribute name="scripts">
-        <spring:url value="/resources/js/userEdit.js" var="userEdit" />
+        <spring:url value="/resources/themeDefault/js/userEdit.js" var="userEdit"/>
         <script src="${userEdit}"></script>
     </jsp:attribute>
     <jsp:body>

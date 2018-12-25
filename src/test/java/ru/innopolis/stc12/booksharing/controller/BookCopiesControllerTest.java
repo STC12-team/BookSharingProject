@@ -141,4 +141,18 @@ class BookCopiesControllerTest {
         when(bookCopiesService.getBookCopyById(1)).thenReturn(new BookCopy());
         assertEquals("bookCopyDescription", bookCopiesController.showBookEditionDescriptionPage(1, model));
     }
+
+    @Test
+    void getMyBooksEmptyUser() {
+        when(principal.getName()).thenReturn(null);
+        assertEquals("userBooks", bookCopiesController.getMyBooks(model, principal));
+    }
+
+    @Test
+    void getMyBooksEmptyBookList() {
+        List<BookCopy> bookCopyList = new ArrayList<>();
+        when(principal.getName()).thenReturn("name");
+        when(userService.getBookCopiesByUserLogin("user")).thenReturn(bookCopyList);
+        assertEquals("userBooks", bookCopiesController.getMyBooks(model, principal));
+    }
 }
