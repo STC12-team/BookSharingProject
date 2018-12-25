@@ -8,6 +8,10 @@
 <head>
     <meta http-equiv=Content-Type content="text/html;charset=UTF-8">
     <title>"${title}"</title>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <spring:url value="/resources/themeWinter/js/snow-it.js" var="snow"/>
+    <script src="${snow}"></script>
+
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
@@ -18,6 +22,12 @@
     </style>
 </head>
 <body>
+<script type="text/javascript">
+    $.fn.snowit({
+        flakeColor: '#fff', total: 100, minSize: 30,
+        maxSize: 50,
+    });
+</script>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
     <h1><spring:message code="message.title"/></h1>
