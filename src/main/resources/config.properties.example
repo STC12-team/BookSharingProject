@@ -2,3 +2,6 @@ driver=org.postgresql.Driver
 HEROKU_DATABASE_URL=jdbc:postgresql://localhost:5432/book_sharing_project
 DATABASE_USERNAME=postgres
 DATABASE_PASSWORD=secret
+cloud_name=akbhkas
+api_key=111111111111
+api_secret=jsdjbhsdkgksndgs

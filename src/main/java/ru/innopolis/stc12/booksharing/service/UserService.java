@@ -103,7 +103,7 @@ public class UserService {
         return getUserByLogin(login);
     }
 
-    public UserDetails updateUserDetails(String firstName, String lastName, String surname) {
+    public UserDetails updateUserDetails(String firstName, String lastName, String surname, String photoUrl) {
         UserDetails currentUserDetails = getAuthenticatedUserDetails().getUserDetails();
         if (currentUserDetails == null) {
             return null;
@@ -119,6 +119,10 @@ public class UserService {
 
         if (!surname.equals("")) {
             currentUserDetails.setSurname(surname);
+        }
+
+        if (!photoUrl.equals("")) {
+            currentUserDetails.setUserPicUrl(photoUrl);
         }
 
         return userDetailsDao.update(currentUserDetails);

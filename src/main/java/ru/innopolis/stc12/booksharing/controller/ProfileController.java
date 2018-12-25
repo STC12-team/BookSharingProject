@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.innopolis.stc12.booksharing.exceptions.ControllerException;
 import ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails;
+import ru.innopolis.stc12.booksharing.service.FileUploadService;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
 @Controller
@@ -27,6 +29,7 @@ public class ProfileController {
     private static final String MESSAGE_CANNOT_GET_USER = "Cannot get authenticated user";
 
     private Logger logger = Logger.getLogger(ProfileController.class);
+    private FileUploadService fileUploadService;
     private UserService userService;
     private UserDetails authenticatedUserDetails;
     private boolean userPasswordConfirmed = false;
@@ -40,6 +43,11 @@ public class ProfileController {
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setFileUploadServiceService(FileUploadService fileUploadService) {
+        this.fileUploadService = fileUploadService;
     }
 
     public void setUserPasswordConfirmed(boolean value) {
@@ -86,11 +94,13 @@ public class ProfileController {
     @PostMapping(value = "/userEdit")
     @ExceptionHandler(ControllerException.class)
     public RedirectView postProfileEditPage(@RequestParam(value = "firstName", required = false) String firstName,
-                                     @RequestParam(value = "lastName", required = false) String lastName,
-                                     @RequestParam(value = "surname", required = false) String surname,
-                                     Model model, SessionStatus status) {
+                                            @RequestParam(value = "lastName", required = false) String lastName,
+                                            @RequestParam(value = "surname", required = false) String surname,
+                                            @RequestParam(value = "uploadFile", required = false) MultipartFile photo,
+                                            Model model, SessionStatus status) {
         model.addAttribute(USER_DETAILS_PAGE_ATTRIBUTE, authenticatedUserDetails);
-        UserDetails userDetails = userService.updateUserDetails(firstName, lastName, surname);
+        String fileUrl = fileUploadService.uploadMultipartFile(photo);
+        UserDetails userDetails = userService.updateUserDetails(firstName, lastName, surname, fileUrl);
         if (userDetails != null) {
             model.addAttribute(MODEL_UPDATED_ATTRIBUTE,
                     messageSource.getMessage("model.messageUpdate", null, "", LocaleContextHolder.getLocale()));

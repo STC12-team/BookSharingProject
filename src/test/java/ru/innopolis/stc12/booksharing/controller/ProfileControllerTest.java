@@ -7,9 +7,11 @@ import org.mockito.Mock;
 import org.springframework.context.MessageSource;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.dao.entity.UserDetails;
+import ru.innopolis.stc12.booksharing.service.FileUploadService;
 import ru.innopolis.stc12.booksharing.service.UserService;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,6 +32,9 @@ class ProfileControllerTest {
     private SessionStatus status;
 
     @Mock
+    MultipartFile file;
+
+    @Mock
     private Model model;
 
     @Mock
@@ -37,6 +42,8 @@ class ProfileControllerTest {
 
     @Mock
     UserDetails userDetails;
+    @Mock
+    private FileUploadService fileUploadService;
 
     @Mock
     private MessageSource messageSource;
@@ -81,14 +88,24 @@ class ProfileControllerTest {
     @Test
     void postProfileEditPage() {
         when(model.addAttribute(anyString())).thenReturn(model);
+        when(fileUploadService.uploadMultipartFile(file)).thenReturn("some URL");
         assertSame(profileController.postProfileEditPage(
-                "firstname", "lastname", "surname", model, status).getUrl(), new RedirectView("userProfile").getUrl());
+                "firstname", "lastname", "surname", file, model, status).getUrl(), new RedirectView("userProfile").getUrl());
+    }
+
+    @Test
+    void postProfileEditPageWithNotNullableUserDetails() {
+        when(model.addAttribute(anyString())).thenReturn(model);
+        when(userService.updateUserDetails(anyString(), anyString(), anyString(), anyString())).thenReturn(userDetails);
+        when(fileUploadService.uploadMultipartFile(file)).thenReturn("some URL");
+        assertSame(profileController.postProfileEditPage(
+                "firstname", "lastname", "surname", file, model, status).getUrl(), new RedirectView("userProfile").getUrl());
     }
 
     @Test
     void postProfileEditPageWithSuccessOnUpdateDetailsUpdateConfirmationFlagToFalse() {
         when(model.addAttribute(anyString())).thenReturn(model);
-        when(userService.updateUserDetails(anyString(), anyString(), anyString())).thenReturn(new UserDetails());
+        when(userService.updateUserDetails(anyString(), anyString(), anyString(), anyString())).thenReturn(new UserDetails());
         assertFalse(profileController.isUserPasswordConfirmed());
     }
 

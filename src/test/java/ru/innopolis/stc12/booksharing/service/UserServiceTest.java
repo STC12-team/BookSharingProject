@@ -123,7 +123,7 @@ class UserServiceTest {
         when(user.getUserDetails()).thenReturn(userDetails);
         when(userDetailsDao.update(userDetails)).thenReturn(userDetails);
 
-        assertEquals(userDetails, userService.updateUserDetails("firstName", "lastName", "surname"));
+        assertEquals(userDetails, userService.updateUserDetails("firstName", "lastName", "surname", ""));
     }
 
     @Test

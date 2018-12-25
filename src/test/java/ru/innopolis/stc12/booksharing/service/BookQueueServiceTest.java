@@ -11,6 +11,7 @@ import ru.innopolis.stc12.booksharing.model.dao.entity.BookEdition;
 import ru.innopolis.stc12.booksharing.model.dao.entity.BookQueue;
 import ru.innopolis.stc12.booksharing.model.dao.entity.User;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookCopiesDao;
+import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookEditionsDao;
 import ru.innopolis.stc12.booksharing.model.dao.interfaces.BookQueueDao;
 import ru.innopolis.stc12.booksharing.model.pojo.BookCopiesStatus;
 import ru.innopolis.stc12.booksharing.model.pojo.BookQueueStatus;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
@@ -32,24 +34,30 @@ class BookQueueServiceTest {
     private BookCopiesDao bookCopiesDao;
     @Mock
     private List<BookQueue> bookQueueList;
+    @Mock
+    private BookEditionsDao bookEditionsDao;
+    @Mock
+    private BookEdition bookEdition;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         bookQueueService.setBookQueueDao(bookQueueDao);
         bookQueueService.setBookCopiesDao(bookCopiesDao);
+        bookQueueService.setBookEditionsDao(bookEditionsDao);
     }
 
     @Test
     void getBookQueueByBookEditionId() {
-//        when(bookQueueDao.getBookQueueByBookEditionId(anyInt())).thenReturn(bookQueueList);
-//        assertEquals(bookQueueList, bookQueueService.getBookQueueByBookEditionId(anyInt()));
+        when(bookEditionsDao.findOne(anyInt())).thenReturn(bookEdition);
+        assertEquals(bookEdition.getBookQueue(), bookQueueService.getBookQueueByBookEditionId(anyInt()));
     }
 
     @Test
     void updateBookQueue() {
-//        when(bookQueueDao.updateBookQueue(any())).thenReturn(true);
- //       assertEquals(true, bookQueueService.updateBookQueue(any()));
+        BookQueue bookQueue = new BookQueue();
+        when(bookQueueDao.update(any())).thenReturn(bookQueue);
+        assertEquals(bookQueue, bookQueueService.updateBookQueue(any()));
     }
 
     @Test

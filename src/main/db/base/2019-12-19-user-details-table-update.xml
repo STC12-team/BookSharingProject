@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="2019-12-19-user-details-table-update" author="bass2000">
+
+        <addColumn tableName="user_details">
+            <column name="user_pic_url" type="varchar(120)">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+
+    </changeSet>
+</databaseChangeLog>
